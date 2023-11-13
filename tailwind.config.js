@@ -70,6 +70,14 @@ module.exports = {
           fontWeight: "400",
         },
       ],
+      "link-big": [
+        "1.125rem",
+        {
+          lineHeight: "1.688rem",
+          fontWeight: "500",
+          letterSpacing: "0.02rem",
+        },
+      ],
       "link-normal": [
         "1rem",
         {
@@ -79,7 +87,7 @@ module.exports = {
         },
       ],
       "link-small": [
-        "0.875",
+        "0.875rem",
         {
           lineHeight: "1.313rem",
           fontWeight: "500",
@@ -87,7 +95,7 @@ module.exports = {
         },
       ],
       "link-tiny": [
-        "0.75",
+        "0.75rem",
         {
           lineHeight: "1.125rem",
           fontWeight: "500",

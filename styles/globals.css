@@ -16,9 +16,6 @@
   }
 }
 
-.container > * {
+.container > :not(:last-child) {
   margin-bottom: 2rem;
-}
-.container > *:last-child{
-  margin-bottom: 0;
 }
