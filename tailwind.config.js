@@ -118,6 +118,7 @@ module.exports = {
         sans: ["var(--font-poppins)"],
       },
       borderRadius: {
+        sm: "0.25rem",
         DEFAULT: "0.5rem",
         DEFAULT: "8px",
       },

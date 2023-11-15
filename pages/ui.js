@@ -1,18 +1,23 @@
 import Container from "@/components/ui/container";
 import Title from "@/components/ui/title";
-import Button from "@/components/ui/buttons/Normal/button";
-import ButtonBig from "@/components/ui/buttons/Big/buttonBig";
-import ButtonSmall from "@/components/ui/buttons/Small/buttonSmall";
-import ButtonOutline from "@/components/ui/buttons/Normal/buttonOutline";
-import ButtonOutlineBig from "@/components/ui/buttons/Big/buttonBigOutline";
-import ButtonOutlineSmall from "@/components/ui/buttons/Small/buttonSmallOutline";
-import ButtonBigLink from "@/components/ui/buttons/Big/buttonBigLink";
-import ButtonLink from "@/components/ui/buttons/Normal/buttonLink";
-import ButtonSmallLink from "@/components/ui/buttons/Small/buttonSmallLink";
+import {
+  Button,
+  ButtonLink,
+  ButtonOutline,
+  ButtonBig,
+  ButtonBigLink,
+  ButtonBigOutline,
+  ButtonSmall,
+  ButtonSmallLink,
+  ButtonSmallOutline,
+} from "@/components/ui/buttons";
+import { Label, LabelBig } from "@/components/ui/labels";
+import Navbar from "@/components/navbar";
 
 export default function UI() {
   return (
     <>
+      <Navbar></Navbar>
       <Container>
         <div>
           <Title>Başlık Örneği: Lorem ipsum dolor sit amet</Title>
@@ -45,10 +50,10 @@ export default function UI() {
             </ButtonBig>
           </div>
           <div className=" flex flex-col  gap-4">
-            <ButtonOutlineSmall href="#">Button </ButtonOutlineSmall>
+            <ButtonSmallOutline href="#">Button </ButtonSmallOutline>
             <ButtonOutline href="#">Button </ButtonOutline>
-            <ButtonOutlineBig href="#">Button </ButtonOutlineBig>
-            <ButtonOutlineBig href="#">
+            <ButtonBigOutline href="#">Button </ButtonBigOutline>
+            <ButtonBigOutline href="#">
               Button{" "}
               <svg
                 className="ml-1.5 -mr-1.5 fill-primary-color "
@@ -60,7 +65,7 @@ export default function UI() {
               >
                 <path d="M16.1188 11.004H5.10876C4.55876 11.004 4.10876 11.454 4.10876 12.004C4.10876 12.554 4.55876 13.004 5.10876 13.004H16.1188V14.794C16.1188 15.244 16.6588 15.464 16.9688 15.144L19.7488 12.354C19.9388 12.154 19.9388 11.844 19.7488 11.644L16.9688 8.85398C16.6588 8.53398 16.1188 8.76398 16.1188 9.20398V11.004Z" />
               </svg>
-            </ButtonOutlineBig>
+            </ButtonBigOutline>
           </div>
           <div className=" flex flex-col   gap-4">
             <ButtonSmallLink href="#">Button </ButtonSmallLink>
@@ -69,7 +74,7 @@ export default function UI() {
             <ButtonBigLink href="#">
               Button{" "}
               <svg
-                className="ml-1.5 fill-primary-color"
+                className="ml-1.5 fill-primary-color hover:fill-primary-color/60"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -83,20 +88,12 @@ export default function UI() {
         </div>
       </Container>
       <Container>
-        <div className="grid grid-cols-4 gap-4 ">
-          <div className="bg-red-700 w-full h-32"></div>
-          <div className="bg-blue-700 w-full h-32"></div>
-          <div className="bg-green-700 w-full h-32"></div>
-          <div className="bg-yellow-700 w-full h-32"></div>
-          <div className="bg-red-700 w-full h-32"></div>
-          <div className="bg-blue-700 w-full h-32"></div>
-          <div className="bg-green-700 w-full h-32"></div>
-          <div className="bg-yellow-700 w-full h-32"></div>
-          <div className="bg-yellow-700 w-full h-32"></div>
-          <div className="bg-red-700 w-full h-32"></div>
-          <div className="bg-blue-700 w-full h-32"></div>
-          <div className="bg-green-700 w-full h-32"></div>
-          <div className="bg-yellow-700 w-full h-32"></div>
+        <Title>Label</Title>
+        <div className="flex justify-center items-center">
+          <Label>New</Label>
+          <div className="mx-5">
+            <LabelBig>YENİ</LabelBig>
+          </div>
         </div>
       </Container>
     </>

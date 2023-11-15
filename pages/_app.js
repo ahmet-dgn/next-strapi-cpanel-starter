@@ -10,7 +10,7 @@ const poppins = Poppins({
 export default function App({ Component, pageProps }) {
   return (
     <main
-      className={`${poppins.variable} font-sans bg-background-color text-normal-regular`}
+      className={`${poppins.variable} font-sans bg-background-color text-normal-regular `}
     >
       <Component {...pageProps} />
     </main>
