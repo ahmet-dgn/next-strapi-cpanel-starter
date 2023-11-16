@@ -1,4 +1,5 @@
 import Link from "next/link";
+const buttonColor = "";
 
 export function Button({ children, href }) {
   return (
@@ -22,11 +23,11 @@ export function ButtonLink({ children, href }) {
   );
 }
 
-export function ButtonOutline({ children, href }) {
+export function ButtonOutline({ children, href, borderColor, textColor }) {
   return (
     <Link
       href={href}
-      className="flex items-center justify-center w-fit min-h-[2.5rem] px-4 text-link-normal rounded bg-transparent text-primary-color border-2 border-primary-color hover:bg-primary-color/20 "
+      className={`flex items-center justify-center w-fit min-h-[2.5rem] px-4 text-link-normal rounded bg-transparent border-2 border-${borderColor} text-${textColor} hover:bg-primary-color/20 `}
     >
       {children}
     </Link>
@@ -55,11 +56,11 @@ export function ButtonBigLink({ children, href }) {
   );
 }
 
-export function ButtonBigOutline({ children, href }) {
+export function ButtonBigOutline({ children, href, borderColor, textColor }) {
   return (
     <Link
       href={href}
-      className="flex items-center justify-center w-fit min-h-[2.75rem] px-5 text-link-big rounded bg-transparent text-primary-color border-2 border-primary-color hover:bg-primary-color/20 "
+      className={`flex items-center justify-center w-fit min-h-[2.75rem] px-5 text-link-big rounded bg-transparen border-2 border-${borderColor} text-${textColor} hover:bg-primary-color/20 `}
     >
       {children}
     </Link>

@@ -13,11 +13,13 @@ import {
 } from "@/components/ui/buttons";
 import { Label, LabelBig } from "@/components/ui/labels";
 import Navbar from "@/components/navbar";
+import Slider from "@/components/slider";
 
 export default function UI() {
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar />
+      <Slider />
       <Container>
         <div>
           <Title>Başlık Örneği: Lorem ipsum dolor sit amet</Title>

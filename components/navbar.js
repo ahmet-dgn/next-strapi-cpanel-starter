@@ -31,9 +31,10 @@ export default function Navbar() {
           src="/logo.png"
           width={200}
           height={50}
+          alt="logo"
         />
         <div
-          className={` w-full h-full fixed top-0  bg-white ${
+          className={` w-full h-full fixed top-0 z-20 bg-white ${
             !currentMenuStatus
               ? "-left-full origin-left duration-500"
               : "left-0 origin-left duration-500 "
@@ -47,7 +48,7 @@ export default function Navbar() {
               <ButtonSmallLink href="/">Hakkımızda</ButtonSmallLink>
             </li>
             <li
-              className="flex justify-center flex-col rounded min-h-[2rem] text-link-small text-primary-color hover:text-primary-color/60 px-4 lg:relative"
+              className="flex justify-center cursor-pointer flex-col rounded min-h-[2rem] text-link-small text-primary-color hover:text-primary-color/60 px-4 lg:relative"
               onClick={menuSubStatusHandler}
               onMouseEnter={screenSizeCheckerForHoverMenu}
               onMouseLeave={screenSizeCheckerForHoverMenu}
@@ -55,7 +56,7 @@ export default function Navbar() {
               <span>
                 Yayınlarımız
                 <svg
-                  className={`ml-0.8 inline-block fill-primary-color hover:fill-primary-color/60 `}
+                  className={`ml-0.8 inline-block  fill-primary-color hover:fill-primary-color/60 `}
                   width="24"
                   height="24"
                   viewBox="0 0 24 24"
@@ -65,7 +66,7 @@ export default function Navbar() {
                 </svg>
               </span>
               <ul
-                className={`  pl-4  ${
+                className={`  pl-4 z-50 ${
                   !currentSubMenuStatus
                     ? "h-0 lg:w-0 overflow-hidden"
                     : "h-fit py-2 border-t-2 rounded border-primary-color/50 bg-gray-50  lg:absolute lg:top-8 lg:w-48 lg:shadow-md lg:bg-white"
