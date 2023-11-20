@@ -16,6 +16,8 @@
   }
 }
 
-.container > :not(:last-child) {
-  margin-bottom: 2rem;
+
+.group:hover .opacity-0 {
+  opacity: 1;
+  transition-duration: 300ms;
 }

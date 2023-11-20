@@ -14,12 +14,15 @@ import {
 import { Label, LabelBig } from "@/components/ui/labels";
 import Navbar from "@/components/navbar";
 import Slider from "@/components/slider";
-
+import Card from "@/components/ui/card";
 export default function UI() {
   return (
     <>
       <Navbar />
       <Slider />
+      <Container>
+        <Card></Card>
+      </Container>
       <Container>
         <div>
           <Title>Başlık Örneği: Lorem ipsum dolor sit amet</Title>

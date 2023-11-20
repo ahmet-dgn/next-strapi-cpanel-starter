@@ -70,6 +70,13 @@ module.exports = {
           fontWeight: "400",
         },
       ],
+      "tiny-regular": [
+        "0.75rem",
+        {
+          lineHeight: "1.125rem",
+          fontWeight: "400",
+        },
+      ],
       "link-big": [
         "1.125rem",
         {
@@ -107,11 +114,11 @@ module.exports = {
       colors: {
         "primary-color": "#0463BA",
         "on-primary-color": "#FFFFFF",
-        "secondary-color": "#E20000",
+        "secondary-color": "#d21202",
         "on-secondary-color": "#FFFFFF",
-        "background-color": "#F3F4F6",
+        "background-color": "#f5f5f5",
         "on-background-color": "#012F59",
-        "surface-color": "#FFFFFF",
+        "surface-color": "white",
         "on-surface-color": "#012F59",
       },
       fontFamily: {

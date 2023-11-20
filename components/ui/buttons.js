@@ -1,12 +1,9 @@
 import Link from "next/link";
-const buttonColor = "";
 
-export function Button({ children, href }) {
+export function Button({ children, href, textColor, bgColor, hover }) {
+  const buttonClassName = `flex items-center justify-center w-fit min-h-[2.5rem] px-4 text-link-normal rounded ${bgColor} ${textColor} ${hover}`;
   return (
-    <Link
-      href={href}
-      className="flex items-center justify-center w-fit min-h-[2.5rem] px-4 text-link-normal rounded bg-primary-color text-on-primary-color hover:bg-primary-color/80 "
-    >
+    <Link href={href} className={buttonClassName}>
       {children}
     </Link>
   );
@@ -24,22 +21,19 @@ export function ButtonLink({ children, href }) {
 }
 
 export function ButtonOutline({ children, href, borderColor, textColor }) {
+  const buttonClassName = `flex items-center justify-center w-fit min-h-[2.5rem] px-4 text-link-normal rounded bg-transparent border-2 border-${borderColor} text-${textColor} hover:bg-primary-color/20`;
+
   return (
-    <Link
-      href={href}
-      className={`flex items-center justify-center w-fit min-h-[2.5rem] px-4 text-link-normal rounded bg-transparent border-2 border-${borderColor} text-${textColor} hover:bg-primary-color/20 `}
-    >
+    <Link href={href} className={buttonClassName}>
       {children}
     </Link>
   );
 }
 
-export function ButtonBig({ children, href }) {
+export function ButtonBig({ children, href, textColor, bgColor }) {
+  const buttonBigClassName = `flex items-center justify-center rounded w-fit min-h-[2.75rem] px-5 text-link-big bg-${bgColor} text-${textColor} hover:bg-${bgColor}/80`;
   return (
-    <Link
-      href={href}
-      className="flex items-center justify-center rounded w-fit min-h-[2.75rem] px-5 text-link-big bg-primary-color text-on-primary-color hover:bg-primary-color/80"
-    >
+    <Link href={href} className={buttonBigClassName}>
       {children}
     </Link>
   );
