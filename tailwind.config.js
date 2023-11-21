@@ -70,6 +70,13 @@ module.exports = {
           fontWeight: "400",
         },
       ],
+      "small-bold": [
+        "0.875rem",
+        {
+          lineHeight: "1.313rem",
+          fontWeight: "700",
+        },
+      ],
       "tiny-regular": [
         "0.75rem",
         {

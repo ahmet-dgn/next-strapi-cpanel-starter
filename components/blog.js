@@ -51,6 +51,8 @@ export default function Blog() {
             cardTitle={blog.cardTitle}
             cardDesc={blog.cardDesc}
             cardImgAlt={blog.cardTitle}
+            cardBtnType="link"
+            cardImgClass=" object-cover rounded"
             cardImgSize='sizes="(max-width: 640px) 100vw, (max-width: 1024px)50vw, 25vw"'
           ></Card>
         ))}

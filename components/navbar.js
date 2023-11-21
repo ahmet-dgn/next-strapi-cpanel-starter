@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ButtonSmallLink } from "./ui/buttons";
+import { Button } from "./ui/buttons";
 import { useState } from "react";
 
 export default function Navbar() {
@@ -42,10 +42,14 @@ export default function Navbar() {
         >
           <ul className="text-link-small pt-4  lg:pt-0 lg:pl-0 lg:flex lg:justify-end ">
             <li className="px-4">
-              <ButtonSmallLink href="/">Anasayfa</ButtonSmallLink>
+              <Button href="/" size="sm" type="link">
+                Anasayfa
+              </Button>
             </li>
             <li className="px-4">
-              <ButtonSmallLink href="/">Hakkımızda</ButtonSmallLink>
+              <Button href="/" size="sm" type="link">
+                Hakkımızda
+              </Button>
             </li>
             <li
               className="flex justify-center cursor-pointer flex-col rounded min-h-[2rem] text-link-small text-primary-color hover:text-primary-color/60 px-4 lg:relative"
@@ -73,23 +77,31 @@ export default function Navbar() {
                 }`}
               >
                 <li className="lg:py-1">
-                  <ButtonSmallLink href="#">Kitap - 1 </ButtonSmallLink>
+                  <Button href="#" size="sm" type="link">
+                    Kitap - 1{" "}
+                  </Button>
                 </li>
                 <li className="lg:py-1">
-                  <ButtonSmallLink href="#">
+                  <Button href="#" size="sm" type="link">
                     Kitap - 2 asdasdasdasd{" "}
-                  </ButtonSmallLink>
+                  </Button>
                 </li>
                 <li className="lg:py-1">
-                  <ButtonSmallLink href="#">Kitap - 3 </ButtonSmallLink>
+                  <Button href="#" size="sm" type="link">
+                    Kitap - 3{" "}
+                  </Button>
                 </li>
               </ul>
             </li>
             <li className="px-4">
-              <ButtonSmallLink href="/">Blog</ButtonSmallLink>
+              <Button href="/" size="sm" type="link">
+                Blog
+              </Button>
             </li>
             <li className="px-4">
-              <ButtonSmallLink href="/">İletişim</ButtonSmallLink>
+              <Button href="/" size="sm" type="link">
+                İletişim
+              </Button>
             </li>
           </ul>
           <svg

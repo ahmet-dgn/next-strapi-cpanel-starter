@@ -1,94 +1,29 @@
 import Link from "next/link";
 
-export function Button({ children, href, textColor, bgColor, hover }) {
-  const buttonClassName = `flex items-center justify-center w-fit min-h-[2.5rem] px-4 text-link-normal rounded ${bgColor} ${textColor} ${hover}`;
+export function Button({ children, href, textColor, color, size, type }) {
+  const btnSizeClass =
+    size === "sm"
+      ? "min-h-[2rem] px-3 text-link-small "
+      : size === "md"
+      ? "min-h-[2.5rem] px-4 text-link-normal"
+      : size === "lg"
+      ? "min-h-[3rem] px-5 text-link-big"
+      : "min-h-[2.5rem] px-4 text-link-normal";
+
+  const btnColorClass = color ? color : "primary-color";
+  const textColorClass = textColor ? textColor : "text-white";
+  const btnTypeClass =
+    type === "solid"
+      ? `bg-${btnColorClass} ${textColorClass} hover:bg-${btnColorClass}/60`
+      : type === "outline"
+      ? `text-${btnColorClass} border-2 border-${btnColorClass} hover:bg-${btnColorClass}/20`
+      : type === "link"
+      ? `text-${btnColorClass} hover:text-${btnColorClass}/60 px-0`
+      : `bg-${btnColorClass} ${textColorClass} hover:bg-${btnColorClass}/60`;
+
+  const buttonClassName = `flex items-center justify-center w-fit rounded  ${btnSizeClass} ${btnTypeClass}`;
   return (
     <Link href={href} className={buttonClassName}>
-      {children}
-    </Link>
-  );
-}
-
-export function ButtonLink({ children, href }) {
-  return (
-    <Link
-      href={href}
-      className="flex items-center justify-center w-fit min-h-[2.5rem] text-link-normal rounded text-primary-color hover:text-primary-color/60 "
-    >
-      {children}
-    </Link>
-  );
-}
-
-export function ButtonOutline({ children, href, borderColor, textColor }) {
-  const buttonClassName = `flex items-center justify-center w-fit min-h-[2.5rem] px-4 text-link-normal rounded bg-transparent border-2 border-${borderColor} text-${textColor} hover:bg-primary-color/20`;
-
-  return (
-    <Link href={href} className={buttonClassName}>
-      {children}
-    </Link>
-  );
-}
-
-export function ButtonBig({ children, href, textColor, bgColor }) {
-  const buttonBigClassName = `flex items-center justify-center rounded w-fit min-h-[2.75rem] px-5 text-link-big bg-${bgColor} text-${textColor} hover:bg-${bgColor}/80`;
-  return (
-    <Link href={href} className={buttonBigClassName}>
-      {children}
-    </Link>
-  );
-}
-
-export function ButtonBigLink({ children, href }) {
-  return (
-    <Link
-      href={href}
-      className="flex items-center justify-center rounded w-fit min-h-[2.75rem] text-link-big text-primary-color hover:text-primary-color/60 hover:fill-primary-color/60"
-    >
-      {children}
-    </Link>
-  );
-}
-
-export function ButtonBigOutline({ children, href, borderColor, textColor }) {
-  return (
-    <Link
-      href={href}
-      className={`flex items-center justify-center w-fit min-h-[2.75rem] px-5 text-link-big rounded bg-transparen border-2 border-${borderColor} text-${textColor} hover:bg-primary-color/20 `}
-    >
-      {children}
-    </Link>
-  );
-}
-
-export function ButtonSmall({ children, href }) {
-  return (
-    <Link
-      href={href}
-      className="flex items-center justify-center rounded w-fit min-h-[2rem] px-3 text-link-small bg-primary-color text-on-primary-color hover:bg-primary-color/80"
-    >
-      {children}
-    </Link>
-  );
-}
-
-export function ButtonSmallLink({ children, href }) {
-  return (
-    <Link
-      href={href}
-      className="flex items-center justify-center rounded w-fit min-h-[2rem] text-link-small text-primary-color hover:text-primary-color/60 "
-    >
-      {children}
-    </Link>
-  );
-}
-
-export function ButtonSmallOutline({ children, href }) {
-  return (
-    <Link
-      href={href}
-      className="flex items-center justify-center w-fit min-h-[2rem] px-3 text-link-small rounded bg-transparent text-primary-color border-2 border-primary-color hover:bg-primary-color/20 "
-    >
       {children}
     </Link>
   );

@@ -242,9 +242,7 @@ export default function Slider() {
                     <Button
                       href={slide.link || "#"}
                       passHref
-                      bgColor="bg-secondary-color"
-                      hover="hover:bg-secondary-color/80"
-                      textColor="text-white"
+                      color="secondary-color"
                     >
                       {" "}
                       {slide.button || "Devamını Oku"}{" "}

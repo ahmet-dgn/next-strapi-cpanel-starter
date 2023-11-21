@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ButtonSmallLink } from "./buttons";
+import { Button } from "./buttons";
 
 export default function Card({
   cardImgHeight,
@@ -7,6 +7,7 @@ export default function Card({
   cardTitle,
   cardDesc,
   cardBtn,
+  cardBtnType,
   cardPadding,
   cardImg,
   cardLink,
@@ -14,9 +15,12 @@ export default function Card({
   cardBgColor,
   cardImgAlt,
   cardImgSize,
+  cardImgClass,
+  textAlign,
 }) {
   const cardImageContainer = `relative w-full ${cardImgHeight} `;
 
+  const cardTextAreClasses = `space-y-2 ${textAlign}`;
   //Aşağıda ki değişken sitiller eğer kompenenten gelmiyorsa card csslerine eklenmiyor.
   const cardContainerClasses = [
     cardPadding && `${cardPadding}`,
@@ -36,29 +40,36 @@ export default function Card({
         <Image
           src={cardImg}
           fill
-          className="rounded object-cover"
+          className={cardImgClass}
           alt={cardImgAlt}
           sizes={cardImgSize}
         />
       </div>
 
       {cardInfo || cardTitle || cardDesc || cardBtn ? (
-        <div className=" space-y-2">
-          {cardInfo && (
-            <p className="text-link-tiny text-on-surface-color">{cardInfo}</p>
-          )}
-          {cardTitle && (
-            <p className="text-normal-bold text-on-surface-color h-12 overflow-hidden text-ellipsis line-clamp-2">
-              {cardTitle}
-            </p>
-          )}
+        <div className={cardTextAreClasses}>
+          <div>
+            {cardInfo && (
+              <p className="text-link-tiny text-on-surface-color h-5 overflow-hidden text-ellipsis line-clamp-1">
+                {cardInfo}
+              </p>
+            )}
+            {cardTitle && (
+              <p className="text-small-bold text-on-surface-color h-11 overflow-hidden text-ellipsis line-clamp-2">
+                {cardTitle}
+              </p>
+            )}
+          </div>
+
           {cardDesc && (
             <p className="text-small-regular text-on-surface-color line-clamp-3 h-16 overflow-hidden text-ellipsis">
               {cardDesc}
             </p>
           )}
           {cardBtn && (
-            <ButtonSmallLink href={cardLink}>{cardBtn} </ButtonSmallLink>
+            <Button href={cardLink} size="sm" type={cardBtnType}>
+              {cardBtn}{" "}
+            </Button>
           )}
         </div>
       ) : null}
