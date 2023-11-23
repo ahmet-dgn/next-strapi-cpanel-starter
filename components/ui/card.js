@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Button } from "./buttons";
+import Button from "./buttons";
 
 export default function Card({
   cardImgHeight,
@@ -17,9 +17,11 @@ export default function Card({
   cardImgSize,
   cardImgClass,
   textAlign,
+  titleCustom,
+  overleyText,
 }) {
-  const cardImageContainer = `relative w-full ${cardImgHeight} `;
-
+  const cardImageContainer = `relative w-full relative ${cardImgHeight} `;
+  const titleClasses = `text-small-bold text-on-surface-color h-11 overflow-hidden text-ellipsis line-clamp-2 flex ${titleCustom} `;
   const cardTextAreClasses = `space-y-2 ${textAlign}`;
   //Aşağıda ki değişken sitiller eğer kompenenten gelmiyorsa card csslerine eklenmiyor.
   const cardContainerClasses = [
@@ -29,6 +31,7 @@ export default function Card({
     "rounded",
     cardBorder && `${cardBorder}`,
     "border-gray-300",
+
     "space-y-4",
     cardBgColor && `${cardBgColor}`,
   ]
@@ -44,6 +47,9 @@ export default function Card({
           alt={cardImgAlt}
           sizes={cardImgSize}
         />
+        <p className=" w-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  text-center text-white text-h5">
+          {overleyText}
+        </p>
       </div>
 
       {cardInfo || cardTitle || cardDesc || cardBtn ? (
@@ -54,11 +60,7 @@ export default function Card({
                 {cardInfo}
               </p>
             )}
-            {cardTitle && (
-              <p className="text-small-bold text-on-surface-color h-11 overflow-hidden text-ellipsis line-clamp-2">
-                {cardTitle}
-              </p>
-            )}
+            {cardTitle && <p className={titleClasses}>{cardTitle}</p>}
           </div>
 
           {cardDesc && (

@@ -1,7 +1,7 @@
 import Container from "./ui/container";
 import Row from "./ui/row";
 import Title from "./ui/title";
-import { Button } from "./ui/buttons";
+import Button from "./ui/buttons";
 import Card from "./ui/card";
 
 export default function FeaturedProducts() {
@@ -104,7 +104,7 @@ export default function FeaturedProducts() {
         {products.map(
           (product) =>
             product.category && (
-              <Button href="#" type="outline">
+              <Button href="#" type="outline" color="primary-color">
                 {product.category.charAt(0).toUpperCase() +
                   product.category.slice(1)}
               </Button>

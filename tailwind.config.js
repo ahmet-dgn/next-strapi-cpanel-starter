@@ -56,6 +56,13 @@ module.exports = {
           fontWeight: "400",
         },
       ],
+      "normal-medium": [
+        "1rem",
+        {
+          lineHeight: "1.5rem",
+          fontWeight: "600",
+        },
+      ],
       "normal-bold": [
         "1rem",
         {
@@ -119,14 +126,14 @@ module.exports = {
     },
     extend: {
       colors: {
-        "primary-color": "#0463BA",
+        "primary-color": "#111827",
         "on-primary-color": "#FFFFFF",
         "secondary-color": "#d21202",
         "on-secondary-color": "#FFFFFF",
-        "background-color": "#f5f5f5",
-        "on-background-color": "#012F59",
+        "background-color": "whitw",
+        "on-background-color": "#111827",
         "surface-color": "white",
-        "on-surface-color": "#012F59",
+        "on-surface-color": "#111827",
       },
       fontFamily: {
         sans: ["var(--font-poppins)"],

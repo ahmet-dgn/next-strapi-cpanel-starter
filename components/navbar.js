@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Button } from "./ui/buttons";
+import Button from "./ui/buttons";
 import { useState } from "react";
 
 export default function Navbar() {

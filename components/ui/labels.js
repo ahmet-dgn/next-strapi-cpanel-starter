@@ -1,15 +1,15 @@
-export function Label({ children }) {
-  return (
-    <span className="text-link-tiny w-fit h-fit rounded-sm px-1 bg-primary-color text-on-primary-color">
-      {children}
-    </span>
-  );
-}
+export default function Label({ children, size, color }) {
+  const lableSizeClass =
+    size === "md "
+      ? "text-link-tiny px-1 "
+      : size === "lg"
+      ? "text-link-normal px-2 "
+      : "text-link-tiny px-1";
+  const labelColorClass =
+    color === "yellow"
+      ? "bg-yellow-400 text-gray-900"
+      : "bg-gray-300 text-gray-900";
 
-export function LabelBig({ children }) {
-  return (
-    <span className="text-link-normal w-fit h-fit rounded-sm py-1 px-2 bg-primary-color text-on-primary-color">
-      {children}
-    </span>
-  );
+  const labelClasName = `text-link-normal w-fit h-fit rounded-sm py-1 inline-block ${lableSizeClass} ${labelColorClass}`;
+  return <span className={labelClasName}>{children}</span>;
 }

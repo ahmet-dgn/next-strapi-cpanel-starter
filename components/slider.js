@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Button } from "@/components/ui/buttons";
+import Button from "@/components/ui/buttons";
 import Container from "./ui/container";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
@@ -228,9 +228,9 @@ export default function Slider() {
                   </p>
                 )}
                 {slide.title && (
-                  <h2 className="text-h4 md:text-h2 text-white uppercase">
+                  <h3 className="text-h4 md:text-h3 text-white uppercase">
                     {slide.title}
-                  </h2>
+                  </h3>
                 )}
                 {slide.description && (
                   <p className=" mt-4 text-white text-small-regular md:text-normal-regular md:max-w-md">
@@ -239,11 +239,7 @@ export default function Slider() {
                 )}
                 {slide.button && (
                   <div className="mt-4">
-                    <Button
-                      href={slide.link || "#"}
-                      passHref
-                      color="secondary-color"
-                    >
+                    <Button href={slide.link || "#"} passHref color="red">
                       {" "}
                       {slide.button || "Devamını Oku"}{" "}
                     </Button>
