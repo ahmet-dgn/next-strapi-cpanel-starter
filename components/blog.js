@@ -42,7 +42,6 @@ export default function Blog() {
         {blogs.map((blog, index) => (
           <Card
             key={index}
-            cardImgHeight="h-56 lg:h-64"
             cardPadding="px-2"
             cardBtn="Devamını Oku"
             cardLink={blog.cardLink}
@@ -53,8 +52,7 @@ export default function Blog() {
             cardImgAlt={blog.cardTitle}
             titleCustom="text-normal-bold"
             cardBtnType="link"
-            cardImgClass=" object-cover rounded"
-            cardImgSize='sizes="(max-width: 640px) 100vw, (max-width: 1024px)50vw, 25vw"'
+            cardImgClass=" aspect-[5/3] "
           ></Card>
         ))}
       </Row>

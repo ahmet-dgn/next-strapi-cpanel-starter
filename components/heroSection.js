@@ -1,5 +1,4 @@
 import Container from "./ui/container";
-import Button from "./ui/buttons";
 import Image from "next/image";
 import Row from "./ui/row";
 
@@ -7,37 +6,39 @@ import TextContent from "./ui/textContent";
 
 export function HeroSection() {
   return (
-    <Container>
-      <Row rowCol="grid-cols-1 md:grid-cols-2">
-        <div className="lg:pr-8">
-          <Image
-            src="/home-1-single-image-4.png"
-            width={700}
-            height={475}
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            style={{
-              width: "100%",
-              height: "auto",
-            }}
-            className="object-contain rounded max-h-[500px]"
-          />
-        </div>
-        <TextContent
-          link="#"
-          ctaText="Devamını Oku"
-          description="Duis est adipisicing non est et amet. Amet sint do nisi pariatur
+    <div className="bg-gray-100">
+      <Container>
+        <Row rowCol="grid-cols-1 md:grid-cols-2">
+          <div className="lg:pr-8">
+            <Image
+              src="/home-1-single-image-4.png"
+              width={700}
+              height={475}
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              style={{
+                width: "100%",
+                height: "auto",
+              }}
+              className="object-contain rounded max-h-[500px]"
+            />
+          </div>
+          <TextContent
+            link="#"
+            ctaText="Devamını Oku"
+            description="Duis est adipisicing non est et amet. Amet sint do nisi pariatur
           commodo velit culpa dolor do velit ut elit magna. Amet magna magna
           veniam nulla ad laborum id culpa non proident veniam anim. Sint
           eiusmod aute proident laboris."
-          title="Do nulla tempor ex aliquip officia culpa sint do nisi pariatur."
-          overLineText="Magna consectetur consequat ullamco"
-          subTitle="Amet magna magna veniam nulla ad laborum id culpa non proident veniam
+            title="Do nulla tempor ex aliquip officia culpa sint do nisi pariatur."
+            overLineText="Magna consectetur consequat ullamco"
+            subTitle="Amet magna magna veniam nulla ad laborum id culpa non proident veniam
           anim. Sint eiusmod aute proident laboris."
-          label="Ayın Kitabı"
-          labelColor="yellow"
-        />
-      </Row>
-    </Container>
+            label="Ayın Kitabı"
+            labelColor="yellow"
+          />
+        </Row>
+      </Container>
+    </div>
   );
 }
 

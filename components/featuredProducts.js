@@ -111,17 +111,16 @@ export default function FeaturedProducts() {
             )
         )}
       </div>
-      <Row rowCol="grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6">
+      <Row rowCol="grid-cols-2 min-[475px]:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6  ">
         {products.map((product) => (
           <Card
             cardInfo={product.author}
             cardTitle={product.title}
-            cardImgHeight="h-64 max-[375px]:h-52 lg:h-72"
             cardImg={product.img}
             cardPadding="p-2 sm:p-4"
             cardBorder="border"
             cardBgColor="bg-surface-color"
-            cardImgClass=" object-contain xl:object-cover xl:rounded"
+            cardImgClass="aspect-[3/5] "
           ></Card>
         ))}
       </Row>

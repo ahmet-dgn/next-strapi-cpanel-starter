@@ -1,42 +1,21 @@
 import Image from "next/image";
 import Button from "@/components/ui/buttons";
-import Container from "./ui/container";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
-export default function Slider() {
+export default function Slider({ slider }) {
+  const slides = slider; //Api'den gelen slider verileri
+
   //##########Slider Settings#########
 
   const sliderSettings = {
-    autoPlay: true,
+    autoPlay: false,
     duration: 5000,
   };
 
   //##################################
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const slides = [
-    {
-      imgUrl: "/grabul-2.jpg",
-      mobileImgUrl: "/mobile.png",
-      subtitle: "Vivamus malesuada, nisl ",
-      title: "Lorem ipsum dolor sit amet consectetur",
-      description:
-        "Quisque suscipit sodales lacus nec iaculis. Vivamus malesuada, nisl eu pellentesque consequat.",
-      button: "DEVAMINI OKU",
-      link: "https://www.trendyol.com",
-    },
-    {
-      imgUrl: "/granul-3.jpg",
-      title: "Ut vulputate feugiat condimentum",
-      button: "DEVAMINI OKU",
-      link: "https://www.google.com",
-    },
-    {
-      imgUrl: "/Library inside  0.png",
-      title: "Ut vulputate feugiat condimentum",
-    },
-  ];
 
   const sliderForward = (event) => {
     event.preventDefault();
@@ -198,50 +177,50 @@ export default function Slider() {
           } absolute top-0 left-0`}
         >
           <Link
-            href={slide.link || ""}
+            href={slide.acf.link || ""}
             className=" absolute top-0 left-0 w-full h-full "
           >
             <Image
               placeholder="blur"
               blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO8UA8AAiUBUcc3qzwAAAAASUVORK5CYII="
-              src={slide.imgUrl}
-              alt={slide.title | "slider"}
+              src={slide.acf.resim.url}
+              alt={slide.title.rendered | "slider"}
               fill
               sizes="100vw"
-              className=" object-cover  brightness-50"
+              className=" object-cover  brightness-[0.35]"
               priority={index === currentIndex ? true : undefined}
             />
           </Link>
 
-          {slide.subtitle ||
-          slide.title ||
-          slide.description ||
-          slide.button ? (
+          {slide.acf.ust_baslik ||
+          slide.title.rendered ||
+          slide.acf.aciklama ||
+          slide.acf.link ? (
             <div className="container mx-auto px-2 sm:px-0">
               <div
-                className={`relative  w-full sm:max-w-xs md:max-w-2xl flex flex-col justify-center p-8 rounded h-full  `}
+                className={`relative  w-full sm:max-w-xs md:max-w-2xl flex flex-col justify-center p-8 rounded h-full `}
                 //Buzlu cam efeği için bu clasları ekle: "bg-gray-100/40 backdrop-blur-lg"
               >
-                {slide.subtitle && (
+                {slide.acf.ust_baslik && (
                   <p className="text-small-regular mb-2 text-white uppercase">
-                    {slide.subtitle}
+                    {slide.acf.ust_baslik}
                   </p>
                 )}
-                {slide.title && (
-                  <h3 className="text-h4 md:text-h3 text-white uppercase">
-                    {slide.title}
+                {slide.title.rendered && (
+                  <h3 className="text-h4 md:text-h1 text-white uppercase">
+                    {slide.title.rendered}
                   </h3>
                 )}
-                {slide.description && (
+                {slide.acf.aciklama && (
                   <p className=" mt-4 text-white text-small-regular md:text-normal-regular md:max-w-md">
-                    {slide.description}
+                    {slide.acf.aciklama}
                   </p>
                 )}
-                {slide.button && (
+                {slide.acf.link && (
                   <div className="mt-4">
-                    <Button href={slide.link || "#"} passHref color="red">
+                    <Button href={slide.acf.link || "#"} passHref color="red">
                       {" "}
-                      {slide.button || "Devamını Oku"}{" "}
+                      {slide.acf.link_adi || "İncele"}{" "}
                     </Button>
                   </div>
                 )}

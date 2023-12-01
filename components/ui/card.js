@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Button from "./buttons";
+import Label from "./labels";
 
 export default function Card({
-  cardImgHeight,
   cardInfo,
   cardTitle,
   cardDesc,
@@ -14,14 +14,16 @@ export default function Card({
   cardBorder,
   cardBgColor,
   cardImgAlt,
-  cardImgSize,
   cardImgClass,
   textAlign,
   titleCustom,
   overleyText,
+  label,
+  labelColor,
 }) {
-  const cardImageContainer = `relative w-full relative ${cardImgHeight} `;
+  const cardImageContainer = `relative w-full  `;
   const titleClasses = `text-small-bold text-on-surface-color h-11 overflow-hidden text-ellipsis line-clamp-2 flex ${titleCustom} `;
+  const cardImageClass = `object-cover rounded ${cardImgClass}`;
   const cardTextAreClasses = `space-y-2 ${textAlign}`;
   //Aşağıda ki değişken sitiller eğer kompenenten gelmiyorsa card csslerine eklenmiyor.
   const cardContainerClasses = [
@@ -42,10 +44,10 @@ export default function Card({
       <div className={cardImageContainer}>
         <Image
           src={cardImg}
-          fill
-          className={cardImgClass}
+          width={700}
+          height={300}
+          className={cardImageClass}
           alt={cardImgAlt}
-          sizes={cardImgSize}
         />
         <p className=" w-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  text-center text-white text-h5">
           {overleyText}
@@ -54,6 +56,7 @@ export default function Card({
 
       {cardInfo || cardTitle || cardDesc || cardBtn ? (
         <div className={cardTextAreClasses}>
+          {label && <Label color={labelColor}>{label}</Label>}
           <div>
             {cardInfo && (
               <p className="text-link-tiny text-on-surface-color h-5 overflow-hidden text-ellipsis line-clamp-1">
