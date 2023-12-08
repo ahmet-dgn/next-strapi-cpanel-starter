@@ -5,6 +5,26 @@ import Button from "./ui/buttons";
 import Card from "./ui/card";
 
 export default function FeaturedProducts() {
+  const container = {
+    hidden: { opacity: 1, scale: 0 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        delayChildren: 1,
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const item = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+    },
+    transition: { ease: "easeOut", duration: 2, type: "spring" },
+  };
   const products = [
     {
       id: 1,
@@ -111,17 +131,20 @@ export default function FeaturedProducts() {
             )
         )}
       </div>
+
       <Row rowCol="grid-cols-2 min-[475px]:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6  ">
         {products.map((product) => (
-          <Card
-            cardInfo={product.author}
-            cardTitle={product.title}
-            cardImg={product.img}
-            cardPadding="p-2 sm:p-4"
-            cardBorder="border"
-            cardBgColor="bg-surface-color"
-            cardImgClass="aspect-[3/5] "
-          ></Card>
+          <div>
+            <Card
+              cardInfo={product.author}
+              cardTitle={product.title}
+              cardImg={product.img}
+              cardPadding="p-2 sm:p-4"
+              cardBorder="border"
+              cardBgColor="bg-surface-color"
+              cardImgClass="aspect-[3/5] "
+            ></Card>
+          </div>
         ))}
       </Row>
     </Container>

@@ -2,15 +2,9 @@ import Card from "./ui/card";
 import Container from "./ui/container";
 import Row from "./ui/row";
 import Title from "./ui/title";
+import { motion } from "framer-motion";
 
 export default function NewProdcuts() {
-  const reqUrl =
-    "http://template.local/wp-admin/edit-tags.php?taxonomy=product-catagorie&post_type=product";
-  const prodcuts = async () => {
-    const req = await fetch(reqUrl);
-    const prodcuts = await req.json();
-    console.log(prodcuts);
-  };
   const products = [
     {
       id: 1,
@@ -47,6 +41,7 @@ export default function NewProdcuts() {
       <Title titleDesc="Pariatur pariatur minim dolor proident fugiat eiusmod minim ea ipsum consectetur ipsum adipisicing nulla aliqua.">
         Yeni Çıkan Kitaplarımız
       </Title>
+
       <Row rowCol="grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
         {products.map((product) => (
           <Card

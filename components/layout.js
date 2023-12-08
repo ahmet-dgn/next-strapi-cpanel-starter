@@ -1,6 +1,7 @@
 import { Navbar } from "./navbar";
 import Footer from "./footer";
 import { Poppins } from "next/font/google";
+import TopHeader from "./topHeader";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -8,15 +9,18 @@ const poppins = Poppins({
   weight: ["400", "500", "700"],
 });
 
-export default function Layout({ children, activeLocales }) {
+export default function Layout({ children, menuItems, info }) {
   return (
     <div
       className={`${poppins.variable} font-sans bg-background-color text-normal-regular `}
     >
       {" "}
-      <Navbar activeLocales={activeLocales} />
+      <header>
+        <TopHeader contactDetail={info} />
+        <Navbar menuData={menuItems} />
+      </header>
       <main>{children}</main>
-      <Footer />
+      <Footer menuData={menuItems} />
     </div>
   );
 }

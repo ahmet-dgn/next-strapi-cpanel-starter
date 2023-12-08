@@ -1,79 +1,31 @@
 import Image from "next/image";
 import Button from "./ui/buttons";
 import { useState } from "react";
-import { useRouter } from "next/router";
 import Link from "next/link";
 
-export function Navbar() {
-  const { locale: activeLocale, locales, asPath } = useRouter();
-  const activeLocales = locales.filter((locale) => locale !== activeLocale);
-  const menuItems = [
-    {
-      name: "Anasayfa",
-      href: "/",
-    },
-    {
-      name: "Hakkımızda",
-      href: "https://localhost:3000/hakkimizda/",
-    },
-    {
-      name: "Yayınlarımız",
-      href: "/",
-      children: [
-        {
-          name: "Kitap - 1",
-          href: "/",
-        },
-        {
-          name: "Kitap - 2",
-          href: "/",
-        },
-      ],
-    },
-    {
-      name: "İletişim",
-      href: "/",
-    },
-    {
-      name: "Ürünlerimiz",
-      href: "https://localhost:3000/urunlerimiz/",
-    },
-    {
-      name: "About Us",
-      href: "https://localhost:3000/en/about-us/",
-    },
-  ];
+export function Navbar({ menuData }) {
+  const menuItems = menuData;
 
   const [currentMenuStatus, setMenuStatus] = useState(false);
-  const [currentSubMenuStatus, setSubMenuStatus] = useState(false);
 
   //It reverses the mobile menu status.If It is false, change it to true.If It is true, change it to false.
   const menuStatusHandler = () => {
     setMenuStatus(!currentMenuStatus);
   };
 
-  //It reverses the dopdown menu status.If It is false, change it to true.If It is true, change it to false.
-  const menuSubStatusHandler = () => {
-    setSubMenuStatus(!currentSubMenuStatus);
-  };
-
-  //It checks the screen size for the hover dropdown menu. If the screen size is bigger then 1024px set the value.
-  const screenSizeCheckerForHoverMenu = () => {
-    if (window.innerWidth > 1024) {
-      setSubMenuStatus(!currentSubMenuStatus);
-    }
-  };
-
   return (
     <nav className=" bg-white ">
       <div className="flex justify-between items-center 2xl:container mx-auto px-4 xl:px-8 h-24">
-        <Image
-          className="object-contain !mb-0 "
-          src="/book-logo.png"
-          width={200}
-          height={50}
-          alt="logo"
-        />
+        <Link href="/">
+          <Image
+            className="object-contain !mb-0 "
+            src="/book-logo.png"
+            width={200}
+            height={50}
+            alt="logo"
+          />
+        </Link>
+
         <div
           className={` w-full h-full fixed top-0 z-20 bg-white ${
             !currentMenuStatus
@@ -81,64 +33,52 @@ export function Navbar() {
               : "left-0 origin-left duration-500 "
           } lg:static lg:h-fit`}
         >
-          <ul className="text-link-small pt-4  lg:pt-0 lg:pl-0 lg:flex lg:justify-end ">
-            {menuItems.map((menuItem) =>
-              menuItem.children && menuItem.children.length > 0 ? (
+          <ul className="text-link-small pt-4 lg:pt-0 lg:pl-0 lg:flex lg:justify-end ">
+            {menuItems
+              .filter((menuItem) => !menuItem.parentId)
+              .map((parentItem) => (
                 <li
-                  className="flex justify-center cursor-pointer flex-col rounded min-h-[2rem] text-link-small text-primary-color hover:text-primary-color/60 px-4 lg:relative"
-                  onClick={menuSubStatusHandler}
-                  onMouseEnter={screenSizeCheckerForHoverMenu}
-                  onMouseLeave={screenSizeCheckerForHoverMenu}
-                  key={menuItem.id}
+                  className="flex group justify-center cursor-pointer flex-col rounded min-h-[2rem] text-link-small text-primary-color hover:text-primary-color/60 px-4 lg:relative"
+                  key={parentItem.id}
                 >
-                  <span>
-                    {menuItem.name}
-                    <svg
-                      className={`ml-0.8 inline-block fill-primary-color hover:fill-primary-color/60`}
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path d="M8.12498 8.99999L12.005 12.88L15.885 8.99999C16.275 8.60999 16.905 8.60999 17.295 8.99999C17.685 9.38999 17.685 10.02 17.295 10.41L12.705 15C12.315 15.39 11.685 15.39 11.295 15L6.70498 10.41C6.31498 10.02 6.31498 9.38999 6.70498 8.99999C7.09498 8.61999 7.73498 8.60999 8.12498 8.99999Z" />
-                    </svg>
-                  </span>
-                  <ul
-                    className={`pl-4 z-50 ${
-                      !currentSubMenuStatus
-                        ? "h-0 lg:w-0 overflow-hidden"
-                        : "h-fit py-2 border-t-2 rounded border-primary-color/50 bg-gray-50 lg:absolute lg:top-8 lg:w-48 lg:shadow-md lg:bg-white"
-                    }`}
-                  >
-                    {menuItem.children.map((childItem) => (
-                      <li className="lg:py-1" key={childItem.id}>
-                        <Button href={childItem.href} size="sm" type="link">
-                          {childItem.name}
-                        </Button>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              ) : (
-                <li className="px-4" key={menuItem.id}>
-                  <Button href={menuItem.href} size="sm" type="link">
-                    {menuItem.name}
+                  <Button href={parentItem.url} size="sm" type="link">
+                    {parentItem.label}
+
+                    {menuItems.filter(
+                      (childItem) => childItem.parentId === parentItem.id
+                    ).length > 0 && (
+                      <svg
+                        className={`ml-0.8 inline-block fill-primary-color group-hover:fill-primary-color/60`}
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M8.12498 8.99999L12.005 12.88L15.885 8.99999C16.275 8.60999 16.905 8.60999 17.295 8.99999C17.685 9.38999 17.685 10.02 17.295 10.41L12.705 15C12.315 15.39 11.685 15.39 11.295 15L6.70498 10.41C6.31498 10.02 6.31498 9.38999 6.70498 8.99999C7.09498 8.61999 7.73498 8.60999 8.12498 8.99999Z" />
+                      </svg>
+                    )}
                   </Button>
+                  {menuItems.filter(
+                    (childItem) => childItem.parentId === parentItem.id
+                  ).length > 0 && (
+                    <ul className="pl-4 z-50 h-0 lg:w-0 group-hover:h-fit group-hover:lg:w-48  group-hover:lg:py-2 overflow-hidden  rounded bg-gray-50 lg:absolute lg:top-8 lg:shadow-xl lg:bg-white lg:border-gray-200 group-hover:lg:border">
+                      {menuItems
+                        .filter(
+                          (childItem) => childItem.parentId === parentItem.id
+                        )
+                        .map((childItem) => (
+                          <li className="lg:py-1" key={childItem.id}>
+                            <Button href={childItem.url} size="sm" type="link">
+                              {childItem.label}
+                            </Button>
+                          </li>
+                        ))}
+                    </ul>
+                  )}
                 </li>
-              )
-            )}
+              ))}
           </ul>
-          <ul>
-            {activeLocales.map((locale) => {
-              return (
-                <li className="px-4 lg:px-0 lg:ml-4" key={locale}>
-                  <Link href={asPath} locale={locale}>
-                    {locale}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+
           <svg
             onClick={menuStatusHandler}
             className="absolute right-4 top-4 hover:scale-125 fill-on-background-color lg:hidden "

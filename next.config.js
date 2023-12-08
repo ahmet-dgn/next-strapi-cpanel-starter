@@ -5,7 +5,7 @@ const nextConfig = {
     domains: ["crm.medicomyazilim.com"],
   },
   i18n: {
-    locales: ["tr", "en"],
+    locales: ["tr", "en", "de"],
     defaultLocale: "tr",
   },
 };

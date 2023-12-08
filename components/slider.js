@@ -1,10 +1,18 @@
 import Image from "next/image";
 import Button from "@/components/ui/buttons";
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 
-export default function Slider({ slider }) {
-  const slides = slider; //Api'den gelen slider verileri
+export default function Slider({ sliders }) {
+  const { locale: activeLocale, defaultLocale } = useRouter();
+  const activeSlides = sliders; //Api'den gelen slider verileri
+
+  let slides = activeSlides.filter(
+    (slideItem) => slideItem.sliderFields.dil == activeLocale.toUpperCase()
+  );
+
+  slides = slides.length === 0 ? activeSlides : slides;
 
   //##########Slider Settings#########
 
@@ -177,14 +185,14 @@ export default function Slider({ slider }) {
           } absolute top-0 left-0`}
         >
           <Link
-            href={slide.acf.link || ""}
+            href={slide.sliderFields.link || ""}
             className=" absolute top-0 left-0 w-full h-full "
           >
             <Image
               placeholder="blur"
               blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO8UA8AAiUBUcc3qzwAAAAASUVORK5CYII="
-              src={slide.acf.resim.url}
-              alt={slide.title.rendered | "slider"}
+              src={slide.sliderFields.resim.node.mediaItemUrl}
+              alt={slide.title || "slider"}
               fill
               sizes="100vw"
               className=" object-cover  brightness-[0.35]"
@@ -192,35 +200,39 @@ export default function Slider({ slider }) {
             />
           </Link>
 
-          {slide.acf.ust_baslik ||
-          slide.title.rendered ||
-          slide.acf.aciklama ||
-          slide.acf.link ? (
+          {slide.title ||
+          slide.sliderFields.ustBaslik ||
+          slide.sliderFields.aciklama ||
+          slide.sliderFields.link ? (
             <div className="container mx-auto px-2 sm:px-0">
               <div
                 className={`relative  w-full sm:max-w-xs md:max-w-2xl flex flex-col justify-center p-8 rounded h-full `}
                 //Buzlu cam efeği için bu clasları ekle: "bg-gray-100/40 backdrop-blur-lg"
               >
-                {slide.acf.ust_baslik && (
+                {slide.sliderFields.ustBaslik && (
                   <p className="text-small-regular mb-2 text-white uppercase">
-                    {slide.acf.ust_baslik}
+                    {slide.sliderFields.ustBaslik}
                   </p>
                 )}
-                {slide.title.rendered && (
+                {slide.title && (
                   <h3 className="text-h4 md:text-h1 text-white uppercase">
-                    {slide.title.rendered}
+                    {slide.title}
                   </h3>
                 )}
-                {slide.acf.aciklama && (
+                {slide.sliderFields.aciklama && (
                   <p className=" mt-4 text-white text-small-regular md:text-normal-regular md:max-w-md">
-                    {slide.acf.aciklama}
+                    {slide.sliderFields.aciklama}
                   </p>
                 )}
-                {slide.acf.link && (
+                {slide.sliderFields.link && (
                   <div className="mt-4">
-                    <Button href={slide.acf.link || "#"} passHref color="red">
+                    <Button
+                      href={slide.sliderFields.link || "#"}
+                      passHref
+                      color="red"
+                    >
                       {" "}
-                      {slide.acf.link_adi || "İncele"}{" "}
+                      {slide.sliderFields.linkAdi || "İncele"}{" "}
                     </Button>
                   </div>
                 )}

@@ -1,7 +1,7 @@
 import Container from "./ui/container";
 import Image from "next/image";
 import Row from "./ui/row";
-
+import { motion } from "framer-motion";
 import TextContent from "./ui/textContent";
 
 export function HeroSection() {
@@ -9,7 +9,12 @@ export function HeroSection() {
     <div className="bg-gray-100">
       <Container>
         <Row rowCol="grid-cols-1 md:grid-cols-2">
-          <div className="lg:pr-8">
+          <motion.div
+            initial={{ opacity: 0, x: -100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ ease: "easeOut", duration: 2, type: "spring" }}
+            className="lg:pr-8"
+          >
             <Image
               src="/home-1-single-image-4.png"
               width={700}
@@ -21,21 +26,27 @@ export function HeroSection() {
               }}
               className="object-contain rounded max-h-[500px]"
             />
-          </div>
-          <TextContent
-            link="#"
-            ctaText="Devamını Oku"
-            description="Duis est adipisicing non est et amet. Amet sint do nisi pariatur
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, x: 100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ ease: "easeOut", duration: 2, type: "spring" }}
+          >
+            <TextContent
+              link="#"
+              ctaText="Devamını Oku"
+              description="Duis est adipisicing non est et amet. Amet sint do nisi pariatur
           commodo velit culpa dolor do velit ut elit magna. Amet magna magna
           veniam nulla ad laborum id culpa non proident veniam anim. Sint
           eiusmod aute proident laboris."
-            title="Do nulla tempor ex aliquip officia culpa sint do nisi pariatur."
-            overLineText="Magna consectetur consequat ullamco"
-            subTitle="Amet magna magna veniam nulla ad laborum id culpa non proident veniam
+              title="Do nulla tempor ex aliquip officia culpa sint do nisi pariatur."
+              overLineText="Magna consectetur consequat ullamco"
+              subTitle="Amet magna magna veniam nulla ad laborum id culpa non proident veniam
           anim. Sint eiusmod aute proident laboris."
-            label="Ayın Kitabı"
-            labelColor="yellow"
-          />
+              label="Ayın Kitabı"
+              labelColor="yellow"
+            />
+          </motion.div>
         </Row>
       </Container>
     </div>
