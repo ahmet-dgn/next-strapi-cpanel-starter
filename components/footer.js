@@ -13,17 +13,17 @@ export default function Footer({ menuData }) {
         <Container>
           <ul className="text-link-small pt-4  lg:pt-0 lg:pl-0 flex justify-center flex-wrap ">
             {footerMenu
-              .filter((menuItem) => !menuItem.parentId)
+              .filter((menuItem) => !menuItem.parent)
               .map((menu) => (
-                <li className="px-4">
-                  <Button href={menu.url} size="sm" type="link" color="white">
-                    {menu.label}
+                <li className="px-4" key={menu.id}>
+                  <Button href={menu.path} size="sm" type="link" color="white">
+                    {menu.title}
                   </Button>
                 </li>
               ))}
           </ul>
 
-          <p className="text-gray-500 text-center text-tiny-regular">
+          <p className="text-gray-200 text-center text-tiny-regular">
             © {currentYear} Your Company, Inc. All rights reserved.
           </p>
         </Container>
@@ -42,6 +42,7 @@ export default function Footer({ menuData }) {
             width={125}
             height={50}
             className="inline-block mx-4"
+            alt="Medicom Yazılım"
           />
           tarafından hazırlanmıştır.
         </Link>

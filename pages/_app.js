@@ -1,15 +1,17 @@
 import "@/styles/globals.css";
 import Head from "next/head";
+import { appWithTranslation } from "next-i18next";
 
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <meta name="robots" content="index, follow" />
-        <meta charset="UTF-8" />
+        <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
       <Component {...pageProps} />;
     </>
   );
 }
+
+export default appWithTranslation(App);

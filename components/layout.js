@@ -16,7 +16,7 @@ export default function Layout({ children, menuItems, info }) {
     >
       {" "}
       <header>
-        <TopHeader contactDetail={info} />
+        <TopHeader />
         <Navbar menuData={menuItems} />
       </header>
       <main>{children}</main>

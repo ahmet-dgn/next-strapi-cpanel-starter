@@ -126,14 +126,18 @@ module.exports = {
     },
     extend: {
       colors: {
-        "primary-color": "#111827",
-        "on-primary-color": "#FFFFFF",
+        "primary-color": "#171717",
+        "on-primary-color": "white",
         "secondary-color": "#d21202",
         "on-secondary-color": "#FFFFFF",
-        "background-color": "whitw",
-        "on-background-color": "#111827",
+        "background-color": "white",
+        "on-background-color": "#171717",
         "surface-color": "white",
         "on-surface-color": "#111827",
+        "nav-color": "white",
+        "on-nav-color": "#171717",
+        "top-header": "#f5f5f5",
+        "on-top-header": "#171717",
       },
       fontFamily: {
         sans: ["var(--font-poppins)"],

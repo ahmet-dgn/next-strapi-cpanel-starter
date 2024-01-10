@@ -2,17 +2,14 @@ import Container from "./ui/container";
 import Row from "./ui/row";
 import Title from "./ui/title";
 import Card from "./ui/card";
+import Link from "next/link";
 
 export function ImageBox() {
   return (
     <Container>
-      <Title titleDesc="Cillum nostrud dolore pariatur officia officia reprehenderit proident amet.">
-        Yazarlarımız
-      </Title>
       <Row rowCol="grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-6">
         <Card
           cardImg="/employee/Image-1.jpg"
-          cardTitle="Michael Foster"
           textAlign="text-center"
           titleCustom="justify-center"
           cardImgClass="aspect-[1/1] "
@@ -59,38 +56,193 @@ export function ImageBox() {
   );
 }
 
-export function ImageBox2() {
+export function ImageBox2({ products, activeLocale, defaultLocale }) {
   return (
     <Container>
-      <Title titleDesc="Nisi do aute culpa exercitation officia.">
-        Kategoriler
+      <Title
+        titleDesc={`${
+          activeLocale == defaultLocale
+            ? "PVC granüller, çeşitli endüstrilerde kullanılarak farklı ürünlerin üretiminde önemli bir rol oynar. PVC'nin esneklik, dayanıklılık ve direnç gibi özellikleri, çeşitli sektörlerde çeşitli kullanım alanlarına olanak sağlar."
+            : activeLocale == "en"
+            ? "PVC granules play a significant role in the production of various products across different industries. The characteristics of PVC such as flexibility, durability, and resistance enable diverse applications in various sectors."
+            : "PVC granüller, çeşitli endüstrilerde kullanılarak farklı ürünlerin üretiminde önemli bir rol oynar. PVC'nin esneklik, dayanıklılık ve direnç gibi özellikleri, çeşitli sektörlerde çeşitli kullanım alanlarına olanak sağlar."
+        } `}
+      >
+        {`${
+          activeLocale == defaultLocale
+            ? "PVC Granül Kullanım Alanları"
+            : activeLocale == "en"
+            ? "Uses of PVC Granules "
+            : "PVC Granül Kullanım Alanları"
+        } `}
       </Title>
-      <Row rowCol="grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-        <Card
-          cardImg="/beautiful-shot-famous-roman-colosseum-amphitheater-breathtaking-sky-sunrise.jpg"
-          cardImgClass="aspect-[1/1] brightness-50 "
-          textAlign="text-center"
-          overleyText="Tarih Kitapları"
-        />
-
-        <Card
-          cardImg="/children-playing-grass.jpg"
-          textAlign="text-center"
-          overleyText="Çocuk Kitapları"
-          cardImgClass="aspect-[1/1] brightness-50 "
-        />
-
-        <Card
-          cardImg="/alone-girl-sitting-chair.jpg"
-          textAlign="text-center"
-          overleyText="Edebiyat Kitapları"
-          cardImgClass=" object-cover rounded brightness-50"
-        />
-        <Card
-          cardImg="/family-with-their-little-daughter-autumn-field.jpg"
-          overleyText="Aile Kitapları"
-          cardImgClass="aspect-[1/1] brightness-50 "
-        />
+      <Row rowCol="grid-cols-1  lg:grid-cols-2  ">
+        <Link
+          href={
+            activeLocale == defaultLocale
+              ? products[4].uri
+              : `${activeLocale}` + products[4].uri
+          }
+        >
+          <Card
+            cardImg={products[4].products.anaResim.node.mediaItemUrl}
+            cardImgClass="w-full h-[250px]  md:h-[350px] brightness-50 hover:brightness-[.75] cursor-pointer transition duration-500"
+            textAlign="text-center"
+            cardImgAlt={
+              activeLocale == defaultLocale
+                ? products[4].title
+                : activeLocale == "en"
+                ? products[4].products.ingilizceBaslik
+                : products[4].title
+            }
+            overleyText={
+              activeLocale == defaultLocale
+                ? products[4].title
+                : activeLocale == "en"
+                ? products[4].products.ingilizceBaslik
+                : products[4].title
+            }
+          />
+        </Link>
+        <Row rowCol="grid-cols-1 md:grid-cols-2  ">
+          <Link
+            href={
+              activeLocale == defaultLocale
+                ? products[5].uri
+                : `${activeLocale}` + products[5].uri
+            }
+          >
+            <Card
+              cardImg={products[5].products.anaResim.node.mediaItemUrl}
+              cardImgClass="w-full h-[250px]  md:h-[350px] brightness-50 hover:brightness-[.75] cursor-pointer transition duration-500"
+              textAlign="text-center"
+              cardImgAlt={
+                activeLocale == defaultLocale
+                  ? products[5].title
+                  : activeLocale == "en"
+                  ? products[5].products.ingilizceBaslik
+                  : products[5].title
+              }
+              overleyText={
+                activeLocale == defaultLocale
+                  ? products[5].title
+                  : activeLocale == "en"
+                  ? products[5].products.ingilizceBaslik
+                  : products[5].title
+              }
+            />
+          </Link>
+          <Link
+            href={
+              activeLocale == defaultLocale
+                ? products[1].uri
+                : `${activeLocale}` + products[1].uri
+            }
+          >
+            <Card
+              cardImg={products[1].products.anaResim.node.mediaItemUrl}
+              cardImgClass="w-full h-[250px]  md:h-[350px] brightness-50 hover:brightness-[.75] cursor-pointer transition duration-500"
+              textAlign="text-center"
+              cardImgAlt={
+                activeLocale == defaultLocale
+                  ? products[1].title
+                  : activeLocale == "en"
+                  ? products[1].products.ingilizceBaslik
+                  : products[1].title
+              }
+              overleyText={
+                activeLocale == defaultLocale
+                  ? products[1].title
+                  : activeLocale == "en"
+                  ? products[1].products.ingilizceBaslik
+                  : products[1].title
+              }
+            />
+          </Link>
+        </Row>
+        <Row rowCol="grid-cols-1 md:grid-cols-2 ">
+          <Link
+            href={
+              activeLocale == defaultLocale
+                ? products[0].uri
+                : `${activeLocale}` + products[0].uri
+            }
+          >
+            <Card
+              cardImg={products[0].products.anaResim.node.mediaItemUrl}
+              cardImgClass="w-full h-[250px]  md:h-[350px] brightness-50 hover:brightness-[.75] cursor-pointer transition duration-500"
+              textAlign="text-center"
+              cardImgAlt={
+                activeLocale == defaultLocale
+                  ? products[0].title
+                  : activeLocale == "en"
+                  ? products[0].products.ingilizceBaslik
+                  : products[0].title
+              }
+              overleyText={
+                activeLocale == defaultLocale
+                  ? products[0].title
+                  : activeLocale == "en"
+                  ? products[0].products.ingilizceBaslik
+                  : products[0].title
+              }
+            />
+          </Link>
+          <Link
+            href={
+              activeLocale == defaultLocale
+                ? products[2].uri
+                : `${activeLocale}` + products[2].uri
+            }
+          >
+            <Card
+              cardImg={products[2].products.anaResim.node.mediaItemUrl}
+              cardImgClass="w-full h-[250px]  md:h-[350px] brightness-50 hover:brightness-[.75] cursor-pointer transition duration-500"
+              textAlign="text-center"
+              cardImgAlt={
+                activeLocale == defaultLocale
+                  ? products[2].title
+                  : activeLocale == "en"
+                  ? products[2].products.ingilizceBaslik
+                  : products[2].title
+              }
+              overleyText={
+                activeLocale == defaultLocale
+                  ? products[2].title
+                  : activeLocale == "en"
+                  ? products[2].products.ingilizceBaslik
+                  : products[2].title
+              }
+            />
+          </Link>
+        </Row>
+        <Link
+          href={
+            activeLocale == defaultLocale
+              ? products[3].uri
+              : `${activeLocale}` + products[3].uri
+          }
+        >
+          <Card
+            cardImg={products[3].products.anaResim.node.mediaItemUrl}
+            cardImgClass="w-full h-[250px]  md:h-[350px] brightness-50 hover:brightness-[.75] cursor-pointer transition duration-500"
+            textAlign="text-center"
+            cardImgAlt={
+              activeLocale == defaultLocale
+                ? products[3].title
+                : activeLocale == "en"
+                ? products[3].products.ingilizceBaslik
+                : products[3].title
+            }
+            overleyText={
+              activeLocale == defaultLocale
+                ? products[3].title
+                : activeLocale == "en"
+                ? products[3].products.ingilizceBaslik
+                : products[3].title
+            }
+          />
+        </Link>
       </Row>
     </Container>
   );

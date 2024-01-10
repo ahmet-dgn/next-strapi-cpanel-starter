@@ -1,150 +1,66 @@
+import { useState } from "react";
 import Container from "./ui/container";
 import Row from "./ui/row";
 import Title from "./ui/title";
-import Button from "./ui/buttons";
 import Card from "./ui/card";
+import Link from "next/link";
 
-export default function FeaturedProducts() {
-  const container = {
-    hidden: { opacity: 1, scale: 0 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        delayChildren: 1,
-        staggerChildren: 0.2,
-      },
-    },
+export default function FeaturedProducts({ data, backendUrl, translation }) {
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const products = data.products.data;
+
+  const handleCategoryFilter = (category) => {
+    setSelectedCategory(category === `${translation}` ? null : category);
   };
 
-  const item = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-    },
-    transition: { ease: "easeOut", duration: 2, type: "spring" },
-  };
-  const products = [
-    {
-      id: 1,
-      title: "Nocturnal Creatures Thief",
-      author: "Leila Mottley",
-      img: "/prodcuts/1.jpg",
-      category: "tarih",
-    },
-    {
-      id: 2,
-      title: "Swedish Chairs",
-      author: "Dan Gordan",
-      img: "/prodcuts/2.jpg",
-      category: "psikoloji",
-    },
-    {
-      id: 3,
-      title:
-        "Fugiat et ipsum ea anim reprehenderit est reprehenderit cillum enim velit minim sit.",
-      author: "Dan Ellen Marie Wiseman",
-      img: "/prodcuts/3.jpg",
-      category: "çocuk",
-    },
-    {
-      id: 4,
-      title: "Moster Paulas Kattkafe Hastek and Jakme",
-      author: "Charlie Jonas",
-      img: "/prodcuts/4.jpg",
-      category: "edebiyat",
-    },
-    {
-      id: 5,
-      title: "Emotionally Intelligent",
-      author: "Maria Gottberg",
-      img: "/prodcuts/5.jpg",
-      category: "sosyoloji",
-    },
-    {
-      id: 6,
-      title: "The Friday Drink est reprehenderit ",
-      author: "Kayo Mpoyi",
-      img: "/prodcuts/6.jpg",
-      category: "roman",
-    },
-    {
-      id: 7,
-      title: "Read & Riot",
-      author: "Nadya Tolokon",
-      img: "/prodcuts/7.jpg",
-      category: "",
-    },
-    {
-      id: 8,
-      title:
-        "I Don’t Forget Anyone Deserunt minim nulla non laboris veniam incididunt eu nostrud elit.",
-      author: "Gunvor Hofmo",
-      img: "/prodcuts/8.jpg",
-      category: "",
-    },
-    {
-      id: 9,
-      title: "Truffle Fever Occaecat",
-      author: "Steven Ekholm",
-      img: "/prodcuts/9.jpg",
-      category: "",
-    },
-    {
-      id: 10,
-      title:
-        "Skuggan Dotter Ad qui exercitation adipisicing deserunt ullamco ad occaecat officia.",
-      author: "Elena Frrante",
-      img: "/prodcuts/10.jpg",
-      category: "",
-    },
-    {
-      id: 11,
-      title: "Wedding Trouble",
-      author: "Stig Dagerman",
-      img: "/prodcuts/11.jpg",
-      category: "",
-    },
-    {
-      id: 12,
-      title: "Malstrom exercitation adipisicing",
-      author: "Charlote Al-Khalli",
-      img: "/prodcuts/12.jpg",
-      category: "",
-    },
+  const filteredProducts = selectedCategory
+    ? products.filter(
+        (product) =>
+          product.attributes.category &&
+          product.attributes.category.data.attributes.Title.toLowerCase() ===
+            selectedCategory.toLowerCase()
+      )
+    : products;
+
+  const categories = [
+    translation,
+    ...new Set(
+      products
+        .filter((product) => product.attributes.category)
+        .map((product) => product.attributes.category.data.attributes.Title)
+    ),
   ];
 
   return (
     <Container>
-      <Title titleDesc="Laboris qui sit ullamco nostrud. Officia et aute est et amet consectetur aliqua Lorem.">
-        Kitaplarımız
-      </Title>
+      <Title titleDesc={data.Description}>{data.Title}</Title>
       <div className="flex gap-4 justify-center flex-wrap">
-        {products.map(
-          (product) =>
-            product.category && (
-              <Button href="#" type="outline" color="primary-color">
-                {product.category.charAt(0).toUpperCase() +
-                  product.category.slice(1)}
-              </Button>
-            )
-        )}
+        {categories.map((category, index) => (
+          <span
+            key={index}
+            className={`min-h-[2.5rem] px-4 text-link-normal text-primary-color border-2 border-primary-color hover:bg-primary-color/20 flex items-center justify-center w-fit rounded cursor-pointer ${
+              selectedCategory === category ? "bg-primary-color text-white" : ""
+            } `}
+            onClick={() => handleCategoryFilter(category)}
+          >
+            {category}
+          </span>
+        ))}
       </div>
 
-      <Row rowCol="grid-cols-2 min-[475px]:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6  ">
-        {products.map((product) => (
-          <div>
+      <Row rowCol="grid-cols-2 min-[475px]:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6">
+        {filteredProducts.map((product) => (
+          <Link href={`/products/${product.attributes.Slug}`} key={product.id}>
             <Card
-              cardInfo={product.author}
-              cardTitle={product.title}
-              cardImg={product.img}
-              cardPadding="p-2 sm:p-4"
-              cardBorder="border"
+              cardInfo={product.attributes.Writer}
+              cardTitle={product.attributes.Title}
+              cardImg={`${backendUrl}${product.attributes.MainImage.data.attributes.url}`}
+              cardPadding="p-2 xl:p-4"
+              cardBorder="border hover:shadow-xl transition-shadow duration-300 hover:border-gray-400"
               cardBgColor="bg-surface-color"
-              cardImgClass="aspect-[3/5] "
-            ></Card>
-          </div>
+              cardImgClass="aspect-[3/5]"
+            />
+          </Link>
         ))}
       </Row>
     </Container>

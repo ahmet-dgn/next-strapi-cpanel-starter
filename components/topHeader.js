@@ -3,66 +3,25 @@ import Image from "next/image";
 import Link from "next/link";
 import Button from "./ui/buttons";
 
-export default function TopHeader({ contactDetail }) {
+export default function TopHeader() {
   const { locale: activeLocale, locales, asPath, defaultLocale } = useRouter();
   const activeLocales = locales.filter((locale) => locale !== activeLocale);
 
-  //Filtering the contact detail data according to the active locale
-  const companyInfo = contactDetail.filter(
-    (contactItem) =>
-      contactItem.companyInfoField.dil == activeLocale.toUpperCase()
-  );
-
-  //Filtering the contact detail data according to the default locale
-  const companyInfoDefault = contactDetail.filter(
-    (contactItem) =>
-      contactItem.companyInfoField.dil == defaultLocale.toUpperCase()
-  );
-
-  //If there is no data for the default locale, the default data is used
-  const companyInfoDefaulCheck =
-    companyInfo.length > 0 ? companyInfo : companyInfoDefault;
-
-  //Data fortmating
-  const companyInfoDetail = companyInfoDefaulCheck[0].companyInfoField;
-  const companyInfoDetailDefault = companyInfoDefault[0].companyInfoField;
-
-  //If there is no data for the default locale, the default data is used
-  //TO DO: Buraya bir fonksiyon yazılacak.
-  const ePostaData = companyInfoDetail.ePosta
-    ? companyInfoDetail.ePosta
-    : companyInfoDetailDefault.ePosta;
-
-  const telefon = companyInfoDetail.telefon
-    ? companyInfoDetail.telefon
-    : companyInfoDetailDefault.telefon;
-
-  const facebook = companyInfoDetail.facebook
-    ? companyInfoDetail.facebook
-    : companyInfoDetailDefault.facebook;
-
-  const instagram = companyInfoDetail.instagram
-    ? companyInfoDetail.instagram
-    : companyInfoDetailDefault.instagram;
-
-  const twitter = companyInfoDetail.x
-    ? companyInfoDetail.x
-    : companyInfoDetailDefault.x;
-
   return (
-    <div className="bg-gray-100">
-      <div className="flex justify-between items-center 2xl:container mx-auto px-4 xl:px-8 h-12">
+    <div className="border-b">
+      <div className="flex justify-between items-center 2xl:container mx-auto px-4 xl:px-8 h-10">
         <div className="flex">
-          <div className="hidden sm:flex  justify-center items-center">
-            <p className="text-small-regular text-primary-color">
-              Bizi Takip Edin!
-            </p>
-
+          {/* <div className="hidden sm:flex  justify-center items-center">
+            {twitter || instagram || facebook ? (
+              <p className="text-small-regular text-on-top-header">
+                Bizi Takip Edin!
+              </p>
+            ) : null}
             <div className="flex justify-center items-center ml-4 space-x-1">
               {twitter && (
                 <Link href={twitter}>
                   <svg
-                    className={`fill-primary-color hover:fill-primary-color/60 mr-1`}
+                    className={`fill-on-top-header hover:fill-on-top-header/60 mr-1`}
                     width="15"
                     height="15"
                     viewBox="0 0 1001 937"
@@ -101,13 +60,18 @@ export default function TopHeader({ contactDetail }) {
                 </Link>
               )}
             </div>
-          </div>
+          </div> */}
         </div>{" "}
         <div className="flex">
-          <div className="px-4 group items-center hidden md:flex ">
-            <Button href={`mailto:${ePostaData} `} size="sm" type="link">
+          {/* <div className="px-4 group items-center hidden md:flex ">
+            <Button
+              href={`mailto:${ePostaData} `}
+              size="sm"
+              type="link"
+              color="white"
+            >
               <svg
-                className={`fill-primary-color group-hover:fill-primary-color/60 mr-1`}
+                className={`fill-on-top-header group-hover:fill-on-top-header/60 mr-1`}
                 width="20"
                 height="20"
                 viewBox="0 0 30 30"
@@ -119,9 +83,14 @@ export default function TopHeader({ contactDetail }) {
             </Button>
           </div>
           <div className="px-4 group flex items-center">
-            <Button href={`tel:${telefon} `} size="sm" type="link">
+            <Button
+              href={`tel:${telefon} `}
+              size="sm"
+              type="link"
+              color="white"
+            >
               <svg
-                className={`fill-primary-color group-hover:fill-primary-color/60 mr-1`}
+                className={`fill-on-top-header group-hover:fill-on-top-header/60 mr-1`}
                 width="20"
                 height="20"
                 viewBox="0 0 50 50"
@@ -131,19 +100,25 @@ export default function TopHeader({ contactDetail }) {
               </svg>
               {telefon}
             </Button>
-          </div>
+          </div> */}
           <ul className="group flex flex-col relative pl-4  ">
-            <li className=" cursor-pointer  text-primary-color hover:text-primary-color/60 min-h-[2rem] text-link-small flex justify-center items-center">
+            <li className=" cursor-pointer  text-on-top-header hover:text-on-top-header/60 min-h-[2rem] text-link-tiny flex justify-center items-center">
               <Image
                 className="object-contain mr-2"
                 src={`/icons/flags/${activeLocale}.svg`}
                 width={20}
                 height={15}
-                alt={activeLocale}
+                alt={`${
+                  activeLocale == defaultLocale
+                    ? "Türkçe"
+                    : activeLocale == "en"
+                    ? "English"
+                    : "Türkçe"
+                } `}
               />
               {activeLocale.toUpperCase()}
               <svg
-                className={`ml-0.8 inline-block fill-primary-color group-hover:fill-primary-color/60`}
+                className={`ml-0.8 inline-block fill-on-top-header group-hover:fill-on-top-header/60`}
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -157,7 +132,7 @@ export default function TopHeader({ contactDetail }) {
                 return (
                   <li key={locale}>
                     <Link
-                      className="min-h-[2rem]  text-link-small text-primary-color hover:text-primary-color/60 flex justify-center items-center px-4"
+                      className="min-h-[2rem]  text-link-tiny text-on-background-color hover:text-on-background-color/60 flex justify-center items-center px-4"
                       href={asPath}
                       locale={locale}
                     >

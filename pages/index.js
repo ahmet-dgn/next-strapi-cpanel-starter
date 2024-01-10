@@ -1,89 +1,126 @@
 import Slider from "@/components/slider";
-import Blog from "@/components/blog";
-import FeaturedProducts from "@/components/featuredProducts";
-import { ImageBox, ImageBox2 } from "@/components/imageBox";
-import { HeroSection, HeroSection2 } from "@/components/heroSection";
 import NewProdcuts from "@/components/newProducts";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { getMenusByLang, getAllSliders, companyInfo } from "@/lib/posts";
+import HeroSection from "@/components/heroSection";
+import Blog from "@/components/blog";
+import TextWithOverlayImage from "@/components/textWithOverlayImage";
+import FeaturedProducts from "@/components/featuredProducts";
+import SEO from "@/components/seo";
+import { useTranslation } from "next-i18next";
 import Layout from "@/components/layout";
-import { domain } from "@/config";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-export default function Home({ menu, sliders, contactInfo }) {
-  const { locale: activeLocale, defaultLocale, asPath } = useRouter();
+export default function Home({ menu, generalSettings, homePageData, blogs }) {
+  const homePage = homePageData.Blocks;
+  const { t } = useTranslation("common");
 
-  //Filtering the contact detail data according to the active locale
-  const companyInfo = contactInfo.filter(
-    (contactItem) =>
-      contactItem.companyInfoField.dil == activeLocale.toUpperCase()
-  );
-
-  //Filtering the contact detail data according to the default locale
-  const companyInfoDefault = contactInfo.filter(
-    (contactItem) =>
-      contactItem.companyInfoField.dil == defaultLocale.toUpperCase()
-  );
-
-  //If there is no data for the default locale, the default data is used
-  const companyInfoDefaulCheck =
-    companyInfo.length > 0 ? companyInfo : companyInfoDefault;
-
-  //Data fortmating
-  const companyInfoDetail = companyInfoDefaulCheck[0].companyInfoField;
-  const companyInfoDetailDefault = companyInfoDefault[0].companyInfoField;
-
-  const title = companyInfoDetail.siteBaslikSeo
-    ? companyInfoDetail.siteBaslikSeo
-    : companyInfoDetailDefault.siteBaslikSeo;
-
-  const favicon = companyInfoDetail.favicon.node.mediaItemUrl
-    ? companyInfoDetail.favicon.node.mediaItemUrl
-    : companyInfoDetailDefault.favicon.node.mediaItemUrl;
-
-  const description = companyInfoDetail.siteAciklamaSeo
-    ? companyInfoDetail.siteAciklamaSeo
-    : companyInfoDetailDefault.siteAciklamaSeo;
-
-  const logo = companyInfoDetail.logo.node.mediaItemUrl
-    ? companyInfoDetail.logo.node.mediaItemUrl
-    : companyInfoDetailDefault.logo.node.mediaItemUrl;
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <link rel="icon" href={favicon} sizes="any" />
-        <meta name="description" content={description} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:image" content={logo} />
-        <meta property="og:url" content={domain} />
-      </Head>
-
-      <Layout menuItems={menu} info={contactInfo}>
-        <Slider sliders={sliders} />
-        <NewProdcuts />
-        <HeroSection />
-        <FeaturedProducts />
-        <HeroSection2 />
-        <ImageBox />
-        <Blog />
+      <SEO generalSettings={generalSettings} seoData={homePageData.SEO} />
+      <Layout menuItems={menu}>
+        {homePage.map((item, index) => {
+          switch (item.__component) {
+            case "blocks.slider":
+              return (
+                <Slider
+                  key={index}
+                  data={item}
+                  backendUrl={process.env.DATA_URL}
+                />
+              );
+            case "blocks.hero":
+              return (
+                <HeroSection
+                  key={index}
+                  data={item}
+                  backendUrl={process.env.DATA_URL}
+                />
+              );
+            case "blocks.text-with-overlay-image":
+              return (
+                <TextWithOverlayImage
+                  key={index}
+                  data={item}
+                  backendUrl={process.env.DATA_URL}
+                />
+              );
+            case "blocks.new-products":
+              return (
+                <NewProdcuts
+                  key={index}
+                  data={item}
+                  backendUrl={process.env.DATA_URL}
+                  translation={t("new_label")}
+                />
+              );
+            case "blocks.featured-products":
+              return (
+                <FeaturedProducts
+                  key={index}
+                  data={item}
+                  backendUrl={process.env.DATA_URL}
+                  translation={t("all_categories")}
+                />
+              );
+            case "blocks.last-blogs":
+              return (
+                <Blog
+                  key={index}
+                  data={blogs}
+                  title={item.Title}
+                  description={item.Description}
+                  backendUrl={process.env.DATA_URL}
+                  translation={t("read_more")}
+                />
+              );
+            default:
+              return null;
+          }
+        })}
       </Layout>
     </>
   );
 }
 
-export async function getStaticProps({ locale }) {
-  const sliders = await getAllSliders();
-  const menu = await getMenusByLang(locale);
-  const contactInfo = await companyInfo();
+export async function getServerSideProps({ locale, defaultLocale }) {
+  const res = await fetch(
+    `${process.env.DATA_URL}/api/navigation/render/main-navigation${
+      locale === defaultLocale ? "" : "-" + locale
+    }`
+  );
+  const menu = await res.json();
+
+  const resSettings = await fetch(
+    `${process.env.DATA_URL}/api/general-site-setting?populate=* `
+  );
+  const settings = await resSettings.json();
+  const generalSettings = settings.data.attributes;
+
+  const resIndex = await fetch(
+    `${
+      process.env.DATA_URL
+    }/api/home?populate=Blocks.Content.Image&populate=Blocks.Image&populate=Blocks.products.MainImage&populate=Blocks.products.category&populate=SEO&locale=${
+      locale === defaultLocale ? defaultLocale : locale
+    }`
+  );
+  const index = await resIndex.json();
+  const homePageData = index.data.attributes;
+
+  const resBlogs = await fetch(
+    `${
+      process.env.DATA_URL
+    }/api/blogs?populate=Image&populate=blog_categories&populate=MainImage&locale=${
+      locale === defaultLocale ? defaultLocale : locale
+    }`
+  );
+  const blogs = await resBlogs.json();
 
   return {
     props: {
       menu,
-      sliders,
-      contactInfo,
+      generalSettings,
+      homePageData,
+      blogs,
+      ...(await serverSideTranslations(locale, ["common"])),
     },
-    revalidate: 10,
   };
 }
