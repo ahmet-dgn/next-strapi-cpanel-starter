@@ -2,14 +2,13 @@ import Image from "next/image";
 import Button from "@/components/ui/buttons";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { dataUrl } from "@/config";
 
 export default function Slider({ data }) {
   const slides = data.Content; //Api'den gelen slider verileri
 
   //##########Slider Settings#########
   const sliderSettings = {
-    autoPlay: false,
+    autoPlay: true,
     duration: 5000,
   };
 
@@ -180,7 +179,8 @@ export default function Slider({ data }) {
               blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mO8UA8AAiUBUcc3qzwAAAAASUVORK5CYII="
               src={
                 slide.Image.data
-                  ? dataUrl + slide.Image.data.attributes.url
+                  ? process.env.NEXT_PUBLIC_DATA_URL +
+                    slide.Image.data.attributes.url
                   : ""
               }
               alt={slide.Title || "slider"}

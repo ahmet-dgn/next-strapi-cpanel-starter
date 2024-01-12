@@ -8,6 +8,8 @@ import SEO from "@/components/seo";
 import { useTranslation } from "next-i18next";
 import Layout from "@/components/layout";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import Container from "@/components/ui/container";
+import HorizontalCardBlock from "@/components/horizontalCardBlock";
 
 export default function Home({ menu, generalSettings, homePageData, blogs }) {
   const homePage = homePageData.Blocks;
@@ -16,24 +18,16 @@ export default function Home({ menu, generalSettings, homePageData, blogs }) {
   return (
     <>
       <SEO generalSettings={generalSettings} seoData={homePageData.SEO} />
-      <Layout menuItems={menu}>
+      <Layout menuItems={menu} generalSettings={generalSettings}>
         {homePage.map((item, index) => {
           switch (item.__component) {
             case "blocks.slider":
-              return (
-                <Slider
-                  key={index}
-                  data={item}
-                  backendUrl={process.env.DATA_URL}
-                />
-              );
+              return <Slider key={index} data={item} />;
             case "blocks.hero":
               return (
-                <HeroSection
-                  key={index}
-                  data={item}
-                  backendUrl={process.env.DATA_URL}
-                />
+                <Container>
+                  <HeroSection key={index} data={item} />
+                </Container>
               );
             case "blocks.text-with-overlay-image":
               return (
@@ -45,32 +39,50 @@ export default function Home({ menu, generalSettings, homePageData, blogs }) {
               );
             case "blocks.new-products":
               return (
-                <NewProdcuts
-                  key={index}
-                  data={item}
-                  backendUrl={process.env.DATA_URL}
-                  translation={t("new_label")}
-                />
+                <Container>
+                  <NewProdcuts
+                    key={index}
+                    data={item}
+                    translation={t("new_label")}
+                  />
+                </Container>
               );
             case "blocks.featured-products":
               return (
-                <FeaturedProducts
-                  key={index}
-                  data={item}
-                  backendUrl={process.env.DATA_URL}
-                  translation={t("all_categories")}
-                />
+                <Container>
+                  <FeaturedProducts
+                    key={index}
+                    data={item}
+                    backendUrl={process.env.DATA_URL}
+                    translation={t("all_categories")}
+                  />
+                </Container>
               );
             case "blocks.last-blogs":
               return (
-                <Blog
-                  key={index}
-                  data={blogs}
-                  title={item.Title}
-                  description={item.Description}
-                  backendUrl={process.env.DATA_URL}
-                  translation={t("read_more")}
-                />
+                <Container>
+                  <Blog
+                    key={index}
+                    data={blogs}
+                    title={item.Title}
+                    description={item.Description}
+                    translation={t("read_more")}
+                  />
+                </Container>
+              );
+            case "blocks.yatay-vitrin":
+              return (
+                <div className="bg-sky-50">
+                  <Container>
+                    <HorizontalCardBlock
+                      key={index}
+                      data={item}
+                      title={item.Title}
+                      description={item.Description}
+                      translation={t("read_more")}
+                    />
+                  </Container>
+                </div>
               );
             default:
               return null;

@@ -65,7 +65,7 @@ export default function blogs({ menu, blogs, generalSettings }) {
   return (
     <>
       <SEO generalSettings={generalSettings} seoData={seo} />
-      <Layout menuItems={menu}>
+      <Layout menuItems={menu} generalSettings={generalSettings}>
         <Container>
           <Row rowCol="grid-cols-2  lg:grid-cols-3  ">
             <div className="col-span-2 w-full">
@@ -87,7 +87,7 @@ export default function blogs({ menu, blogs, generalSettings }) {
                     cardTitle={blog.attributes.Title}
                     cardImg={
                       blog.attributes.Image.data
-                        ? process.env.DATA_URL +
+                        ? process.env.NEXT_PUBLIC_DATA_URL +
                           blog.attributes.Image.data.attributes.url
                         : ""
                     }

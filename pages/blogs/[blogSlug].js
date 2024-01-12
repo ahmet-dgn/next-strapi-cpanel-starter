@@ -16,7 +16,7 @@ export default function ProductDetail({ blog, menu, generalSettings }) {
     <>
       <SEO generalSettings={generalSettings} seoData={seo} />
 
-      <Layout menuItems={menu}>
+      <Layout menuItems={menu} generalSettings={generalSettings}>
         <Container>
           <div className="max-w-4xl mx-auto space-y-8">
             <Image
@@ -24,7 +24,7 @@ export default function ProductDetail({ blog, menu, generalSettings }) {
               height={400}
               src={
                 data.attributes.Image.data
-                  ? process.env.DATA_URL +
+                  ? process.env.NEXT_PUBLIC_DATA_URL +
                     data.attributes.Image.data.attributes.url
                   : ""
               }

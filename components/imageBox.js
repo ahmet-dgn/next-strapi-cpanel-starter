@@ -6,53 +6,51 @@ import Link from "next/link";
 
 export function ImageBox() {
   return (
-    <Container>
-      <Row rowCol="grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-6">
-        <Card
-          cardImg="/employee/Image-1.jpg"
-          textAlign="text-center"
-          titleCustom="justify-center"
-          cardImgClass="aspect-[1/1] "
-        />
+    <Row rowCol="grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-6">
+      <Card
+        cardImg="/employee/Image-1.jpg"
+        textAlign="text-center"
+        titleCustom="justify-center"
+        cardImgClass="aspect-[1/1] "
+      />
 
-        <Card
-          cardImg="/employee/Image-2.jpg"
-          cardTitle="Lindsay Walton"
-          cardImgClass="aspect-[1/1] "
-          textAlign="text-center"
-          titleCustom="justify-center"
-        />
+      <Card
+        cardImg="/employee/Image-2.jpg"
+        cardTitle="Lindsay Walton"
+        cardImgClass="aspect-[1/1] "
+        textAlign="text-center"
+        titleCustom="justify-center"
+      />
 
-        <Card
-          cardImg="/employee/Image-3.jpg"
-          cardTitle="Dries Vincent"
-          cardImgClass="aspect-[1/1] "
-          textAlign="text-center"
-          titleCustom="justify-center"
-        />
-        <Card
-          cardImg="/employee/Image-4.jpg"
-          cardTitle="Floyd Miles"
-          cardImgClass="aspect-[1/1] "
-          textAlign="text-center"
-          titleCustom="justify-center"
-        />
-        <Card
-          cardImg="/employee/Image-5.jpg"
-          cardImgClass="aspect-[1/1] "
-          cardTitle="Leonard Krasner"
-          textAlign="text-center"
-          titleCustom="justify-center"
-        />
-        <Card
-          cardImg="/employee/Image-6.jpg"
-          cardImgClass="aspect-[1/1] "
-          cardTitle="Leslie Alexander"
-          textAlign="text-center"
-          titleCustom="justify-center"
-        />
-      </Row>
-    </Container>
+      <Card
+        cardImg="/employee/Image-3.jpg"
+        cardTitle="Dries Vincent"
+        cardImgClass="aspect-[1/1] "
+        textAlign="text-center"
+        titleCustom="justify-center"
+      />
+      <Card
+        cardImg="/employee/Image-4.jpg"
+        cardTitle="Floyd Miles"
+        cardImgClass="aspect-[1/1] "
+        textAlign="text-center"
+        titleCustom="justify-center"
+      />
+      <Card
+        cardImg="/employee/Image-5.jpg"
+        cardImgClass="aspect-[1/1] "
+        cardTitle="Leonard Krasner"
+        textAlign="text-center"
+        titleCustom="justify-center"
+      />
+      <Card
+        cardImg="/employee/Image-6.jpg"
+        cardImgClass="aspect-[1/1] "
+        cardTitle="Leslie Alexander"
+        textAlign="text-center"
+        titleCustom="justify-center"
+      />
+    </Row>
   );
 }
 

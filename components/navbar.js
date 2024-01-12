@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Button from "./ui/buttons";
 
-export function Navbar({ menuData }) {
+export function Navbar({ menuData, generalSettings }) {
   const menuItems = menuData;
 
   const [currentMenuStatus, setMenuStatus] = useState(false);
@@ -20,11 +20,16 @@ export function Navbar({ menuData }) {
   };
   return (
     <nav className="bg-nav-color">
-      <div className="flex justify-between items-center 2xl:container mx-auto px-4 xl:px-8 h-24">
+      <div className="flex justify-between items-center 2xl:container mx-auto px-4 xl:px-8 min-h-[6rem]">
         <Link href="/">
           <Image
-            className="object-contain !mb-0 "
-            src="/book-logo.png"
+            className="object-contain  my-4 width max-w-[150px] lg:max-w-[200px]"
+            src={
+              generalSettings
+                ? process.env.NEXT_PUBLIC_DATA_URL +
+                  generalSettings.Logo.data[0].attributes.url
+                : ""
+            }
             width={200}
             height={50}
             alt="logo"

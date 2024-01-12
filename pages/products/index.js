@@ -3,6 +3,7 @@ import Container from "@/components/ui/container";
 import { useState, useEffect } from "react";
 import Row from "@/components/ui/row";
 import Card from "@/components/ui/card";
+import HorizontalCard from "@/components/ui/horizontalCard";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import Link from "next/link";
@@ -48,9 +49,12 @@ export default function Products({ menu, products, generalSettings }) {
     setMenuStatus(!currentMenuStatus);
   };
 
-  const categories = productsData.map(
-    (product) => product.attributes.category.data.attributes.Title
-  );
+  const categories = productsData.map((product) => {
+    if (product.attributes.category && product.attributes.category.data) {
+      return product.attributes.category.data.attributes.Title;
+    }
+    return null;
+  });
 
   // Kategorilerden yinelenenleri kaldırın
   const uniqueCategories = Array.from(new Set(categories));
@@ -69,7 +73,7 @@ export default function Products({ menu, products, generalSettings }) {
     <>
       <SEO generalSettings={generalSettings} seoData={seo} />
 
-      <Layout menuItems={menu}>
+      <Layout menuItems={menu} generalSettings={generalSettings}>
         <Container>
           <Row rowCol="grid-cols-2  lg:grid-cols-3  ">
             <div
@@ -127,27 +131,46 @@ export default function Products({ menu, products, generalSettings }) {
                 </p>
               </div>
 
-              <Row rowCol="grid-cols-2 min-[475px]:grid-cols-3 md:grid-cols-4">
+              <Row rowCol="grid-cols-1 ">
                 {filteredProducts.map((product) => (
-                  <Link
-                    href={`/products/${product.attributes.Slug}`}
+                  //   <Link
+                  //   href={`/products/${product.attributes.Slug}`}
+                  //   key={product.id}
+                  // >
+                  //  <Card
+                  //     cardInfo={product.attributes.Writer}
+                  //     cardTitle={product.attributes.Title}
+                  //     cardImg={
+                  //       product.attributes.MainImage.data
+                  //         ? process.env.NEXT_PUBLIC_DATA_URL +
+                  //           product.attributes.MainImage.data.attributes.url
+                  //         : ""
+                  //     }
+                  //     cardPadding="p-2 xl:p-4"
+                  //     cardBorder="border hover:shadow-xl transition-shadow duration-300 hover:border-gray-400"
+                  //     cardBgColor="bg-surface-color"
+                  //     cardImgClass="aspect-[3/5]"
+                  //   />
+
+                  <HorizontalCard
+                    titleCustom="!text-h6"
                     key={product.id}
-                  >
-                    <Card
-                      cardInfo={product.attributes.Writer}
-                      cardTitle={product.attributes.Title}
-                      cardImg={
-                        product.attributes.MainImage.data
-                          ? process.env.DATA_URL +
-                            product.attributes.MainImage.data.attributes.url
-                          : ""
-                      }
-                      cardPadding="p-2 xl:p-4"
-                      cardBorder="border hover:shadow-xl transition-shadow duration-300 hover:border-gray-400"
-                      cardBgColor="bg-surface-color"
-                      cardImgClass="aspect-[3/5]"
-                    />
-                  </Link>
+                    cardTitle={product.attributes.Title}
+                    cardImg={
+                      product.attributes.MainImage.data
+                        ? process.env.NEXT_PUBLIC_DATA_URL +
+                          product.attributes.MainImage.data.attributes.url
+                        : ""
+                    }
+                    cardBorder="border hover:shadow-xl transition-shadow duration-300 hover:border-gray-400"
+                    cardPadding="p-2 xl:p-4"
+                    cardBgColor="bg-surface-color"
+                    cardImgClass="aspect-[5/3]"
+                    cardDesc={product.attributes.Description}
+                    cardBtn={t("read_more")}
+                    cardLink={`/products/${product.attributes.Slug}`}
+                    cardBtnType="link"
+                  />
                 ))}
               </Row>
             </div>
@@ -160,21 +183,21 @@ export default function Products({ menu, products, generalSettings }) {
 
 export async function getServerSideProps({ locale, defaultLocale }) {
   const res = await fetch(
-    `${process.env.DATA_URL}/api/navigation/render/main-navigation${
+    `${process.env.NEXT_PUBLIC_DATA_URL}/api/navigation/render/main-navigation${
       locale === defaultLocale ? "" : "-" + locale
     }`
   );
   const menu = await res.json();
 
   const resSettings = await fetch(
-    ` ${process.env.DATA_URL}/api/general-site-setting?populate=* `
+    ` ${process.env.NEXT_PUBLIC_DATA_URL}/api/general-site-setting?populate=* `
   );
   const settings = await resSettings.json();
   const generalSettings = settings.data.attributes;
 
   const resProducts = await fetch(
     `${
-      process.env.DATA_URL
+      process.env.NEXT_PUBLIC_DATA_URL
     }/api/products?populate=Image&populate=category&populate=MainImage&locale=${
       locale === defaultLocale ? defaultLocale : locale
     }`

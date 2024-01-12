@@ -51,15 +51,16 @@ export default function Contact({ generalSettings, menu }) {
           }
         />
       </Head>
-      <Layout menuItems={menu}>
+      <Layout menuItems={menu} generalSettings={generalSettings}>
         <Container>
           <Row rowCol="grid-cols-1 md:grid-cols-2">
             <div>
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d192697.88850536282!2d28.8473727310983!3d41.005463242987815!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa7040068086b%3A0xe1ccfe98bc01b0d0!2zxLBzdGFuYnVs!5e0!3m2!1str!2str!4v1704184302484!5m2!1str!2str"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.2766280325077!2d29.13734157644978!3d40.99731812009903!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cacf4d6a09ad3b%3A0x2c4dd6a08c072bd5!2sBoysis!5e0!3m2!1str!2str!4v1704969154803!5m2!1str!2str"
                 width="600"
                 height="450"
                 className="rounded w-full"
+                allowfullscreen=""
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
               ></iframe>
