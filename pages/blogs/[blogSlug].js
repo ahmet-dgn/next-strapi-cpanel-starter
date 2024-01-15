@@ -3,9 +3,10 @@ import Container from "@/components/ui/container";
 import ReactMarkdown from "react-markdown";
 import Image from "next/image";
 import SEO from "@/components/seo";
+import { getMenu, getGeneralSettings, getSingleBlog } from "@/lib/query";
 
-export default function ProductDetail({ blog, menu, generalSettings }) {
-  const data = blog.data[0];
+export default function ProductDetail({ singleBlog, menu, generalSettings }) {
+  const data = singleBlog;
 
   const seo = {
     metaTitle: data.attributes.Title,
@@ -41,75 +42,18 @@ export default function ProductDetail({ blog, menu, generalSettings }) {
   );
 }
 
-// export const getStaticPaths = async ({ locales }) => {
-//   const localeAll = locales;
-//   const paths = [];
-
-//   for (const locale of localeAll) {
-//     try {
-//       const res = await fetch(`${process.env.DATA_URL}/api/blogs?locale=${locale}`);
-//       if (!res.ok) {
-//         throw new Error(`HTTP error! status: ${res.status}`);
-//       }
-//       const blogs = await res.json();
-
-//       const localePaths = blogs.data.map((blog) => ({
-//         params: { blogSlug: blog.attributes.Slug.toString() },
-//         locale: locale,
-//       }));
-
-//       paths.push(...localePaths);
-//     } catch (error) {
-//       console.error(`Fetch failed for ${locale}:`, error);
-//     }
-//   }
-
-//   return {
-//     paths,
-//     fallback: "blocking",
-//   };
-// };
-
 export const getServerSideProps = async ({ params, locale, defaultLocale }) => {
-  const resNav = await fetch(
-    `${process.env.DATA_URL}/api/navigation/render/main-navigation${
-      locale === defaultLocale ? "" : "-" + locale
-    }`
-  );
-  const menu = await resNav.json();
-
-  const resSettings = await fetch(
-    ` ${process.env.DATA_URL}/api/general-site-setting?populate=* `
-  );
-  const settings = await resSettings.json();
-  const generalSettings = settings.data.attributes;
-
-  let translation = undefined;
   const { blogSlug } = params;
-  const initialRes = await fetch(
-    `${process.env.DATA_URL}/api/blogs?populate=*&locale=all&filters[Slug][$eq]=${blogSlug}`
-  );
-  const initial = await initialRes.json();
-
-  if (
-    locale ===
-    initial.data[0].attributes.localizations.data[0].attributes.locale
-  ) {
-    // Assuming you have a field for storing translated slugs in your blogs
-    const translatedSlug =
-      initial.data[0].attributes.localizations.data[0].attributes.Slug;
-
-    const translationRes = await fetch(
-      `${process.env.DATA_URL}/api/blogs?populate=*&locale=${locale}&filters[Slug][$eq]=${translatedSlug}`
-    );
-    translation = await translationRes.json();
-  }
+  const slug = blogSlug;
+  const menu = await getMenu(locale, defaultLocale);
+  const generalSettings = await getGeneralSettings();
+  const singleBlog = await getSingleBlog(slug, locale);
 
   return {
     props: {
       menu,
       generalSettings,
-      blog: translation ? translation : initial,
+      singleBlog,
     },
   };
 };

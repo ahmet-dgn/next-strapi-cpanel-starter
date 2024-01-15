@@ -8,12 +8,12 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import Link from "next/link";
 import SEO from "@/components/seo";
+import { getMenu, getGeneralSettings, getProductList } from "@/lib/query";
 
 export default function Products({ menu, products, generalSettings }) {
   const { t, i18n } = useTranslation("common");
-  const productsData = products.data;
 
-  const [filteredProducts, setFilteredProducts] = useState(productsData);
+  const [filteredProducts, setFilteredProducts] = useState(products);
 
   // Dil değiştiğinde filtrelenmiş ürünleri güncelle
   useEffect(() => {
@@ -25,9 +25,9 @@ export default function Products({ menu, products, generalSettings }) {
     categoryTitle = t("all_filter")
   ) => {
     if (categoryTitle === t("all_filter")) {
-      setFilteredProducts(productsData); // Tüm ürünleri göster
+      setFilteredProducts(products); // Tüm ürünleri göster
     } else {
-      const filtered = productsData.filter((product) => {
+      const filtered = products.filter((product) => {
         const productLanguage = product.attributes.locale;
         const productCategoryTitle =
           product.attributes.category.data.attributes.Title;
@@ -49,7 +49,7 @@ export default function Products({ menu, products, generalSettings }) {
     setMenuStatus(!currentMenuStatus);
   };
 
-  const categories = productsData.map((product) => {
+  const categories = products.map((product) => {
     if (product.attributes.category && product.attributes.category.data) {
       return product.attributes.category.data.attributes.Title;
     }
@@ -131,46 +131,46 @@ export default function Products({ menu, products, generalSettings }) {
                 </p>
               </div>
 
-              <Row rowCol="grid-cols-1 ">
+              <Row rowCol="grid-cols-2 min-[475px]:grid-cols-3 md:grid-cols-4">
                 {filteredProducts.map((product) => (
-                  //   <Link
-                  //   href={`/products/${product.attributes.Slug}`}
-                  //   key={product.id}
-                  // >
-                  //  <Card
-                  //     cardInfo={product.attributes.Writer}
-                  //     cardTitle={product.attributes.Title}
-                  //     cardImg={
-                  //       product.attributes.MainImage.data
-                  //         ? process.env.NEXT_PUBLIC_DATA_URL +
-                  //           product.attributes.MainImage.data.attributes.url
-                  //         : ""
-                  //     }
-                  //     cardPadding="p-2 xl:p-4"
-                  //     cardBorder="border hover:shadow-xl transition-shadow duration-300 hover:border-gray-400"
-                  //     cardBgColor="bg-surface-color"
-                  //     cardImgClass="aspect-[3/5]"
-                  //   />
-
-                  <HorizontalCard
-                    titleCustom="!text-h6"
+                  <Link
+                    href={`/products/${product.attributes.Slug}`}
                     key={product.id}
-                    cardTitle={product.attributes.Title}
-                    cardImg={
-                      product.attributes.MainImage.data
-                        ? process.env.NEXT_PUBLIC_DATA_URL +
-                          product.attributes.MainImage.data.attributes.url
-                        : ""
-                    }
-                    cardBorder="border hover:shadow-xl transition-shadow duration-300 hover:border-gray-400"
-                    cardPadding="p-2 xl:p-4"
-                    cardBgColor="bg-surface-color"
-                    cardImgClass="aspect-[5/3]"
-                    cardDesc={product.attributes.Description}
-                    cardBtn={t("read_more")}
-                    cardLink={`/products/${product.attributes.Slug}`}
-                    cardBtnType="link"
-                  />
+                  >
+                    <Card
+                      cardInfo={product.attributes.Writer}
+                      cardTitle={product.attributes.Title}
+                      cardImg={
+                        product.attributes.MainImage.data
+                          ? process.env.NEXT_PUBLIC_DATA_URL +
+                            product.attributes.MainImage.data.attributes.url
+                          : ""
+                      }
+                      cardPadding="p-2 xl:p-4"
+                      cardBorder="border hover:shadow-xl transition-shadow duration-300 hover:border-gray-400"
+                      cardBgColor="bg-surface-color"
+                      cardImgClass="aspect-[3/5]"
+                    />
+                  </Link>
+                  // <HorizontalCard
+                  //   titleCustom="!text-h6"
+                  //   key={product.id}
+                  //   cardTitle={product.attributes.Title}
+                  //   cardImg={
+                  //     product.attributes.MainImage.data
+                  //       ? process.env.NEXT_PUBLIC_DATA_URL +
+                  //         product.attributes.MainImage.data.attributes.url
+                  //       : ""
+                  //   }
+                  //   cardBorder="border hover:shadow-xl transition-shadow duration-300 hover:border-gray-400"
+                  //   cardPadding="p-2 xl:p-4"
+                  //   cardBgColor="bg-surface-color"
+                  //   cardImgClass="aspect-[5/3]"
+                  //   cardDesc={product.attributes.Description}
+                  //   cardBtn={t("read_more")}
+                  //   cardLink={`/products/${product.attributes.Slug}`}
+                  //   cardBtnType="link"
+                  // />
                 ))}
               </Row>
             </div>
@@ -182,27 +182,9 @@ export default function Products({ menu, products, generalSettings }) {
 }
 
 export async function getServerSideProps({ locale, defaultLocale }) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_DATA_URL}/api/navigation/render/main-navigation${
-      locale === defaultLocale ? "" : "-" + locale
-    }`
-  );
-  const menu = await res.json();
-
-  const resSettings = await fetch(
-    ` ${process.env.NEXT_PUBLIC_DATA_URL}/api/general-site-setting?populate=* `
-  );
-  const settings = await resSettings.json();
-  const generalSettings = settings.data.attributes;
-
-  const resProducts = await fetch(
-    `${
-      process.env.NEXT_PUBLIC_DATA_URL
-    }/api/products?populate=Image&populate=category&populate=MainImage&locale=${
-      locale === defaultLocale ? defaultLocale : locale
-    }`
-  );
-  const products = await resProducts.json();
+  const menu = await getMenu(locale, defaultLocale);
+  const generalSettings = await getGeneralSettings();
+  const products = await getProductList(locale, defaultLocale);
 
   return {
     props: {

@@ -7,15 +7,14 @@ import { useRef, useEffect, useState } from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import SEO from "@/components/seo";
+import { getMenu, getGeneralSettings, getSingleProduct } from "@/lib/query";
 
 export default function ProductDetail({ product, menu, generalSettings }) {
-  const data = product.data[0];
-
-  const imagesArray = data.attributes.MainImage.data
+  const imagesArray = product.attributes.MainImage.data
     ? [
         process.env.NEXT_PUBLIC_DATA_URL +
-          data.attributes.MainImage.data.attributes.url,
-        ...(data.attributes.Image.data?.map(
+          product.attributes.MainImage.data.attributes.url,
+        ...(product.attributes.Image.data?.map(
           (image) => process.env.NEXT_PUBLIC_DATA_URL + image.attributes.url
         ) || []),
       ].filter((url) => url !== undefined && url !== null && url !== "")
@@ -59,8 +58,8 @@ export default function ProductDetail({ product, menu, generalSettings }) {
   const sliderPosition = clientWidth * currentIndex;
 
   const seo = {
-    metaTitle: data.attributes.Title,
-    metaDescription: data.attributes.Description,
+    metaTitle: product.attributes.Title,
+    metaDescription: product.attributes.Description,
   };
 
   return (
@@ -115,7 +114,7 @@ export default function ProductDetail({ product, menu, generalSettings }) {
                         src={image}
                         fill
                         alt="/"
-                        className="object-cover rounded border-transparent transition-transform duration-500 touch-pan-x select-none"
+                        className="object-contain rounded border-transparent transition-transform duration-500 touch-pan-x select-none"
                         style={{
                           transform: `translateX(-${sliderPosition}px)`,
                         }}
@@ -146,10 +145,10 @@ export default function ProductDetail({ product, menu, generalSettings }) {
             <div className="lg:px-8 space-y-4">
               <h1 className="text-h2 text-on-background-color">
                 {" "}
-                {data.attributes.Title}
+                {product.attributes.Title}
               </h1>
               <div className="space-y-4">
-                <ReactMarkdown>{data.attributes.Description}</ReactMarkdown>
+                <ReactMarkdown>{product.attributes.Description}</ReactMarkdown>
               </div>
             </div>
           </Row>
@@ -159,75 +158,19 @@ export default function ProductDetail({ product, menu, generalSettings }) {
   );
 }
 
-// export const getStaticPaths = async ({ locales }) => {
-//   const localeAll = locales;
-//   const paths = [];
-
-//   for (const locale of localeAll) {
-//     try {
-//       const res = await fetch(`${process.env.NEXT_PUBLIC_DATA_URL}/api/products?locale=${locale}`);
-//       if (!res.ok) {
-//         throw new Error(`HTTP error! status: ${res.status}`);
-//       }
-//       const products = await res.json();
-
-//       const localePaths = products.data.map((product) => ({
-//         params: { productSlug: product.attributes.Slug.toString() },
-//         locale: locale,
-//       }));
-
-//       paths.push(...localePaths);
-//     } catch (error) {
-//       console.error(`Fetch failed for ${locale}:`, error);
-//     }
-//   }
-
-//   return {
-//     paths,
-//     fallback: "blocking",
-//   };
-// };
-
 export const getServerSideProps = async ({ params, locale, defaultLocale }) => {
-  const resNav = await fetch(
-    `${process.env.NEXT_PUBLIC_DATA_URL}/api/navigation/render/main-navigation${
-      locale === defaultLocale ? "" : "-" + locale
-    }`
-  );
-  const menu = await resNav.json();
+  const menu = await getMenu(locale, defaultLocale);
+  const generalSettings = await getGeneralSettings();
 
-  const resSettings = await fetch(
-    `${process.env.NEXT_PUBLIC_DATA_URL}/api/general-site-setting?populate=*`
-  );
-  const settings = await resSettings.json();
-  const generalSettings = settings.data.attributes;
-
-  let translation = undefined;
   const { productSlug } = params;
-  const initialRes = await fetch(
-    `${process.env.NEXT_PUBLIC_DATA_URL}/api/products?populate=*&locale=all&filters[Slug][$eq]=${productSlug}`
-  );
-  const initial = await initialRes.json();
-
-  if (
-    locale ===
-    initial.data[0].attributes.localizations.data[0].attributes.locale
-  ) {
-    // Assuming you have a field for storing translated slugs in your products
-    const translatedSlug =
-      initial.data[0].attributes.localizations.data[0].attributes.Slug;
-
-    const translationRes = await fetch(
-      `${process.env.NEXT_PUBLIC_DATA_URL}/api/products?populate=*&locale=${locale}&filters[Slug][$eq]=${translatedSlug}`
-    );
-    translation = await translationRes.json();
-  }
+  const slug = productSlug;
+  const product = await getSingleProduct(slug, locale);
 
   return {
     props: {
       menu,
       generalSettings,
-      product: translation ? translation : initial,
+      product,
       ...(await serverSideTranslations(locale, ["common"])),
     },
   };

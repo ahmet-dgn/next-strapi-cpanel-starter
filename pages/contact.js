@@ -7,6 +7,7 @@ import Head from "next/head";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
+import { getMenu, getGeneralSettings } from "@/lib/query";
 
 export default function Contact({ generalSettings, menu }) {
   const companyName = generalSettings.CompanyName;
@@ -151,18 +152,8 @@ export default function Contact({ generalSettings, menu }) {
 }
 
 export async function getServerSideProps({ locale, defaultLocale }) {
-  const res = await fetch(
-    `${process.env.DATA_URL}/api/navigation/render/main-navigation${
-      locale === defaultLocale ? "" : "-" + locale
-    }`
-  );
-  const menu = await res.json();
-
-  const resSettings = await fetch(
-    `${process.env.DATA_URL}/api/general-site-setting?populate=*`
-  );
-  const settings = await resSettings.json();
-  const generalSettings = settings.data.attributes;
+  const menu = await getMenu(locale, defaultLocale);
+  const generalSettings = await getGeneralSettings();
 
   return {
     props: {

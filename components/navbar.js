@@ -25,7 +25,7 @@ export function Navbar({ menuData, generalSettings }) {
           <Image
             className="object-contain  my-4 width max-w-[150px] lg:max-w-[200px]"
             src={
-              generalSettings
+              generalSettings.Logo
                 ? process.env.NEXT_PUBLIC_DATA_URL +
                   generalSettings.Logo.data[0].attributes.url
                 : ""

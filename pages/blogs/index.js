@@ -6,12 +6,12 @@ import HorizontalCard from "@/components/ui/horizontalCard";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import SEO from "@/components/seo";
+import { getMenu, getGeneralSettings, getBlogList } from "@/lib/query";
 
-export default function blogs({ menu, blogs, generalSettings }) {
+export default function Blogs({ menu, blogList, generalSettings }) {
   const { t, i18n } = useTranslation("common");
-  const blogsData = blogs.data;
 
-  const [filteredblogs, setFilteredblogs] = useState(blogsData);
+  const [filteredblogs, setFilteredblogs] = useState(blogList);
 
   // Dil değiştiğinde filtrelenmiş ürünleri güncelle
   useEffect(() => {
@@ -23,9 +23,9 @@ export default function blogs({ menu, blogs, generalSettings }) {
     categoryTitle = t("all_filter")
   ) => {
     if (categoryTitle === t("all_filter")) {
-      setFilteredblogs(blogsData); // Tüm ürünleri göster
+      setFilteredblogs(blogList); // Tüm ürünleri göster
     } else {
-      const filtered = blogsData.filter((blog) => {
+      const filtered = blogList.filter((blog) => {
         const blogLanguage = blog.attributes.locale;
         const blogCategoryTitle =
           blog.attributes.blog_category.data.attributes.Title;
@@ -47,7 +47,7 @@ export default function blogs({ menu, blogs, generalSettings }) {
     setMenuStatus(!currentMenuStatus);
   };
 
-  const categories = blogsData.map(
+  const categories = blogList.map(
     (blog) => blog.attributes.blog_category.data.attributes.Title
   );
 
@@ -155,33 +155,14 @@ export default function blogs({ menu, blogs, generalSettings }) {
 }
 
 export async function getServerSideProps({ locale, defaultLocale }) {
-  const res = await fetch(
-    `${process.env.DATA_URL}/api/navigation/render/main-navigation${
-      locale === defaultLocale ? "" : "-" + locale
-    }`
-  );
-  const menu = await res.json();
-
-  const resSettings = await fetch(
-    ` ${process.env.DATA_URL}/api/general-site-setting?populate=* `
-  );
-  const settings = await resSettings.json();
-  const generalSettings = settings.data.attributes;
-
-  const resBlogs = await fetch(
-    `${
-      process.env.DATA_URL
-    }/api/blogs?populate=Image&populate=blog_category&populate=MainImage&locale=${
-      locale === defaultLocale ? defaultLocale : locale
-    }`
-  );
-  const blogs = await resBlogs.json();
-
+  const menu = await getMenu(locale, defaultLocale);
+  const generalSettings = await getGeneralSettings();
+  const blogList = await getBlogList(locale, defaultLocale);
   return {
     props: {
       menu,
       generalSettings,
-      blogs,
+      blogList,
       ...(await serverSideTranslations(locale, ["common"])),
     },
   };
