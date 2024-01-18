@@ -2,9 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import Button from "./ui/buttons";
+import { useRouter } from "next/router";
 
 export function Navbar({ menuData, generalSettings }) {
   const menuItems = menuData;
+  const { asPath } = useRouter();
 
   const [currentMenuStatus, setMenuStatus] = useState(false);
 
@@ -19,16 +21,25 @@ export function Navbar({ menuData, generalSettings }) {
     setOpenSubChildId(openSubChildId === childItemId ? null : childItemId);
   };
   return (
-    <nav className="bg-nav-color">
+    <nav
+      className={`bg-nav-color w-full ${
+        (asPath === "/") & (generalSettings.TransparanNavbar === true)
+          ? "bg-transparent absolute top-12 left-0 z-20"
+          : ""
+      }`}
+    >
       <div className="flex justify-between items-center 2xl:container mx-auto px-4 xl:px-8 min-h-[6rem]">
         <Link href="/">
           <Image
             className="object-contain  my-4 width max-w-[150px] lg:max-w-[200px]"
             src={
-              generalSettings.Logo
-                ? process.env.NEXT_PUBLIC_DATA_URL +
-                  generalSettings.Logo.data[0].attributes.url
-                : ""
+              asPath === "/" && generalSettings.TransparanNavbar
+                ? generalSettings.BeyazLogo?.data?.attributes?.url &&
+                  process.env.NEXT_PUBLIC_DATA_URL +
+                    generalSettings.BeyazLogo.data.attributes.url
+                : generalSettings.Logo?.data?.attributes?.url &&
+                  process.env.NEXT_PUBLIC_DATA_URL +
+                    generalSettings.Logo.data.attributes.url
             }
             width={200}
             height={50}
@@ -37,7 +48,7 @@ export function Navbar({ menuData, generalSettings }) {
         </Link>
 
         <div
-          className={` w-full h-full fixed top-0 z-20 bg-nav-color lg:bg-transparent p-8 ${
+          className={` w-full h-full fixed top-0 z-40 bg-nav-color lg:bg-transparent p-8 ${
             !currentMenuStatus
               ? "-left-full origin-left duration-500 "
               : "left-0 origin-left duration-500 "
@@ -48,10 +59,20 @@ export function Navbar({ menuData, generalSettings }) {
               .filter((menuItem) => !menuItem.parent)
               .map((parentItem) => (
                 <li
-                  className="flex group justify-center cursor-pointer flex-col rounded min-h-[2rem] text-link-normal px-4 lg:relative"
+                  className="flex group justify-center cursor-pointer flex-col rounded min-h-[2rem] text-link-normal text-on-nav-color px-4 lg:relative"
                   key={parentItem.id}
                 >
-                  <Button href={parentItem.path} size="md" type="link">
+                  <Button
+                    href={parentItem.path}
+                    size="md"
+                    type="link"
+                    color={
+                      (asPath === "/") &
+                      (generalSettings.TransparanNavbar === true)
+                        ? "white"
+                        : ""
+                    }
+                  >
                     {parentItem.title}
 
                     {menuItems.filter(
@@ -74,7 +95,7 @@ export function Navbar({ menuData, generalSettings }) {
                     (childItem) =>
                       childItem.parent && childItem.parent.id === parentItem.id
                   ).length > 0 && (
-                    <ul className="px-4 z-50 h-0 lg:w-0 group-hover:h-fit group-hover:lg:w-52 group-hover:lg:py-2 overflow-hidden rounded bg-gray-50 lg:absolute lg:top-8 lg:shadow-xl lg:bg-white lg:border-gray-200 group-hover:lg:border">
+                    <ul className="px-4 z-40 h-0 lg:w-0 group-hover:h-fit group-hover:lg:w-52 group-hover:lg:py-2 overflow-hidden rounded bg-gray-50 lg:absolute lg:top-8 lg:shadow-xl lg:bg-white lg:border-gray-200 group-hover:lg:border">
                       {menuItems
                         .filter(
                           (childItem) =>
@@ -92,11 +113,11 @@ export function Navbar({ menuData, generalSettings }) {
                                 subChildItem.parent &&
                                 subChildItem.parent.id === childItem.id
                             ).length > 0 ? (
-                              <p className="flex items-center justify-center w-fit rounded min-h-[2.5rem] text-link-small text-primary-color hover:text-primary-color/60 !px-0">
+                              <p className="flex items-center justify-center w-fit rounded min-h-[2.5rem] text-link-small text-on-nav-color hover:text-on-nav-color/60 !px-0">
                                 {" "}
                                 {childItem.title}{" "}
                                 <svg
-                                  className={`ml-0.8 inline-block fill-primary-color group-hover:fill-primary-color/60`}
+                                  className={`ml-0.8 inline-block fill-on-nav-color group-hover:fill-on-nav-color/60`}
                                   width="24"
                                   height="24"
                                   viewBox="0 0 24 24"
@@ -121,7 +142,7 @@ export function Navbar({ menuData, generalSettings }) {
                                 subChildItem.parent.id === childItem.id
                             ).length > 0 && (
                               <ul
-                                className={`pl-4 z-50  overflow-hidden rounded ${
+                                className={`pl-4 z-40  overflow-hidden rounded ${
                                   openSubChildId === childItem.id
                                     ? "h-fit"
                                     : "h-0"
@@ -158,7 +179,11 @@ export function Navbar({ menuData, generalSettings }) {
           </ul>
           <svg
             onClick={menuStatusHandler}
-            className="absolute right-4 top-4 hover:scale-125 fill-on-nav-color lg:hidden "
+            className={`absolute right-4 top-4 hover:scale-125  lg:hidden ${
+              (asPath === "/") & (generalSettings.TransparanNavbar === true)
+                ? "fill-white"
+                : "fill-on-nav-color "
+            }`}
             width="30"
             height="30"
             viewBox="0 0 24 24"

@@ -4,12 +4,14 @@ export default function SEO({ generalSettings, seoData }) {
   const domain = generalSettings.FrontUrl;
   const companyName = generalSettings.CompanyName;
   const logo = generalSettings.Logo
-    ? process.env.NEXT_PUBLIC_DATA_URL +
-      generalSettings.Logo.data[0].attributes.url
+    ? generalSettings.Logo?.data?.attributes?.url &&
+      process.env.NEXT_PUBLIC_DATA_URL +
+        generalSettings.Logo.data.attributes.url
     : "";
   const favicon = generalSettings.Favicon
-    ? process.env.NEXT_PUBLIC_DATA_URL +
-      generalSettings.Favicon.data[0].attributes.url
+    ? generalSettings.Favicon?.data?.attributes?.url &&
+      process.env.NEXT_PUBLIC_DATA_URL +
+        generalSettings.Favicon.data.attributes.url
     : "";
   const index = generalSettings.Index;
   return (

@@ -75,70 +75,100 @@ export default function Products({ menu, products, generalSettings }) {
 
       <Layout menuItems={menu} generalSettings={generalSettings}>
         <Container>
-          <Row rowCol="grid-cols-2  lg:grid-cols-3  ">
-            <div
-              className={` w-full h-full fixed top-0 z-20 bg-nav-color lg:bg-transparent p-8 ${
-                !currentMenuStatus
-                  ? "-left-full origin-left duration-500 "
-                  : "left-0 origin-left duration-500 "
-              } lg:static lg:block lg:h-fit lg:mr-12 lg:w-4/5 lg:p-0`}
-            >
-              <svg
-                onClick={menuStatusHandler}
-                className="absolute right-4 top-4 hover:scale-125 fill-on-nav-color lg:hidden "
-                width="30"
-                height="30"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
+          <Row
+            rowCol={`grid-cols-2   ${
+              generalSettings.KategoriYanBar && "lg:grid-cols-3"
+            }`}
+          >
+            {generalSettings.KategoriYanBar && (
+              <div
+                className={` w-full h-full fixed top-0 z-20 bg-nav-color lg:bg-transparent p-8 ${
+                  !currentMenuStatus
+                    ? "-left-full origin-left duration-500 "
+                    : "left-0 origin-left duration-500 "
+                } lg:static lg:block lg:h-fit lg:mr-12 lg:w-4/5 lg:p-0`}
               >
-                <path d="M18.3 5.71C17.91 5.32 17.28 5.32 16.89 5.71L12 10.59L7.10997 5.7C6.71997 5.31 6.08997 5.31 5.69997 5.7C5.30997 6.09 5.30997 6.72 5.69997 7.11L10.59 12L5.69997 16.89C5.30997 17.28 5.30997 17.91 5.69997 18.3C6.08997 18.69 6.71997 18.69 7.10997 18.3L12 13.41L16.89 18.3C17.28 18.69 17.91 18.69 18.3 18.3C18.69 17.91 18.69 17.28 18.3 16.89L13.41 12L18.3 7.11C18.68 6.73 18.68 6.09 18.3 5.71Z" />
-              </svg>
-              <h6 className="text-h5 text-on-background-color mb-4">
-                {t("categories")}
-              </h6>
-              <div className="space-y-2">
-                <p
-                  className="py-2 border-b border-gray-300 cursor-pointer text-on-background-color hover:text-primary-color/60"
-                  onClick={() => {
-                    filterProductsByLanguageAndCategory(t("all_filter"));
-                    menuStatusHandler();
-                  }} // Show all option
+                <svg
+                  onClick={menuStatusHandler}
+                  className="absolute right-4 top-4 hover:scale-125 fill-on-nav-color lg:hidden "
+                  width="30"
+                  height="30"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  {t("all_filter")}
-                </p>
-                {filteredCategories.map((category) => (
+                  <path d="M18.3 5.71C17.91 5.32 17.28 5.32 16.89 5.71L12 10.59L7.10997 5.7C6.71997 5.31 6.08997 5.31 5.69997 5.7C5.30997 6.09 5.30997 6.72 5.69997 7.11L10.59 12L5.69997 16.89C5.30997 17.28 5.30997 17.91 5.69997 18.3C6.08997 18.69 6.71997 18.69 7.10997 18.3L12 13.41L16.89 18.3C17.28 18.69 17.91 18.69 18.3 18.3C18.69 17.91 18.69 17.28 18.3 16.89L13.41 12L18.3 7.11C18.68 6.73 18.68 6.09 18.3 5.71Z" />
+                </svg>
+                <h6 className="text-h5 text-on-background-color mb-4">
+                  {t("categories")}
+                </h6>
+                <div className="space-y-2">
                   <p
                     className="py-2 border-b border-gray-300 cursor-pointer text-on-background-color hover:text-primary-color/60"
-                    key={category}
                     onClick={() => {
-                      filterProductsByLanguageAndCategory(category);
+                      filterProductsByLanguageAndCategory(t("all_filter"));
                       menuStatusHandler();
-                    }}
+                    }} // Show all option
                   >
-                    {category}
+                    {t("all_filter")}
                   </p>
-                ))}
+                  {filteredCategories.map((category) => (
+                    <p
+                      className="py-2 border-b border-gray-300 cursor-pointer text-on-background-color hover:text-primary-color/60"
+                      key={category}
+                      onClick={() => {
+                        filterProductsByLanguageAndCategory(category);
+                        menuStatusHandler();
+                      }}
+                    >
+                      {category}
+                    </p>
+                  ))}
+                </div>
               </div>
-            </div>
-            {/* Display filtered products */}
-            <div className="col-span-2 w-full">
-              <div
-                className="w-full flex justify-end mb-4 lg:hidden"
-                onClick={menuStatusHandler}
-              >
-                <p className="  min-h-[2rem] px-3 text-link-small flex items-center justify-center w-fit rounded text-on-background-color border-2 border-on-background-color hover:bg-on-background-color/20">
-                  Filtreyi Göster
-                </p>
-              </div>
+            )}
 
-              <Row rowCol="grid-cols-2 min-[475px]:grid-cols-3 md:grid-cols-4">
-                {filteredProducts.map((product) => (
-                  <Link
-                    href={`/products/${product.attributes.Slug}`}
-                    key={product.id}
-                  >
-                    <Card
-                      cardInfo={product.attributes.Writer}
+            <div className="col-span-2 w-full">
+              {generalSettings.KategoriYanBar && (
+                <div
+                  className="w-full flex justify-end mb-4 lg:hidden"
+                  onClick={menuStatusHandler}
+                >
+                  <p className="  min-h-[2rem] px-3 text-link-small flex items-center justify-center w-fit rounded text-on-background-color border-2 border-on-background-color hover:bg-on-background-color/20">
+                    Filtreyi Göster
+                  </p>
+                </div>
+              )}
+              {!generalSettings.UrunListesiYatay && (
+                <Row rowCol="grid-cols-2 min-[475px]:grid-cols-3 md:grid-cols-4">
+                  {filteredProducts.map((product) => (
+                    <Link
+                      href={`/products/${product.attributes.Slug}`}
+                      key={product.id}
+                    >
+                      <Card
+                        cardInfo={product.attributes.Writer}
+                        cardTitle={product.attributes.Title}
+                        cardImg={
+                          product.attributes.MainImage.data
+                            ? process.env.NEXT_PUBLIC_DATA_URL +
+                              product.attributes.MainImage.data.attributes.url
+                            : ""
+                        }
+                        cardPadding="p-2 xl:p-4"
+                        cardBorder="border hover:shadow-xl transition-shadow duration-300 hover:border-gray-400"
+                        cardBgColor="bg-surface-color"
+                        cardImgClass="aspect-[3/5]"
+                      />
+                    </Link>
+                  ))}
+                </Row>
+              )}
+              {generalSettings.UrunListesiYatay && (
+                <Row rowCol="grid-cols-1 lg:grid-cols-2">
+                  {filteredProducts.map((product) => (
+                    <HorizontalCard
+                      titleCustom="!text-h6"
+                      key={product.id}
                       cardTitle={product.attributes.Title}
                       cardImg={
                         product.attributes.MainImage.data
@@ -146,33 +176,18 @@ export default function Products({ menu, products, generalSettings }) {
                             product.attributes.MainImage.data.attributes.url
                           : ""
                       }
-                      cardPadding="p-2 xl:p-4"
                       cardBorder="border hover:shadow-xl transition-shadow duration-300 hover:border-gray-400"
+                      cardPadding="p-2 xl:p-4"
                       cardBgColor="bg-surface-color"
-                      cardImgClass="aspect-[3/5]"
+                      cardImgClass="aspect-[5/3]"
+                      cardDesc={product.attributes.Description}
+                      cardBtn={t("read_more")}
+                      cardLink={`/products/${product.attributes.Slug}`}
+                      cardBtnType="link"
                     />
-                  </Link>
-                  // <HorizontalCard
-                  //   titleCustom="!text-h6"
-                  //   key={product.id}
-                  //   cardTitle={product.attributes.Title}
-                  //   cardImg={
-                  //     product.attributes.MainImage.data
-                  //       ? process.env.NEXT_PUBLIC_DATA_URL +
-                  //         product.attributes.MainImage.data.attributes.url
-                  //       : ""
-                  //   }
-                  //   cardBorder="border hover:shadow-xl transition-shadow duration-300 hover:border-gray-400"
-                  //   cardPadding="p-2 xl:p-4"
-                  //   cardBgColor="bg-surface-color"
-                  //   cardImgClass="aspect-[5/3]"
-                  //   cardDesc={product.attributes.Description}
-                  //   cardBtn={t("read_more")}
-                  //   cardLink={`/products/${product.attributes.Slug}`}
-                  //   cardBtnType="link"
-                  // />
-                ))}
-              </Row>
+                  ))}
+                </Row>
+              )}
             </div>
           </Row>
         </Container>
@@ -181,17 +196,29 @@ export default function Products({ menu, products, generalSettings }) {
   );
 }
 
-export async function getServerSideProps({ locale, defaultLocale }) {
-  const menu = await getMenu(locale, defaultLocale);
-  const generalSettings = await getGeneralSettings();
-  const products = await getProductList(locale, defaultLocale);
+export const getServerSideProps = async ({ locale, defaultLocale }) => {
+  try {
+    const menu = await getMenu(locale, defaultLocale);
+    const generalSettings = await getGeneralSettings();
+    const products = await getProductList(locale, defaultLocale);
 
-  return {
-    props: {
-      menu,
-      generalSettings,
-      products,
-      ...(await serverSideTranslations(locale, ["common"])),
-    },
-  };
-}
+    return {
+      props: {
+        menu,
+        generalSettings,
+        products,
+        ...(await serverSideTranslations(locale, ["common"])),
+      },
+    };
+  } catch (error) {
+    console.error("Error in getServerSideProps:", error);
+
+    return {
+      props: {
+        menu: [],
+        pageBlocks: {},
+        products: [],
+      },
+    };
+  }
+};

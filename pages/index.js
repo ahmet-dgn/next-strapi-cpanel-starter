@@ -24,18 +24,30 @@ export default function Home({ menu, generalSettings, blocks, blogList }) {
 }
 
 export async function getServerSideProps({ locale, defaultLocale }) {
-  const menu = await getMenu(locale, defaultLocale);
-  const generalSettings = await getGeneralSettings();
-  const blocks = await getBlocks(locale, defaultLocale);
-  const blogList = await getBlogList(locale, defaultLocale);
+  try {
+    const menu = await getMenu(locale, defaultLocale);
+    const generalSettings = await getGeneralSettings();
+    const blocks = await getBlocks(locale, defaultLocale);
+    const blogList = await getBlogList(locale, defaultLocale);
 
-  return {
-    props: {
-      menu,
-      generalSettings,
-      blocks,
-      blogList,
-      ...(await serverSideTranslations(locale, ["common"])),
-    },
-  };
+    return {
+      props: {
+        menu,
+        generalSettings,
+        blocks,
+        blogList,
+        ...(await serverSideTranslations(locale, ["common"])),
+      },
+    };
+  } catch (error) {
+    console.error("Error in getServerSideProps:", error);
+    return {
+      props: {
+        menu: [],
+        generalSettings: {},
+        blocks: {},
+        blogList: [],
+      },
+    };
+  }
 }

@@ -135,9 +135,9 @@ module.exports = {
         "surface-color": "white",
         "on-surface-color": "#111827",
         "nav-color": "white",
-        "on-nav-color": "#171717",
-        "top-header": "#f5f5f5",
-        "on-top-header": "#171717",
+        "on-nav-color": "#1b3459",
+        "top-header": "white",
+        "on-top-header": "#1b3459",
       },
       fontFamily: {
         sans: ["var(--font-poppins)"],

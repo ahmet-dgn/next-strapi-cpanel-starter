@@ -22,3 +22,6 @@
   transition-duration: 300ms;
 }
 
+video {
+  object-fit: cover;
+}

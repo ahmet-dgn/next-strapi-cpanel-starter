@@ -154,16 +154,29 @@ export default function Blogs({ menu, blogList, generalSettings }) {
   );
 }
 
-export async function getServerSideProps({ locale, defaultLocale }) {
-  const menu = await getMenu(locale, defaultLocale);
-  const generalSettings = await getGeneralSettings();
-  const blogList = await getBlogList(locale, defaultLocale);
-  return {
-    props: {
-      menu,
-      generalSettings,
-      blogList,
-      ...(await serverSideTranslations(locale, ["common"])),
-    },
-  };
-}
+export const getServerSideProps = async ({ locale, defaultLocale }) => {
+  try {
+    const menu = await getMenu(locale, defaultLocale);
+    const generalSettings = await getGeneralSettings();
+    const blogList = await getBlogList(locale, defaultLocale);
+
+    return {
+      props: {
+        menu,
+        generalSettings,
+        blogList,
+        ...(await serverSideTranslations(locale, ["common"])),
+      },
+    };
+  } catch (error) {
+    console.error("Error in getServerSideProps:", error);
+
+    return {
+      props: {
+        menu: [],
+        generalSettings: {},
+        blogList: [],
+      },
+    };
+  }
+};

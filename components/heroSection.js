@@ -22,7 +22,11 @@ export default function HeroSection({ data }) {
                 }
                 width={700}
                 height={475}
-                className="object-contain rounded aspect-[4/3]"
+                className={`rounded aspect-[4/3] ${
+                  HeroSectionData.ResmiSigdir
+                    ? "object-contain"
+                    : "object-cover"
+                } `}
                 alt={HeroSectionData.Title || "About Us"}
               />
             )}

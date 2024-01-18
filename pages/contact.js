@@ -13,10 +13,10 @@ export default function Contact({ generalSettings, menu }) {
   const companyName = generalSettings.CompanyName;
   const domain = generalSettings.FrontUrl;
   const logo = generalSettings.Logo.data
-    ? `${process.env.DATA_URL}${generalSettings.Logo.data[0].attributes.url}`
+    ? `${process.env.DATA_URL}${generalSettings.Logo.data.attributes.url}`
     : "";
   const favicon = generalSettings.Favicon.data
-    ? `${process.env.DATA_URL}${generalSettings.Favicon.data[0].attributes.url}`
+    ? `${process.env.DATA_URL}${generalSettings.Favicon.data.attributes.url}`
     : "";
   const index = generalSettings.Index;
   const { t } = useTranslation("common");
@@ -152,15 +152,26 @@ export default function Contact({ generalSettings, menu }) {
 }
 
 export async function getServerSideProps({ locale, defaultLocale }) {
-  const menu = await getMenu(locale, defaultLocale);
-  const generalSettings = await getGeneralSettings();
+  try {
+    const menu = await getMenu(locale, defaultLocale);
+    const generalSettings = await getGeneralSettings();
 
-  return {
-    props: {
-      menu,
-      generalSettings,
+    return {
+      props: {
+        menu,
+        generalSettings,
 
-      ...(await serverSideTranslations(locale, ["common"])),
-    },
-  };
+        ...(await serverSideTranslations(locale, ["common"])),
+      },
+    };
+  } catch (error) {
+    console.error("Error in getServerSideProps:", error);
+
+    return {
+      props: {
+        menu: [],
+        generalSettings: {},
+      },
+    };
+  }
 }

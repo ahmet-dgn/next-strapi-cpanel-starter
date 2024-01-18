@@ -7,7 +7,7 @@ export default function Layout({ children, menuItems, generalSettings }) {
   return (
     <>
       <header>
-        <TopHeader />
+        <TopHeader generalSettings={generalSettings} />
         <Navbar menuData={menuItems} generalSettings={generalSettings} />
       </header>
       <main>{children}</main>

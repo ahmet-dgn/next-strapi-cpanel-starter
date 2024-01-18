@@ -4,13 +4,11 @@ import Row from "./ui/row";
 import Title from "./ui/title";
 
 export default function Blog({ data, title, description, translation }) {
-  const blogs = data.data;
-
   return (
     <>
       <Title titleDesc={description}>{title}</Title>
       <Row rowCol="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-        {blogs.slice(0, 3).map((blog) => (
+        {data.slice(0, 3).map((blog) => (
           <Card
             key={blog.id}
             cardPadding="px-2"

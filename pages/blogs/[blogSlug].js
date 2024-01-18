@@ -43,17 +43,29 @@ export default function ProductDetail({ singleBlog, menu, generalSettings }) {
 }
 
 export const getServerSideProps = async ({ params, locale, defaultLocale }) => {
-  const { blogSlug } = params;
-  const slug = blogSlug;
-  const menu = await getMenu(locale, defaultLocale);
-  const generalSettings = await getGeneralSettings();
-  const singleBlog = await getSingleBlog(slug, locale);
+  try {
+    const { blogSlug } = params;
+    const slug = blogSlug;
+    const menu = await getMenu(locale, defaultLocale);
+    const generalSettings = await getGeneralSettings();
+    const singleBlog = await getSingleBlog(slug, locale);
 
-  return {
-    props: {
-      menu,
-      generalSettings,
-      singleBlog,
-    },
-  };
+    return {
+      props: {
+        menu,
+        generalSettings,
+        singleBlog,
+      },
+    };
+  } catch (error) {
+    console.error("Error in getServerSideProps:", error);
+
+    return {
+      props: {
+        menu: [],
+        generalSettings: {},
+        singleBlog: [],
+      },
+    };
+  }
 };

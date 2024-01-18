@@ -159,19 +159,31 @@ export default function ProductDetail({ product, menu, generalSettings }) {
 }
 
 export const getServerSideProps = async ({ params, locale, defaultLocale }) => {
-  const menu = await getMenu(locale, defaultLocale);
-  const generalSettings = await getGeneralSettings();
+  try {
+    const menu = await getMenu(locale, defaultLocale);
+    const generalSettings = await getGeneralSettings();
 
-  const { productSlug } = params;
-  const slug = productSlug;
-  const product = await getSingleProduct(slug, locale);
+    const { productSlug } = params;
+    const slug = productSlug;
+    const product = await getSingleProduct(slug, locale);
 
-  return {
-    props: {
-      menu,
-      generalSettings,
-      product,
-      ...(await serverSideTranslations(locale, ["common"])),
-    },
-  };
+    return {
+      props: {
+        menu,
+        generalSettings,
+        product,
+        ...(await serverSideTranslations(locale, ["common"])),
+      },
+    };
+  } catch (error) {
+    console.error("Error in getServerSideProps:", error);
+
+    return {
+      props: {
+        menu: [],
+        generalSettings: {},
+        product: [],
+      },
+    };
+  }
 };

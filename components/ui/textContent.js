@@ -1,5 +1,7 @@
 import Label from "./labels";
 import Button from "./buttons";
+import ReactMarkdown from "react-markdown";
+
 export default function TextContent({
   link,
   ctaText,
@@ -50,7 +52,11 @@ export default function TextContent({
         </div>
       ) : null}
       {subTitle && <p className={subTitleClass}>{subTitle}</p>}
-      {description && <p className={descriptionClass}>{description}</p>}
+      {description && (
+        <ReactMarkdown className={descriptionClass}>
+          {description}
+        </ReactMarkdown>
+      )}
       {link && (
         <Button href={link} color={btnColor}>
           {ctaText || "İncele"}

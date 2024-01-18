@@ -1,13 +1,21 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
-export default function TopHeader() {
+export default function TopHeader({ generalSettings }) {
   const { locale: activeLocale, locales, asPath, defaultLocale } = useRouter();
   const activeLocales = locales.filter((locale) => locale !== activeLocale);
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="border-b">
+    <div
+      className={`bg-nav-color w-full  ${
+        (asPath === "/") & (generalSettings.TransparanNavbar === true)
+          ? "bg-transparent absolute top-6 left-0  z-10 lg:z-30"
+          : "border-b"
+      }`}
+    >
       <div className="flex justify-between items-center 2xl:container mx-auto px-4 xl:px-8 h-10">
         <div className="flex">
           {/* <div className="hidden sm:flex  justify-center items-center">
@@ -61,7 +69,7 @@ export default function TopHeader() {
             </div>
           </div> */}
         </div>{" "}
-        <div className="flex">
+        <div className="flex lg:px-2">
           {/* <div className="px-4 group items-center hidden md:flex ">
             <Button
               href={`mailto:${ePostaData} `}
@@ -100,8 +108,18 @@ export default function TopHeader() {
               {telefon}
             </Button>
           </div> */}
-          <ul className="group flex flex-col relative pl-4  ">
-            <li className=" cursor-pointer  text-on-top-header hover:text-on-top-header/60 min-h-[2rem] text-link-tiny flex justify-center items-center">
+          <ul
+            className=" flex flex-col relative pl-4  h-fit"
+            onMouseOver={() => setIsHovered(true)}
+            onMouseOut={() => setIsHovered(false)}
+          >
+            <li
+              className={`cursor-pointer   min-h-[2rem] text-link-tiny flex justify-center items-center ${
+                (asPath === "/") & (generalSettings.TransparanNavbar === true)
+                  ? "text-white hover:text-white/60"
+                  : "text-on-top-header hover:text-on-top-header/60"
+              }`}
+            >
               <Image
                 className="object-contain mr-2"
                 src={`/icons/flags/${activeLocale}.svg`}
@@ -117,7 +135,11 @@ export default function TopHeader() {
               />
               {activeLocale.toUpperCase()}
               <svg
-                className={`ml-0.8 inline-block fill-on-top-header group-hover:fill-on-top-header/60`}
+                className={`ml-0.8 inline-block  ${
+                  (asPath === "/") & (generalSettings.TransparanNavbar === true)
+                    ? "fill-white group-hover:white/60"
+                    : "fill-on-top-header group-hover:fill-on-top-header/60"
+                }`}
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
@@ -126,7 +148,13 @@ export default function TopHeader() {
                 <path d="M8.12498 8.99999L12.005 12.88L15.885 8.99999C16.275 8.60999 16.905 8.60999 17.295 8.99999C17.685 9.38999 17.685 10.02 17.295 10.41L12.705 15C12.315 15.39 11.685 15.39 11.295 15L6.70498 10.41C6.31498 10.02 6.31498 9.38999 6.70498 8.99999C7.09498 8.61999 7.73498 8.60999 8.12498 8.99999Z" />
               </svg>
             </li>
-            <ul className=" h-0 overflow-hidden group-hover:h-fit absolute top-8 left-0 z-50 rounded bg-gray-50 lg:absolute lg:shadow-md lg:bg-white">
+            <ul
+              onMouseOver={() => setIsHovered(true)}
+              onMouseOut={() => setIsHovered(false)}
+              className={`h-0 overflow-hidden absolute top-8 left-0 z-30 rounded bg-gray-50 lg:absolute lg:shadow-md lg:bg-white ${
+                isHovered ? "h-fit" : ""
+              }`}
+            >
               {activeLocales.map((locale) => {
                 return (
                   <li key={locale}>

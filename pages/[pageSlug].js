@@ -21,9 +21,8 @@ export default function ProductDetail({
   pageBlocks,
 }) {
   const { t } = useTranslation("common");
-  console.log(
-    process.env.NEXT_PUBLIC_DATA_URL + singlePage.Image.data.attributes.url
-  );
+  console.log(pageBlocks);
+
   return (
     <>
       <SEO generalSettings={generalSettings} seoData={singlePage.SEO} />
@@ -35,15 +34,16 @@ export default function ProductDetail({
           singlePage?.Description ? (
             <div className="mx-auto space-y-8">
               {singlePage.Image.data && (
-                <Image
-                  width={1536}
-                  height={400}
-                  src={
-                    process.env.NEXT_PUBLIC_DATA_URL +
-                    singlePage.Image.data.attributes.url
-                  }
-                  className="rounded"
-                />
+                <div className="w-full relative h-[500px]">
+                  <Image
+                    fill
+                    src={
+                      process.env.NEXT_PUBLIC_DATA_URL +
+                      singlePage.Image.data.attributes.url
+                    }
+                    className="rounded object-cover"
+                  />
+                </div>
               )}
               {singlePage?.Title && (
                 <h1 className="text-h3 text-on-background-color">
@@ -63,21 +63,35 @@ export default function ProductDetail({
 }
 
 export const getServerSideProps = async ({ params, locale, defaultLocale }) => {
-  const { pageSlug } = params;
-  const slug = pageSlug;
-  const { singlePage, pageBlocks } = await getSinglePage(slug, locale);
-  const menu = await getMenu(locale, defaultLocale);
-  const generalSettings = await getGeneralSettings();
-  const blogList = await getBlogList(locale, defaultLocale);
+  try {
+    const { pageSlug } = params;
+    const slug = pageSlug;
+    const { singlePage, pageBlocks } = await getSinglePage(slug, locale);
+    const menu = await getMenu(locale, defaultLocale);
+    const generalSettings = await getGeneralSettings();
+    const blogList = await getBlogList(locale, defaultLocale);
 
-  return {
-    props: {
-      menu,
-      pageBlocks,
-      blogList,
-      generalSettings,
-      singlePage,
-      ...(await serverSideTranslations(locale, ["common"])),
-    },
-  };
+    return {
+      props: {
+        menu,
+        pageBlocks,
+        blogList,
+        generalSettings,
+        singlePage,
+        ...(await serverSideTranslations(locale, ["common"])),
+      },
+    };
+  } catch (error) {
+    console.error("Error in getServerSideProps:", error);
+
+    return {
+      props: {
+        menu: [],
+        pageBlocks: {},
+        blogList: [],
+        generalSettings: {},
+        singlePage: {},
+      },
+    };
+  }
 };

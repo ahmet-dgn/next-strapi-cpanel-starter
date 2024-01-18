@@ -54,194 +54,89 @@ export function ImageBox() {
   );
 }
 
-export function ImageBox2({ products, activeLocale, defaultLocale }) {
+export function ImageBox2({ data }) {
   return (
-    <Container>
-      <Title
-        titleDesc={`${
-          activeLocale == defaultLocale
-            ? "PVC granüller, çeşitli endüstrilerde kullanılarak farklı ürünlerin üretiminde önemli bir rol oynar. PVC'nin esneklik, dayanıklılık ve direnç gibi özellikleri, çeşitli sektörlerde çeşitli kullanım alanlarına olanak sağlar."
-            : activeLocale == "en"
-            ? "PVC granules play a significant role in the production of various products across different industries. The characteristics of PVC such as flexibility, durability, and resistance enable diverse applications in various sectors."
-            : "PVC granüller, çeşitli endüstrilerde kullanılarak farklı ürünlerin üretiminde önemli bir rol oynar. PVC'nin esneklik, dayanıklılık ve direnç gibi özellikleri, çeşitli sektörlerde çeşitli kullanım alanlarına olanak sağlar."
-        } `}
-      >
-        {`${
-          activeLocale == defaultLocale
-            ? "PVC Granül Kullanım Alanları"
-            : activeLocale == "en"
-            ? "Uses of PVC Granules "
-            : "PVC Granül Kullanım Alanları"
-        } `}
-      </Title>
+    <>
+      <Title titleDesc={data.Aciklama}>{data.Baslik}</Title>
+
       <Row rowCol="grid-cols-1  lg:grid-cols-2  ">
-        <Link
-          href={
-            activeLocale == defaultLocale
-              ? products[4].uri
-              : `${activeLocale}` + products[4].uri
-          }
-        >
+        <Link href={data.Icerik[0].Link}>
           <Card
-            cardImg={products[4].products.anaResim.node.mediaItemUrl}
+            cardImg={
+              process.env.NEXT_PUBLIC_DATA_URL +
+              data.Icerik[0].Resim.data.attributes.url
+            }
             cardImgClass="w-full h-[250px]  md:h-[350px] brightness-50 hover:brightness-[.75] cursor-pointer transition duration-500"
             textAlign="text-center"
-            cardImgAlt={
-              activeLocale == defaultLocale
-                ? products[4].title
-                : activeLocale == "en"
-                ? products[4].products.ingilizceBaslik
-                : products[4].title
-            }
-            overleyText={
-              activeLocale == defaultLocale
-                ? products[4].title
-                : activeLocale == "en"
-                ? products[4].products.ingilizceBaslik
-                : products[4].title
-            }
+            cardImgAlt={data.Icerik[0].Baslik}
+            overleyText={data.Icerik[0].Baslik}
           />
         </Link>
         <Row rowCol="grid-cols-1 md:grid-cols-2  ">
-          <Link
-            href={
-              activeLocale == defaultLocale
-                ? products[5].uri
-                : `${activeLocale}` + products[5].uri
-            }
-          >
+          <Link href={data.Icerik[1].Link}>
             <Card
-              cardImg={products[5].products.anaResim.node.mediaItemUrl}
+              cardImg={
+                process.env.NEXT_PUBLIC_DATA_URL +
+                data.Icerik[1].Resim.data.attributes.url
+              }
               cardImgClass="w-full h-[250px]  md:h-[350px] brightness-50 hover:brightness-[.75] cursor-pointer transition duration-500"
               textAlign="text-center"
-              cardImgAlt={
-                activeLocale == defaultLocale
-                  ? products[5].title
-                  : activeLocale == "en"
-                  ? products[5].products.ingilizceBaslik
-                  : products[5].title
-              }
-              overleyText={
-                activeLocale == defaultLocale
-                  ? products[5].title
-                  : activeLocale == "en"
-                  ? products[5].products.ingilizceBaslik
-                  : products[5].title
-              }
+              cardImgAlt={data.Icerik[1].Baslik}
+              overleyText={data.Icerik[1].Baslik}
             />
           </Link>
-          <Link
-            href={
-              activeLocale == defaultLocale
-                ? products[1].uri
-                : `${activeLocale}` + products[1].uri
-            }
-          >
+          <Link href={data.Icerik[2].Link}>
             <Card
-              cardImg={products[1].products.anaResim.node.mediaItemUrl}
+              cardImg={
+                process.env.NEXT_PUBLIC_DATA_URL +
+                data.Icerik[2].Resim.data.attributes.url
+              }
               cardImgClass="w-full h-[250px]  md:h-[350px] brightness-50 hover:brightness-[.75] cursor-pointer transition duration-500"
               textAlign="text-center"
-              cardImgAlt={
-                activeLocale == defaultLocale
-                  ? products[1].title
-                  : activeLocale == "en"
-                  ? products[1].products.ingilizceBaslik
-                  : products[1].title
-              }
-              overleyText={
-                activeLocale == defaultLocale
-                  ? products[1].title
-                  : activeLocale == "en"
-                  ? products[1].products.ingilizceBaslik
-                  : products[1].title
-              }
+              cardImgAlt={data.Icerik[2].Baslik}
+              overleyText={data.Icerik[2].Baslik}
             />
           </Link>
         </Row>
         <Row rowCol="grid-cols-1 md:grid-cols-2 ">
-          <Link
-            href={
-              activeLocale == defaultLocale
-                ? products[0].uri
-                : `${activeLocale}` + products[0].uri
-            }
-          >
+          <Link href={data.Icerik[3].Link}>
             <Card
-              cardImg={products[0].products.anaResim.node.mediaItemUrl}
+              cardImg={
+                process.env.NEXT_PUBLIC_DATA_URL +
+                data.Icerik[3].Resim.data.attributes.url
+              }
               cardImgClass="w-full h-[250px]  md:h-[350px] brightness-50 hover:brightness-[.75] cursor-pointer transition duration-500"
               textAlign="text-center"
-              cardImgAlt={
-                activeLocale == defaultLocale
-                  ? products[0].title
-                  : activeLocale == "en"
-                  ? products[0].products.ingilizceBaslik
-                  : products[0].title
-              }
-              overleyText={
-                activeLocale == defaultLocale
-                  ? products[0].title
-                  : activeLocale == "en"
-                  ? products[0].products.ingilizceBaslik
-                  : products[0].title
-              }
+              cardImgAlt={data.Icerik[3].Baslik}
+              overleyText={data.Icerik[3].Baslik}
             />
           </Link>
-          <Link
-            href={
-              activeLocale == defaultLocale
-                ? products[2].uri
-                : `${activeLocale}` + products[2].uri
-            }
-          >
+          <Link href={data.Icerik[4].Link}>
             <Card
-              cardImg={products[2].products.anaResim.node.mediaItemUrl}
+              cardImg={
+                process.env.NEXT_PUBLIC_DATA_URL +
+                data.Icerik[4].Resim.data.attributes.url
+              }
               cardImgClass="w-full h-[250px]  md:h-[350px] brightness-50 hover:brightness-[.75] cursor-pointer transition duration-500"
               textAlign="text-center"
-              cardImgAlt={
-                activeLocale == defaultLocale
-                  ? products[2].title
-                  : activeLocale == "en"
-                  ? products[2].products.ingilizceBaslik
-                  : products[2].title
-              }
-              overleyText={
-                activeLocale == defaultLocale
-                  ? products[2].title
-                  : activeLocale == "en"
-                  ? products[2].products.ingilizceBaslik
-                  : products[2].title
-              }
+              cardImgAlt={data.Icerik[4].Baslik}
+              overleyText={data.Icerik[4].Baslik}
             />
           </Link>
         </Row>
-        <Link
-          href={
-            activeLocale == defaultLocale
-              ? products[3].uri
-              : `${activeLocale}` + products[3].uri
-          }
-        >
+        <Link href={data.Icerik[5].Link}>
           <Card
-            cardImg={products[3].products.anaResim.node.mediaItemUrl}
+            cardImg={
+              process.env.NEXT_PUBLIC_DATA_URL +
+              data.Icerik[5].Resim.data.attributes.url
+            }
             cardImgClass="w-full h-[250px]  md:h-[350px] brightness-50 hover:brightness-[.75] cursor-pointer transition duration-500"
             textAlign="text-center"
-            cardImgAlt={
-              activeLocale == defaultLocale
-                ? products[3].title
-                : activeLocale == "en"
-                ? products[3].products.ingilizceBaslik
-                : products[3].title
-            }
-            overleyText={
-              activeLocale == defaultLocale
-                ? products[3].title
-                : activeLocale == "en"
-                ? products[3].products.ingilizceBaslik
-                : products[3].title
-            }
+            cardImgAlt={data.Icerik[5].Baslik}
+            overleyText={data.Icerik[5].Baslik}
           />
         </Link>
       </Row>
-    </Container>
+    </>
   );
 }

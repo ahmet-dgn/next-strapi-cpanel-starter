@@ -8,7 +8,7 @@ export default function Slider({ data }) {
 
   //##########Slider Settings#########
   const sliderSettings = {
-    autoPlay: true,
+    autoPlay: false,
     duration: 5000,
   };
 
