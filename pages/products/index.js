@@ -181,7 +181,7 @@ export default function Products({ menu, products, generalSettings }) {
                       cardBgColor="bg-surface-color"
                       cardImgClass="aspect-[5/3]"
                       cardDesc={product.attributes.Description}
-                      cardBtn={t("read_more")}
+                      cardBtn={t("discover_more")}
                       cardLink={`/products/${product.attributes.Slug}`}
                       cardBtnType="link"
                     />

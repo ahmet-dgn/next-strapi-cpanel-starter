@@ -48,7 +48,11 @@ export function Navbar({ menuData, generalSettings }) {
         </Link>
 
         <div
-          className={` w-full h-full fixed top-0 z-40 bg-nav-color lg:bg-transparent p-8 ${
+          className={` w-full h-full fixed top-0 z-40  lg:bg-transparent p-8 ${
+            (asPath === "/") & (generalSettings.TransparanNavbar === true)
+              ? "bg-primary-color"
+              : "bg-nav-color"
+          } ${
             !currentMenuStatus
               ? "-left-full origin-left duration-500 "
               : "left-0 origin-left duration-500 "
@@ -194,7 +198,11 @@ export function Navbar({ menuData, generalSettings }) {
         </div>
         <svg
           onClick={menuStatusHandler}
-          className=" fill-on-nav-color lg:hidden"
+          className={` lg:hidden ${
+            (asPath === "/") & (generalSettings.TransparanNavbar === true)
+              ? "fill-white"
+              : "fill-on-nav-color"
+          }`}
           width="40"
           height="40"
           viewBox="0 0 50 50"
