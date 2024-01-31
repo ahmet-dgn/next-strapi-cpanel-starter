@@ -201,6 +201,82 @@ export default function Contact({ generalSettings, menu }) {
               </div>{" "}
             </div>
           ))}
+          {generalSettings.Depertmanlar && (
+            <div className=" lg:max-w-6xl mx-auto">
+              <Row rowCol="grid-cols-1 md:grid-cols-3">
+                {generalSettings.Depertmanlar.map((depertman) => (
+                  <div className="flex-1" key={depertman.id}>
+                    <div className="flex flex-col justify-center   bg-white p-6  rounded-md shadow-md w-full space-y-4 md:space-x-4 md:space-y-0 md:flex-row ">
+                      <div className="  w-full space-y-2 flex flex-col justify-center">
+                        <p className="text-on-background-color text-h5 bg-gray-100 p-4 rounded ">
+                          {" "}
+                          {depertman.DepertmanAdi && depertman.DepertmanAdi}
+                        </p>
+                        {depertman.Yetkili && (
+                          <div className="flex space-x-2 items-center  border-b p-4 rounded">
+                            <svg
+                              width="30"
+                              height="30"
+                              viewBox="0 0 30 30"
+                              className="fill-on-background-color min-w-[30px]"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M15 15C17.7625 15 20 12.7625 20 10C20 7.2375 17.7625 5 15 5C12.2375 5 10 7.2375 10 10C10 12.7625 12.2375 15 15 15ZM15 17.5C11.6625 17.5 5 19.175 5 22.5V25H25V22.5C25 19.175 18.3375 17.5 15 17.5Z" />
+                            </svg>
+
+                            <p className="text-on-background-color text-small-regular lg:text-normal-regular max-w-md">
+                              {depertman.Yetkili}
+                            </p>
+                          </div>
+                        )}
+
+                        {depertman.Telefon && (
+                          <div className="flex space-x-2 items-center  border-b p-4 rounded">
+                            <svg
+                              width="30"
+                              height="30"
+                              viewBox="0 0 50 50"
+                              className="fill-on-background-color min-w-[30px]"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M9.95459 31.8087L15.2463 31.2045C16.5171 31.0587 17.7671 31.4962 18.6629 32.392L22.4963 36.2253C28.3921 33.2253 33.2254 28.4128 36.2254 22.4962L32.3713 18.642C31.4754 17.7462 31.0379 16.4962 31.1838 15.2253L31.7879 9.97534C32.0379 7.87118 33.8088 6.28784 35.9338 6.28784H39.5379C41.8921 6.28784 43.8504 8.24618 43.7046 10.6003C42.6004 28.392 28.3713 42.6003 10.6004 43.7045C8.24626 43.8503 6.28792 41.892 6.28792 39.5378V35.9337C6.26709 33.8295 7.85042 32.0587 9.95459 31.8087Z" />
+                            </svg>
+
+                            <Link
+                              href={`tel:${depertman.Telefon}`}
+                              className="text-on-background-color text-small-regular lg:text-normal-regular"
+                            >
+                              {depertman.Telefon}
+                            </Link>
+                          </div>
+                        )}
+                        {depertman.EPosta && (
+                          <div className="flex space-x-2 items-center   p-4 rounded">
+                            <svg
+                              width="30"
+                              height="30"
+                              viewBox="0 0 30 30"
+                              className="fill-on-background-color min-w-[30px]"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M25 5H5C3.625 5 2.5125 6.125 2.5125 7.5L2.5 22.5C2.5 23.875 3.625 25 5 25H25C26.375 25 27.5 23.875 27.5 22.5V7.5C27.5 6.125 26.375 5 25 5ZM23.75 22.5H6.25C5.5625 22.5 5 21.9375 5 21.25V10L13.675 15.425C14.4875 15.9375 15.5125 15.9375 16.325 15.425L25 10V21.25C25 21.9375 24.4375 22.5 23.75 22.5ZM15 13.75L5 7.5H25L15 13.75Z" />
+                            </svg>
+
+                            <Link
+                              href={`mailto:${depertman.EPosta}`}
+                              className="text-on-background-color text-small-regular lg:text-normal-regular"
+                            >
+                              {depertman.EPosta}
+                            </Link>
+                          </div>
+                        )}
+                      </div>
+                    </div>{" "}
+                  </div>
+                ))}
+              </Row>
+            </div>
+          )}
         </Container>
       </Layout>
     </>

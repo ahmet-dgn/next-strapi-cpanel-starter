@@ -130,7 +130,7 @@ module.exports = {
         "on-primary-color": "white",
         "secondary-color": "#d21202",
         "on-secondary-color": "#FFFFFF",
-        "background-color": "#f0f9ff",
+        "background-color": "#f3f4f6",
         "on-background-color": "#171717",
         "surface-color": "white",
         "on-surface-color": "#111827",
