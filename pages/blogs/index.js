@@ -65,7 +65,7 @@ export default function Blogs({ menu, blogList, generalSettings }) {
   return (
     <>
       <SEO generalSettings={generalSettings} seoData={seo} />
-      <Layout menuItems={menu} generalSettings={generalSettings}>
+      <Layout menuItems={menu} generalSettings={generalSettings} t={t}>
         <Container>
           <Row rowCol="grid-cols-2  lg:grid-cols-3  ">
             <div className="col-span-2 w-full">

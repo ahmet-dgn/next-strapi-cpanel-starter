@@ -4,7 +4,7 @@ import Title from "./ui/title";
 import Link from "next/link";
 
 export default function HorizontalCardBlock({ data, translation }) {
-  const services = data.products.data;
+  const services = data;
   return (
     <>
       <Title>{data.Baslik}</Title>

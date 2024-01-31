@@ -16,7 +16,7 @@ export default function Home({ menu, generalSettings, blocks, blogList }) {
   return (
     <>
       <SEO generalSettings={generalSettings} seoData={blocks.SEO} />
-      <Layout menuItems={menu} generalSettings={generalSettings}>
+      <Layout menuItems={menu} generalSettings={generalSettings} t={t}>
         <ComponentRenderer blogList={blogList} blocks={blocks} t={t} />
       </Layout>
     </>

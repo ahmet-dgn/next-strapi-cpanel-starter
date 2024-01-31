@@ -73,7 +73,7 @@ export default function Products({ menu, products, generalSettings }) {
     <>
       <SEO generalSettings={generalSettings} seoData={seo} />
 
-      <Layout menuItems={menu} generalSettings={generalSettings}>
+      <Layout menuItems={menu} generalSettings={generalSettings} t={t}>
         <Container>
           <Row
             rowCol={`grid-cols-2   ${

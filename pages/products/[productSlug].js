@@ -66,7 +66,7 @@ export default function ProductDetail({ product, menu, generalSettings }) {
     <>
       <SEO generalSettings={generalSettings} seoData={seo} />
 
-      <Layout menuItems={menu} generalSettings={generalSettings}>
+      <Layout menuItems={menu} generalSettings={generalSettings} t={t}>
         <Container>
           <Row rowCol="grid-cols-1 md:grid-cols-2">
             <div className="space-y-2">

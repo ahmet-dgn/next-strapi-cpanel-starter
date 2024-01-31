@@ -27,7 +27,7 @@ export default function ProductDetail({
     <>
       <SEO generalSettings={generalSettings} seoData={singlePage.SEO} />
 
-      <Layout menuItems={menu} generalSettings={generalSettings}>
+      <Layout menuItems={menu} generalSettings={generalSettings} t={t}>
         <Container>
           {singlePage?.Image?.singlePage ||
           singlePage?.Title ||

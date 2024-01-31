@@ -3,16 +3,16 @@ import Container from "@/components/ui/container";
 import ReactMarkdown from "react-markdown";
 import Image from "next/image";
 import SEO from "@/components/seo";
-import { getMenu, getGeneralSettings, getSingleBlog } from "@/lib/query";
+import { getMenu, getGeneralSettings, getSinglePress } from "@/lib/query";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
-export default function BlogDetail({ singleBlog, menu, generalSettings }) {
-  const data = singleBlog;
+export default function BlogDetail({ singlePress, menu, generalSettings }) {
+  const data = singlePress;
   const { t } = useTranslation("common");
   const seo = {
-    metaTitle: data.attributes.Title,
-    metaDescription: data.attributes.Description,
+    metaTitle: data.attributes.Baslik,
+    metaDescription: data.attributes.Yazi,
   };
 
   return (
@@ -26,17 +26,17 @@ export default function BlogDetail({ singleBlog, menu, generalSettings }) {
               width={896}
               height={400}
               src={
-                data.attributes.Image.data
+                data.attributes.Resim.data
                   ? process.env.NEXT_PUBLIC_DATA_URL +
-                    data.attributes.Image.data.attributes.url
+                    data.attributes.Resim.data.attributes.url
                   : ""
               }
               className="rounded"
             />
             <h1 className="text-h3 text-on-background-color">
-              {data.attributes.Title}
+              {data.attributes.Baslik}
             </h1>
-            <ReactMarkdown>{data.attributes.Description}</ReactMarkdown>
+            <ReactMarkdown>{data.attributes.Yazi}</ReactMarkdown>
           </div>
         </Container>
       </Layout>
@@ -46,17 +46,17 @@ export default function BlogDetail({ singleBlog, menu, generalSettings }) {
 
 export const getServerSideProps = async ({ params, locale, defaultLocale }) => {
   try {
-    const { blogSlug } = params;
-    const slug = blogSlug;
+    const { mediaSlug } = params;
+    const slug = mediaSlug;
     const menu = await getMenu(locale, defaultLocale);
     const generalSettings = await getGeneralSettings();
-    const singleBlog = await getSingleBlog(slug, locale);
+    const singlePress = await getSinglePress(slug, locale);
 
     return {
       props: {
         menu,
         generalSettings,
-        singleBlog,
+        singlePress,
         ...(await serverSideTranslations(locale, ["common"])),
       },
     };
@@ -67,7 +67,7 @@ export const getServerSideProps = async ({ params, locale, defaultLocale }) => {
       props: {
         menu: [],
         generalSettings: {},
-        singleBlog: [],
+        singlePress: [],
       },
     };
   }

@@ -1,7 +1,8 @@
 {
     "contact_title": "İletişim",
     "contact_description": "Eğer herhangi bir konuda destek veya bilgi talebiniz varsa, lütfen bizimle iletişime geçin. Uzman ekibimiz, ihtiyaçlarınıza yardımcı olmaktan memnuniyet duyacaktır.",
-    "contact_address": "Address",
+    "contact_us": "İletişime Geç",
+    "contact_address": "Adres",
     "contact_telephone": "Telefon",
     "contact_email": "E-Posta",
     "new_label": "Yeni",
@@ -16,5 +17,8 @@
     "product_category_desc":  "Tüm ürünlerimizi keşfedin.",
     "blog_category": "Blog Kategorileri",
     "blog_category_desc": "Tüm blog içerikleri",
-    "discover_more": "İncele"
+    "discover_more": "İncele",
+    "btn_send": "Gönder",
+    "press_title": "Basında Biz",
+    "press_description": "Medyada bizimle ilgili çıkan haberler, makaleler ve röportajlar hakkında detaylı bilgi için tıklayın."
 }
