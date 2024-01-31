@@ -164,7 +164,14 @@ export default function Products({ menu, products, generalSettings }) {
                 </Row>
               )}
               {generalSettings.UrunListesiYatay && (
-                <Row rowCol="grid-cols-1 lg:grid-cols-2">
+                <Row
+                  rowCol={
+                    generalSettings.UrunListesiYatay &&
+                    generalSettings.KategoriYanBar
+                      ? `grid-cols-1`
+                      : `grid-cols-1 lg:grid-cols-2`
+                  }
+                >
                   {filteredProducts.map((product) => (
                     <HorizontalCard
                       titleCustom="!text-h6"
