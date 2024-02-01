@@ -1,6 +1,7 @@
 import Layout from "@/components/layout";
 import Container from "@/components/ui/container";
-import ReactMarkdown from "react-markdown";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import Image from "next/image";
 import SEO from "@/components/seo";
 import { getMenu, getGeneralSettings, getSinglePress } from "@/lib/query";
@@ -36,7 +37,11 @@ export default function BlogDetail({ singlePress, menu, generalSettings }) {
             <h1 className="text-h3 text-on-background-color">
               {data.attributes.Baslik}
             </h1>
-            <ReactMarkdown>{data.attributes.Yazi}</ReactMarkdown>
+
+            <Markdown
+              children={data.attributes.Yazi}
+              remarkPlugins={[remarkGfm]}
+            />
           </div>
         </Container>
       </Layout>

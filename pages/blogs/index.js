@@ -89,7 +89,8 @@ export default function Blogs({ menu, blogList, generalSettings }) {
                       blog.attributes.Image.data
                         ? process.env.NEXT_PUBLIC_DATA_URL +
                           blog.attributes.Image.data.attributes.url
-                        : ""
+                        : process.env.NEXT_PUBLIC_DATA_URL +
+                          blog.attributes.Banner.data[0].attributes.url
                     }
                     cardPadding="p-2 xl:p-4"
                     cardBorder="border"
