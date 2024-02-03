@@ -26,9 +26,9 @@ export default function Blogs({ menu, blogList, generalSettings }) {
       setFilteredblogs(blogList); // Tüm ürünleri göster
     } else {
       const filtered = blogList.filter((blog) => {
-        const blogLanguage = blog.attributes.locale;
+        const blogLanguage = blog?.attributes?.locale;
         const blogCategoryTitle =
-          blog.attributes.blog_category.data.attributes.Title;
+          blog?.attributes?.blog_category?.data?.attributes?.Title;
         const currentLanguage = i18n.language;
 
         return (
@@ -48,7 +48,8 @@ export default function Blogs({ menu, blogList, generalSettings }) {
   };
 
   const categories = blogList.map(
-    (blog) => blog.attributes.blog_category.data.attributes.Title
+    (blog) =>
+      blog?.attributes?.blog_category?.data?.attributes?.Title || undefined
   );
 
   const uniqueCategories = Array.from(new Set(categories));
@@ -82,23 +83,23 @@ export default function Blogs({ menu, blogList, generalSettings }) {
                 {filteredblogs.map((blog) => (
                   <HorizontalCard
                     titleCustom="!text-h6"
-                    key={blog.id}
-                    cardInfo={blog.attributes.Date}
-                    cardTitle={blog.attributes.Title}
+                    key={blog?.id}
+                    cardInfo={blog?.attributes?.Date}
+                    cardTitle={blog?.attributes?.Title}
                     cardImg={
-                      blog.attributes.Image.data
-                        ? process.env.NEXT_PUBLIC_DATA_URL +
-                          blog.attributes.Image.data.attributes.url
-                        : process.env.NEXT_PUBLIC_DATA_URL +
-                          blog.attributes.Banner.data[0].attributes.url
+                      process.env.NEXT_PUBLIC_DATA_URL +
+                      (blog?.attributes?.Image?.data?.attributes?.url ||
+                        (blog?.attributes?.Banner?.data &&
+                          blog?.attributes?.Banner?.data[0]?.attributes?.url) ||
+                        " ")
                     }
                     cardPadding="p-2 xl:p-4"
                     cardBorder="border"
                     cardBgColor="bg-surface-color"
                     cardImgClass="aspect-[5/3]"
-                    cardDesc={blog.attributes.Description}
+                    cardDesc={blog?.attributes?.Description}
                     cardBtn={t("read_more")}
-                    cardLink={`/blogs/${blog.attributes.Slug}`}
+                    cardLink={`/blogs/${blog?.attributes?.Slug}`}
                     cardBtnType="link"
                   />
                 ))}

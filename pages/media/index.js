@@ -24,21 +24,19 @@ export default function Blogs({ menu, pressList, generalSettings }) {
             {pressList.map((pressListItem) => (
               <HorizontalCard
                 titleCustom="!text-h6"
-                key={pressListItem.id}
-                cardTitle={pressListItem.attributes.Baslik}
+                key={pressListItem?.id}
+                cardTitle={pressListItem?.attributes?.Baslik}
                 cardImg={
-                  pressListItem.attributes.Resim.data
-                    ? process.env.NEXT_PUBLIC_DATA_URL +
-                      pressListItem.attributes.Resim.data.attributes.url
-                    : ""
+                  process.env.NEXT_PUBLIC_DATA_URL +
+                  pressListItem?.attributes?.Resim?.data?.attributes?.url
                 }
                 cardPadding="p-2 xl:p-4"
                 cardBorder="border"
                 cardBgColor="bg-surface-color"
                 cardImgClass="aspect-[5/3]"
-                cardDesc={pressListItem.attributes.Yazi}
+                cardDesc={pressListItem?.attributes?.Yazi}
                 cardBtn={t("read_more")}
-                cardLink={`/media/${pressListItem.attributes.Slug}`}
+                cardLink={`/media/${pressListItem?.attributes?.Slug}`}
                 cardBtnType="link"
               />
             ))}

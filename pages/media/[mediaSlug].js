@@ -12,8 +12,8 @@ export default function BlogDetail({ singlePress, menu, generalSettings }) {
   const data = singlePress;
   const { t } = useTranslation("common");
   const seo = {
-    metaTitle: data.attributes.Baslik,
-    metaDescription: data.attributes.Yazi,
+    metaTitle: data?.attributes?.Baslik,
+    metaDescription: data?.attributes?.Yazi,
   };
 
   return (
@@ -27,19 +27,17 @@ export default function BlogDetail({ singlePress, menu, generalSettings }) {
               width={896}
               height={400}
               src={
-                data.attributes.Resim.data
-                  ? process.env.NEXT_PUBLIC_DATA_URL +
-                    data.attributes.Resim.data.attributes.url
-                  : ""
+                process.env.NEXT_PUBLIC_DATA_URL +
+                data?.attributes?.Resim?.data?.attributes?.url
               }
               className="rounded"
             />
             <h1 className="text-h3 text-on-background-color">
-              {data.attributes.Baslik}
+              {data?.attributes?.Baslik}
             </h1>
 
             <Markdown
-              children={data.attributes.Yazi}
+              children={data?.attributes?.Yazi}
               remarkPlugins={[remarkGfm]}
             />
           </div>

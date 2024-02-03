@@ -21,7 +21,6 @@ export default function ProductDetail({
   pageBlocks,
 }) {
   const { t } = useTranslation("common");
-  console.log(pageBlocks);
 
   return (
     <>
@@ -39,7 +38,7 @@ export default function ProductDetail({
                     fill
                     src={
                       process.env.NEXT_PUBLIC_DATA_URL +
-                      singlePage.Image.data.attributes.url
+                      singlePage?.Image?.data?.attributes?.url
                     }
                     className="rounded object-cover"
                   />
@@ -51,7 +50,7 @@ export default function ProductDetail({
                 </h1>
               )}
               {singlePage?.Description && (
-                <ReactMarkdown>{singlePage.Description}</ReactMarkdown>
+                <ReactMarkdown>{singlePage?.Description}</ReactMarkdown>
               )}
             </div>
           ) : null}

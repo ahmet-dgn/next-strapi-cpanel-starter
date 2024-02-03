@@ -60,80 +60,80 @@ export function ImageBox2({ data }) {
       <Title titleDesc={data.Aciklama}>{data.Baslik}</Title>
 
       <Row rowCol="grid-cols-1  lg:grid-cols-2  ">
-        <Link href={data.Icerik[0].Link}>
+        <Link href={data?.Icerik && data?.Icerik[0]?.Link}>
           <Card
             cardImg={
               process.env.NEXT_PUBLIC_DATA_URL +
-              data.Icerik[0].Resim.data.attributes.url
+              (data?.Icerik && data?.Icerik[0]?.Resim?.data?.attributes?.url)
             }
             cardImgClass="w-full h-[250px]  md:h-[350px] brightness-50 hover:brightness-[.75] cursor-pointer transition duration-500"
             textAlign="text-center"
-            cardImgAlt={data.Icerik[0].Baslik}
-            overleyText={data.Icerik[0].Baslik}
+            cardImgAlt={data.Icerik && data?.Icerik[0]?.Baslik}
+            overleyText={data.Icerik && data?.Icerik[0]?.Baslik}
           />
         </Link>
         <Row rowCol="grid-cols-1 md:grid-cols-2  ">
-          <Link href={data.Icerik[1].Link}>
+          <Link href={data?.Icerik && data?.Icerik[1]?.Link}>
             <Card
               cardImg={
                 process.env.NEXT_PUBLIC_DATA_URL +
-                data.Icerik[1].Resim.data.attributes.url
+                (data?.Icerik && data.Icerik[1]?.Resim?.data?.attributes?.url)
               }
               cardImgClass="w-full h-[250px]  md:h-[350px] brightness-50 hover:brightness-[.75] cursor-pointer transition duration-500"
               textAlign="text-center"
-              cardImgAlt={data.Icerik[1].Baslik}
-              overleyText={data.Icerik[1].Baslik}
+              cardImgAlt={data.Icerik && data?.Icerik[1]?.Baslik}
+              overleyText={data.Icerik && data?.Icerik[1]?.Baslik}
             />
           </Link>
-          <Link href={data.Icerik[2].Link}>
+          <Link href={data?.Icerik && data?.Icerik[2]?.Link}>
             <Card
               cardImg={
                 process.env.NEXT_PUBLIC_DATA_URL +
-                data.Icerik[2].Resim.data.attributes.url
+                (data?.Icerik && data.Icerik[2]?.Resim?.data?.attributes?.url)
               }
               cardImgClass="w-full h-[250px]  md:h-[350px] brightness-50 hover:brightness-[.75] cursor-pointer transition duration-500"
               textAlign="text-center"
-              cardImgAlt={data.Icerik[2].Baslik}
-              overleyText={data.Icerik[2].Baslik}
+              cardImgAlt={data.Icerik && data?.Icerik[2]?.Baslik}
+              overleyText={data.Icerik && data?.Icerik[2]?.Baslik}
             />
           </Link>
         </Row>
         <Row rowCol="grid-cols-1 md:grid-cols-2 ">
-          <Link href={data.Icerik[3].Link}>
+          <Link href={data?.Icerik && data?.Icerik[3]?.Link}>
             <Card
               cardImg={
                 process.env.NEXT_PUBLIC_DATA_URL +
-                data.Icerik[3].Resim.data.attributes.url
+                (data?.Icerik && data.Icerik[3]?.Resim?.data?.attributes?.url)
               }
               cardImgClass="w-full h-[250px]  md:h-[350px] brightness-50 hover:brightness-[.75] cursor-pointer transition duration-500"
               textAlign="text-center"
-              cardImgAlt={data.Icerik[3].Baslik}
-              overleyText={data.Icerik[3].Baslik}
+              cardImgAlt={data.Icerik && data?.Icerik[3]?.Baslik}
+              overleyText={data.Icerik && data?.Icerik[3]?.Baslik}
             />
           </Link>
-          <Link href={data.Icerik[4].Link}>
+          <Link href={data?.Icerik && data?.Icerik[4]?.Link}>
             <Card
               cardImg={
                 process.env.NEXT_PUBLIC_DATA_URL +
-                data.Icerik[4].Resim.data.attributes.url
+                (data?.Icerik && data.Icerik[4]?.Resim?.data?.attributes?.url)
               }
               cardImgClass="w-full h-[250px]  md:h-[350px] brightness-50 hover:brightness-[.75] cursor-pointer transition duration-500"
               textAlign="text-center"
-              cardImgAlt={data.Icerik[4].Baslik}
-              overleyText={data.Icerik[4].Baslik}
+              cardImgAlt={data.Icerik && data?.Icerik[4]?.Baslik}
+              overleyText={data.Icerik && data?.Icerik[4]?.Baslik}
             />
           </Link>
         </Row>
-        <Link href={data.Icerik[5].Link}>
+        <Link href={data?.Icerik && data?.Icerik[5]?.Link}>
           <Card
             cardImg={
               process.env.NEXT_PUBLIC_DATA_URL +
-              data.Icerik[5].Resim.data.attributes.url
+              (data?.Icerik && data.Icerik[5]?.Resim?.data?.attributes?.url)
             }
             cardImgClass="w-full h-[250px]  md:h-[350px] brightness-50 hover:brightness-[.75] cursor-pointer transition duration-500"
             textAlign="text-center"
-            cardImgAlt={data.Icerik[5].Baslik}
-            overleyText={data.Icerik[5].Baslik}
+            cardImgAlt={data.Icerik && data?.Icerik[5]?.Baslik}
+            overleyText={data.Icerik && data?.Icerik[5]?.Baslik}
           />
         </Link>
       </Row>

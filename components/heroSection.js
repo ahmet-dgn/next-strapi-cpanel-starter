@@ -13,30 +13,34 @@ export default function HeroSection({ data }) {
     <div>
       <Row rowCol="grid-cols-1 md:grid-cols-2 ">
         <div className="lg:pr-8  overflow-hidden w-full  relative">
-          {HeroSectionData.Image.data &&
-            HeroSectionData.Image.data.attributes.mime.includes("image") && (
+          {HeroSectionData?.Image?.data &&
+            HeroSectionData?.Image?.data?.attributes?.mime.includes(
+              "image"
+            ) && (
               <Image
                 src={
                   process.env.NEXT_PUBLIC_DATA_URL +
-                  HeroSectionData.Image.data.attributes.url
+                  HeroSectionData?.Image?.data?.attributes?.url
                 }
                 width={700}
                 height={475}
                 className={`rounded aspect-[4/3] ${
-                  HeroSectionData.ResmiSigdir
+                  HeroSectionData?.ResmiSigdir
                     ? "object-contain"
                     : "object-cover"
                 } `}
-                alt={HeroSectionData.Title || "About Us"}
+                alt={HeroSectionData?.Title || "About Us"}
               />
             )}
-          {HeroSectionData.Image.data &&
-            HeroSectionData.Image.data.attributes.mime.includes("video") && (
+          {HeroSectionData?.Image?.data &&
+            HeroSectionData?.Image?.data?.attributes?.mime.includes(
+              "video"
+            ) && (
               <DynamicReactPlayer
                 className="react-player brightness-[0.40] "
                 url={
                   process.env.NEXT_PUBLIC_DATA_URL +
-                  HeroSectionData.Image.data.attributes.url
+                    HeroSectionData?.Image?.data?.attributes?.url || ""
                 }
                 width="100%"
                 height="100%"
@@ -50,16 +54,16 @@ export default function HeroSection({ data }) {
         </div>
         <div
           className={`flex flex-col justify-center ${
-            HeroSectionData.ImagePosition === "Right" ? "order-first" : ""
+            HeroSectionData?.ImagePosition === "Right" ? "order-first" : ""
           }`}
         >
           <TextContent
-            description={HeroSectionData.Description || ""}
-            title={HeroSectionData.Title || ""}
-            subTitle={HeroSectionData.SubTitle || ""}
-            link={HeroSectionData.Link || ""}
-            ctaText={HeroSectionData.ButtonName || ""}
-            overLineText={HeroSectionData.OverLineText || ""}
+            description={HeroSectionData?.Description || ""}
+            title={HeroSectionData?.Title || ""}
+            subTitle={HeroSectionData?.SubTitle || ""}
+            link={HeroSectionData?.Link || ""}
+            ctaText={HeroSectionData?.ButtonName || ""}
+            overLineText={HeroSectionData?.OverLineText || ""}
           />
         </div>
       </Row>

@@ -50,8 +50,8 @@ export default function Products({ menu, products, generalSettings }) {
   };
 
   const categories = products.map((product) => {
-    if (product.attributes.category && product.attributes.category.data) {
-      return product.attributes.category.data.attributes.Title;
+    if (product?.attributes?.category && product?.attributes?.category?.data) {
+      return product?.attributes?.category?.data?.attributes?.Title;
     }
     return null;
   });
@@ -142,17 +142,20 @@ export default function Products({ menu, products, generalSettings }) {
                 <Row rowCol="grid-cols-2 min-[475px]:grid-cols-3 md:grid-cols-4">
                   {filteredProducts.map((product) => (
                     <Link
-                      href={`/products/${product.attributes.Slug}`}
-                      key={product.id}
+                      href={`/products/${product?.attributes?.Slug}`}
+                      key={product?.id}
                     >
                       <Card
-                        cardInfo={product.attributes.Writer}
-                        cardTitle={product.attributes.Title}
+                        cardInfo={product?.attributes?.Writer}
+                        cardTitle={product?.attributes?.Title}
                         cardImg={
-                          product.attributes.MainImage.data
-                            ? process.env.NEXT_PUBLIC_DATA_URL +
-                              product.attributes.MainImage.data.attributes.url
-                            : ""
+                          process.env.NEXT_PUBLIC_DATA_URL +
+                          (product?.attributes?.MainImage?.data?.attributes
+                            ?.url ||
+                            (product?.attributes?.Image?.data &&
+                              product?.attributes?.Image?.data[0]?.attributes
+                                ?.url) ||
+                            "")
                         }
                         cardPadding="p-2 xl:p-4"
                         cardBorder="border hover:shadow-xl transition-shadow duration-300 hover:border-gray-400"
@@ -176,20 +179,23 @@ export default function Products({ menu, products, generalSettings }) {
                     <HorizontalCard
                       titleCustom="!text-h6"
                       key={product.id}
-                      cardTitle={product.attributes.Title}
+                      cardTitle={product?.attributes?.Title}
                       cardImg={
-                        product.attributes.MainImage.data
-                          ? process.env.NEXT_PUBLIC_DATA_URL +
-                            product.attributes.MainImage.data.attributes.url
-                          : ""
+                        process.env.NEXT_PUBLIC_DATA_URL +
+                        (product?.attributes?.MainImage?.data?.attributes
+                          ?.url ||
+                          (product?.attributes?.Image?.data &&
+                            product?.attributes?.Image?.data[0]?.attributes
+                              ?.url) ||
+                          "")
                       }
                       cardBorder="border hover:shadow-xl transition-shadow duration-300 hover:border-gray-400"
                       cardPadding="p-2 xl:p-4"
                       cardBgColor="bg-surface-color"
                       cardImgClass="aspect-[5/3]"
-                      cardDesc={product.attributes.Description}
+                      cardDesc={product?.attributes?.Description}
                       cardBtn={t("discover_more")}
-                      cardLink={`/products/${product.attributes.Slug}`}
+                      cardLink={`/products/${product?.attributes?.Slug}`}
                       cardBtnType="link"
                     />
                   ))}

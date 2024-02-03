@@ -33,13 +33,13 @@ export function Navbar({ menuData, generalSettings }) {
           <Image
             className="object-contain  my-4 width max-w-[150px] lg:max-w-[200px]"
             src={
-              asPath === "/" && generalSettings.TransparanNavbar
-                ? generalSettings.BeyazLogo?.data?.attributes?.url &&
+              asPath === "/" && generalSettings?.TransparanNavbar
+                ? process.env.NEXT_PUBLIC_DATA_URL +
+                    generalSettings?.BeyazLogo?.data?.attributes?.url ||
                   process.env.NEXT_PUBLIC_DATA_URL +
-                    generalSettings.BeyazLogo.data.attributes.url
-                : generalSettings.Logo?.data?.attributes?.url &&
-                  process.env.NEXT_PUBLIC_DATA_URL +
-                    generalSettings.Logo.data.attributes.url
+                    generalSettings?.Logo?.data?.attributes?.url
+                : process.env.NEXT_PUBLIC_DATA_URL +
+                  generalSettings?.Logo?.data?.attributes?.url
             }
             width={200}
             height={50}

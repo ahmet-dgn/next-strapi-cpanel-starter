@@ -11,7 +11,7 @@ export default function TopHeader({ generalSettings }) {
   return (
     <div
       className={`bg-nav-color w-full  ${
-        (asPath === "/") & (generalSettings.TransparanNavbar === true)
+        (asPath === "/") & (generalSettings?.TransparanNavbar === true)
           ? "bg-transparent absolute top-6 left-0  z-10 lg:z-30"
           : "border-b"
       }`}
@@ -115,7 +115,7 @@ export default function TopHeader({ generalSettings }) {
           >
             <li
               className={`cursor-pointer   min-h-[2rem] text-link-tiny flex justify-center items-center ${
-                (asPath === "/") & (generalSettings.TransparanNavbar === true)
+                (asPath === "/") & (generalSettings?.TransparanNavbar === true)
                   ? "text-white hover:text-white/60"
                   : "text-on-top-header hover:text-on-top-header/60"
               }`}
@@ -136,7 +136,8 @@ export default function TopHeader({ generalSettings }) {
               {activeLocale.toUpperCase()}
               <svg
                 className={`ml-0.8 inline-block  ${
-                  (asPath === "/") & (generalSettings.TransparanNavbar === true)
+                  (asPath === "/") &
+                  (generalSettings?.TransparanNavbar === true)
                     ? "fill-white group-hover:white/60"
                     : "fill-on-top-header group-hover:fill-on-top-header/60"
                 }`}

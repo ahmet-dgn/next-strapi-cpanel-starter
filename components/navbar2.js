@@ -4,11 +4,11 @@ import { useState } from "react";
 import Button from "./ui/buttons";
 import { useRouter } from "next/router";
 
-export function Navbar2({ menuData, generalSettings,t }) {
+export function Navbar2({ menuData, generalSettings, t }) {
   const menuItems = menuData;
   const [currentMenuStatus, setMenuStatus] = useState(false);
 
-  const { locale: activeLocale, locales, asPath, defaultLocale} = useRouter();
+  const { locale: activeLocale, locales, asPath, defaultLocale } = useRouter();
   const activeLocales = locales.filter((locale) => locale !== activeLocale);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -25,7 +25,7 @@ export function Navbar2({ menuData, generalSettings,t }) {
   return (
     <nav
       className={`bg-nav-color w-full ${
-        (asPath === "/") & (generalSettings.TransparanNavbar === true)
+        (asPath === "/") & (generalSettings?.TransparanNavbar === true)
           ? "bg-transparent absolute top-12 left-0 z-20"
           : ""
       }`}
@@ -35,13 +35,13 @@ export function Navbar2({ menuData, generalSettings,t }) {
           <Image
             className="object-contain  my-4 width max-w-[150px] lg:max-w-[200px] max-h-[100px]"
             src={
-              asPath === "/" && generalSettings.TransparanNavbar
-                ? generalSettings.BeyazLogo?.data?.attributes?.url &&
+              asPath === "/" && generalSettings?.TransparanNavbar
+                ? process.env.NEXT_PUBLIC_DATA_URL +
+                    generalSettings?.BeyazLogo?.data?.attributes?.url ||
                   process.env.NEXT_PUBLIC_DATA_URL +
-                    generalSettings.BeyazLogo.data.attributes.url
-                : generalSettings.Logo?.data?.attributes?.url &&
-                  process.env.NEXT_PUBLIC_DATA_URL +
-                    generalSettings.Logo.data.attributes.url
+                    generalSettings?.Logo?.data?.attributes?.url
+                : process.env.NEXT_PUBLIC_DATA_URL +
+                  generalSettings?.Logo?.data?.attributes?.url
             }
             width={200}
             height={50}
@@ -51,7 +51,7 @@ export function Navbar2({ menuData, generalSettings,t }) {
 
         <div
           className={` w-full h-full fixed top-0 z-40  lg:bg-transparent p-8 ${
-            (asPath === "/") & (generalSettings.TransparanNavbar === true)
+            (asPath === "/") & (generalSettings?.TransparanNavbar === true)
               ? "bg-primary-color"
               : "bg-nav-color"
           } ${
@@ -67,15 +67,15 @@ export function Navbar2({ menuData, generalSettings,t }) {
                 .map((parentItem) => (
                   <li
                     className="flex group justify-center cursor-pointer flex-col rounded min-h-[2rem] text-link-normal text-on-nav-color px-4 lg:relative"
-                    key={parentItem.id}
+                    key={parentItem?.id}
                   >
                     <Button
-                      href={parentItem.path}
+                      href={parentItem?.path}
                       size="md"
                       type="link"
                       color={
                         (asPath === "/") &
-                        (generalSettings.TransparanNavbar === true)
+                        (generalSettings?.TransparanNavbar === true)
                           ? "white"
                           : ""
                       }
@@ -84,8 +84,8 @@ export function Navbar2({ menuData, generalSettings,t }) {
 
                       {menuItems.filter(
                         (childItem) =>
-                          childItem.parent &&
-                          childItem.parent.id === parentItem.id
+                          childItem?.parent &&
+                          childItem?.parent?.id === parentItem?.id
                       ).length > 0 && (
                         <svg
                           className={`ml-0.8 inline-block fill-on-nav-color group-hover:fill-on-nav-color/60`}
@@ -100,29 +100,30 @@ export function Navbar2({ menuData, generalSettings,t }) {
                     </Button>
                     {menuItems.filter(
                       (childItem) =>
-                        childItem.parent && childItem.parent.id === parentItem.id
+                        childItem?.parent &&
+                        childItem?.parent?.id === parentItem?.id
                     ).length > 0 && (
                       <ul className="px-4 z-40 h-0 lg:w-0 group-hover:h-fit group-hover:lg:w-52 group-hover:lg:py-2 overflow-hidden rounded bg-gray-50 lg:absolute lg:top-8 lg:shadow-xl lg:bg-white lg:border-gray-200 group-hover:lg:border">
                         {menuItems
                           .filter(
                             (childItem) =>
-                              childItem.parent &&
-                              childItem.parent.id === parentItem.id
+                              childItem?.parent &&
+                              childItem?.parent?.id === parentItem?.id
                           )
                           .map((childItem) => (
                             <li
                               className="lg:py-1 "
-                              key={childItem.id}
-                              onClick={() => subChildItemHandler(childItem.id)}
+                              key={childItem?.id}
+                              onClick={() => subChildItemHandler(childItem?.id)}
                             >
                               {menuItems.filter(
                                 (subChildItem) =>
-                                  subChildItem.parent &&
-                                  subChildItem.parent.id === childItem.id
+                                  subChildItem?.parent &&
+                                  subChildItem?.parent?.id === childItem?.id
                               ).length > 0 ? (
                                 <p className="flex items-center justify-center w-fit rounded min-h-[2.5rem] text-link-small text-on-nav-color hover:text-on-nav-color/60 !px-0">
                                   {" "}
-                                  {childItem.title}{" "}
+                                  {childItem?.title}{" "}
                                   <svg
                                     className={`ml-0.8 inline-block fill-on-nav-color group-hover:fill-on-nav-color/60`}
                                     width="24"
@@ -135,22 +136,22 @@ export function Navbar2({ menuData, generalSettings,t }) {
                                 </p>
                               ) : (
                                 <Button
-                                  href={childItem.path}
+                                  href={childItem?.path}
                                   size="sm"
                                   type="link"
                                 >
-                                  {childItem.title}
+                                  {childItem?.title}
                                 </Button>
                               )}
 
                               {menuItems.filter(
                                 (subChildItem) =>
                                   subChildItem.parent &&
-                                  subChildItem.parent.id === childItem.id
+                                  subChildItem?.parent.id === childItem?.id
                               ).length > 0 && (
                                 <ul
                                   className={`pl-4 z-40  overflow-hidden rounded ${
-                                    openSubChildId === childItem.id
+                                    openSubChildId === childItem?.id
                                       ? "h-fit"
                                       : "h-0"
                                   }`}
@@ -158,20 +159,21 @@ export function Navbar2({ menuData, generalSettings,t }) {
                                   {menuItems
                                     .filter(
                                       (subChildItem) =>
-                                        subChildItem.parent &&
-                                        subChildItem.parent.id === childItem.id
+                                        subChildItem?.parent &&
+                                        subChildItem?.parent?.id ===
+                                          childItem?.id
                                     )
                                     .map((subChildItem) => (
                                       <li
                                         className="lg:py-1 "
-                                        key={subChildItem.id}
+                                        key={subChildItem?.id}
                                       >
                                         <Button
-                                          href={subChildItem.path}
+                                          href={subChildItem?.path}
                                           size="sm"
                                           type="link"
                                         >
-                                          {subChildItem.title}
+                                          {subChildItem?.title}
                                         </Button>
                                       </li>
                                     ))}
@@ -185,18 +187,12 @@ export function Navbar2({ menuData, generalSettings,t }) {
                 ))}
             </ul>
             <div className="flex">
-                <Button
-                  href="/contact"
-                  size="md"
-                  color="red" 
-                >
-                  {t("contact_us")}
-                </Button>
-            
-            
+              <Button href="/contact" size="md" color="red">
+                {t("contact_us")}
+              </Button>
             </div>
           </div>
-      
+
           <svg
             onClick={menuStatusHandler}
             className={`absolute right-4 top-4 hover:scale-125  lg:hidden ${

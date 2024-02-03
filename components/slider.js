@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
 export default function Slider({ data }) {
-  const slides = data.Content; //Api'den gelen slider verileri
+  const slides = data?.Content; //Api'den gelen slider verileri
 
   //##########Slider Settings#########
   const sliderSettings = {

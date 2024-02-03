@@ -10,12 +10,12 @@ import SEO from "@/components/seo";
 import { getMenu, getGeneralSettings, getSingleProduct } from "@/lib/query";
 
 export default function ProductDetail({ product, menu, generalSettings }) {
-  const imagesArray = product.attributes.MainImage.data
+  const imagesArray = product?.attributes?.MainImage?.data
     ? [
         process.env.NEXT_PUBLIC_DATA_URL +
-          product.attributes.MainImage.data.attributes.url,
-        ...(product.attributes.Image.data?.map(
-          (image) => process.env.NEXT_PUBLIC_DATA_URL + image.attributes.url
+          product?.attributes?.MainImage?.data?.attributes?.url,
+        ...(product?.attributes?.Image?.data?.map(
+          (image) => process.env.NEXT_PUBLIC_DATA_URL + image?.attributes?.url
         ) || []),
       ].filter((url) => url !== undefined && url !== null && url !== "")
     : [];
@@ -58,8 +58,8 @@ export default function ProductDetail({ product, menu, generalSettings }) {
   const sliderPosition = clientWidth * currentIndex;
 
   const seo = {
-    metaTitle: product.attributes.Title,
-    metaDescription: product.attributes.Description,
+    metaTitle: product?.attributes?.Title,
+    metaDescription: product?.attributes?.Description,
   };
 
   return (
@@ -145,10 +145,12 @@ export default function ProductDetail({ product, menu, generalSettings }) {
             <div className="lg:px-8 space-y-4">
               <h1 className="text-h2 text-on-background-color">
                 {" "}
-                {product.attributes.Title}
+                {product?.attributes?.Title}
               </h1>
               <div className="space-y-4">
-                <ReactMarkdown>{product.attributes.Description}</ReactMarkdown>
+                <ReactMarkdown>
+                  {product?.attributes?.Description}
+                </ReactMarkdown>
               </div>
             </div>
           </Row>

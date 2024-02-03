@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default function FeaturedProducts({ data, translation }) {
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const products = data.products.data;
+  const products = data?.products?.data;
 
   const handleCategoryFilter = (category) => {
     setSelectedCategory(category === `${translation}` ? null : category);
@@ -16,8 +16,8 @@ export default function FeaturedProducts({ data, translation }) {
   const filteredProducts = selectedCategory
     ? products.filter(
         (product) =>
-          product.attributes.category &&
-          product.attributes.category.data.attributes.Title.toLowerCase() ===
+          product?.attributes?.category &&
+          product?.attributes?.category?.data?.attributes?.Title.toLowerCase() ===
             selectedCategory.toLowerCase()
       )
     : products;
@@ -26,14 +26,16 @@ export default function FeaturedProducts({ data, translation }) {
     translation,
     ...new Set(
       products
-        .filter((product) => product.attributes.category)
-        .map((product) => product.attributes.category.data.attributes.Title)
+        .filter((product) => product?.attributes?.category)
+        .map(
+          (product) => product?.attributes?.category?.data?.attributes?.Title
+        )
     ),
   ];
 
   return (
     <>
-      <Title titleDesc={data.Description}>{data.Title}</Title>
+      <Title titleDesc={data?.Description}>{data?.Title}</Title>
       <div className="flex gap-4 justify-center flex-wrap">
         {categories.map((category, index) => (
           <span
@@ -50,13 +52,16 @@ export default function FeaturedProducts({ data, translation }) {
 
       <Row rowCol="grid-cols-2 min-[475px]:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-6">
         {filteredProducts.map((product) => (
-          <Link href={`/products/${product.attributes.Slug}`} key={product.id}>
+          <Link
+            href={`/products/${product?.attributes?.Slug}`}
+            key={product?.id}
+          >
             <Card
-              cardInfo={product.attributes.Writer}
-              cardTitle={product.attributes.Title}
+              cardInfo={product?.attributes?.Writer}
+              cardTitle={product?.attributes?.Title}
               cardImg={
                 process.env.NEXT_PUBLIC_DATA_URL +
-                product.attributes.MainImage.data.attributes.url
+                  product?.attributes?.MainImage?.data?.attributes?.url || ""
               }
               cardPadding="p-2 xl:p-4"
               cardBorder="border hover:shadow-xl transition-shadow duration-300 hover:border-gray-400"

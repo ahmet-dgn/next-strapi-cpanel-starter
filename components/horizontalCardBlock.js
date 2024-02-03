@@ -12,21 +12,19 @@ export default function HorizontalCardBlock({ data, translation }) {
         {services.map((service) => (
           <HorizontalCard
             titleCustom="!text-h6"
-            key={service.id}
-            cardTitle={service.attributes.Title}
+            key={service?.id}
+            cardTitle={service?.attributes?.Title}
             cardImg={
-              service.attributes.MainImage.data
-                ? process.env.NEXT_PUBLIC_DATA_URL +
-                  service.attributes.MainImage.data.attributes.url
-                : ""
+              process.env.NEXT_PUBLIC_DATA_URL +
+                service?.attributes?.MainImage?.data?.attributes?.url || ""
             }
             cardBorder=" hover:shadow-xl transition-shadow duration-300 hover:border-gray-400"
             cardPadding="p-2 xl:p-4"
             cardBgColor="bg-surface-color"
             cardImgClass="aspect-[5/3]"
-            cardDesc={service.attributes.Description}
+            cardDesc={service?.attributes?.Description}
             cardBtn={translation}
-            cardLink={`/products/${service.attributes.Slug}`}
+            cardLink={`/products/${service?.attributes?.Slug}`}
             cardBtnType="link"
           />
         ))}

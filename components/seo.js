@@ -1,19 +1,15 @@
 import Head from "next/head";
 
 export default function SEO({ generalSettings, seoData }) {
-  const domain = generalSettings.FrontUrl;
-  const companyName = generalSettings.CompanyName;
-  const logo = generalSettings.Logo
-    ? generalSettings.Logo?.data?.attributes?.url &&
-      process.env.NEXT_PUBLIC_DATA_URL +
-        generalSettings.Logo.data.attributes.url
-    : "";
-  const favicon = generalSettings.Favicon
-    ? generalSettings.Favicon?.data?.attributes?.url &&
-      process.env.NEXT_PUBLIC_DATA_URL +
-        generalSettings.Favicon.data.attributes.url
-    : "";
-  const index = generalSettings.Index;
+  const domain = generalSettings?.FrontUrl;
+  const companyName = generalSettings?.CompanyName;
+  const logo =
+    process.env.NEXT_PUBLIC_DATA_URL +
+      generalSettings?.Logo?.data?.attributes?.url || "";
+  const favicon =
+    process.env.NEXT_PUBLIC_DATA_URL +
+      generalSettings?.Favicon?.data?.attributes?.url || "";
+  const index = generalSettings?.Index;
   return (
     <Head>
       <title>

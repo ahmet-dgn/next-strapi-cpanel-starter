@@ -9,7 +9,9 @@ export default function VideoPlayer({ data }) {
     <div className="overflow-hidden h-[600px] md:h-[850px] relative w-full">
       <DynamicReactPlayer
         className="react-player brightness-[0.40] object-cover"
-        url={process.env.NEXT_PUBLIC_DATA_URL + data.Video.data.attributes.url}
+        url={
+          process.env.NEXT_PUBLIC_DATA_URL + data?.Video?.data?.attributes?.url
+        }
         width="100%"
         height="100%"
         controls={false}

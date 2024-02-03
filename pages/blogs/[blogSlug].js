@@ -10,8 +10,8 @@ import { useRef, useEffect, useState } from "react";
 
 export default function BlogDetail({ singleBlog, menu, generalSettings }) {
   const imagesArray =
-    singleBlog.attributes.Banner.data?.map(
-      (image) => process.env.NEXT_PUBLIC_DATA_URL + image.attributes.url
+    singleBlog?.attributes?.Banner?.data?.map(
+      (image) => process.env.NEXT_PUBLIC_DATA_URL + image?.attributes?.url
     ) || [];
 
   const elementRef = useRef(null);
@@ -52,8 +52,8 @@ export default function BlogDetail({ singleBlog, menu, generalSettings }) {
   const data = singleBlog;
   const { t } = useTranslation("common");
   const seo = {
-    metaTitle: data.attributes.Title,
-    metaDescription: data.attributes.Description,
+    metaTitle: data?.attributes?.Title,
+    metaDescription: data?.attributes?.Description,
   };
 
   return (
@@ -63,20 +63,18 @@ export default function BlogDetail({ singleBlog, menu, generalSettings }) {
       <Layout menuItems={menu} generalSettings={generalSettings} t={t}>
         <Container>
           <div className="max-w-4xl mx-auto space-y-8">
-            {data.attributes.Image.data && (
+            {data?.attributes?.Image?.data && (
               <Image
                 width={896}
                 height={400}
                 src={
-                  data.attributes.Image.data
-                    ? process.env.NEXT_PUBLIC_DATA_URL +
-                      data.attributes.Image.data.attributes.url
-                    : ""
+                  process.env.NEXT_PUBLIC_DATA_URL +
+                  data?.attributes.Image?.data?.attributes?.url
                 }
                 className="rounded"
               />
             )}
-            {singleBlog.attributes.Banner.data && (
+            {singleBlog?.attributes?.Banner?.data && (
               <div className="space-y-2">
                 <div
                   className="relative   group select-none overflow-hidden  bg-white border rounded"
@@ -152,9 +150,9 @@ export default function BlogDetail({ singleBlog, menu, generalSettings }) {
               </div>
             )}
             <h1 className="text-h3 text-on-background-color">
-              {data.attributes.Title}
+              {data?.attributes?.Title}
             </h1>
-            <ReactMarkdown>{data.attributes.Description}</ReactMarkdown>
+            <ReactMarkdown>{data?.attributes?.Description}</ReactMarkdown>
           </div>
         </Container>
       </Layout>
