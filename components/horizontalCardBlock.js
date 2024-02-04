@@ -3,11 +3,16 @@ import Row from "./ui/row";
 import Title from "./ui/title";
 import Link from "next/link";
 
-export default function HorizontalCardBlock({ data, translation }) {
+export default function HorizontalCardBlock({
+  data,
+  translation,
+  title,
+  description,
+}) {
   const services = data;
   return (
     <>
-      <Title>{data.Baslik}</Title>
+      <Title titleDesc={description}>{title}</Title>
       <Row rowCol="grid-cols-1 md:grid-cols-2">
         {services.map((service) => (
           <HorizontalCard

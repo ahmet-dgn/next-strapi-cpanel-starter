@@ -8,24 +8,30 @@ export default function Layout({ children, menuItems, generalSettings, t }) {
 
   switch (generalSettings.Navbar) {
     case "Navbar-1":
-      navbarComponent = <Navbar menuData={menuItems} generalSettings={generalSettings} t={t}/>;
+      navbarComponent = (
+        <Navbar menuData={menuItems} generalSettings={generalSettings} t={t} />
+      );
       break;
     case "Navbar-2":
-      navbarComponent = <Navbar2 menuData={menuItems} generalSettings={generalSettings} t={t}/>;
+      navbarComponent = (
+        <Navbar2 menuData={menuItems} generalSettings={generalSettings} t={t} />
+      );
       break;
     default:
-      navbarComponent = <Navbar menuData={menuItems} generalSettings={generalSettings} t={t}/>;
+      navbarComponent = (
+        <Navbar menuData={menuItems} generalSettings={generalSettings} t={t} />
+      );
       break;
   }
   return (
     <>
-      <header>
+      <header className="fixed top-0 z-10 w-full shadow-xl ">
         <TopHeader generalSettings={generalSettings} />
-    
+
         {navbarComponent}
       </header>
-      <main>{children}</main>
-      <Footer menuData={menuItems} />
+      <main className="mt-[173px]">{children}</main>
+      <Footer menuData={menuItems} generalSettings={generalSettings} />
     </>
   );
 }

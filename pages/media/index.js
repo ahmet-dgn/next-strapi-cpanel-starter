@@ -10,7 +10,7 @@ import { getMenu, getGeneralSettings, getPressList } from "@/lib/query";
 
 export default function Blogs({ menu, pressList, generalSettings }) {
   const { t, i18n } = useTranslation("common");
-
+  console.log(pressList);
   const seo = {
     metaTitle: t("press_title"),
     metaDescription: t("press_description"),
@@ -28,7 +28,8 @@ export default function Blogs({ menu, pressList, generalSettings }) {
                 cardTitle={pressListItem?.attributes?.Baslik}
                 cardImg={
                   process.env.NEXT_PUBLIC_DATA_URL +
-                  pressListItem?.attributes?.Resim?.data?.attributes?.url
+                  (pressListItem?.attributes?.Resim?.data?.attributes?.url ||
+                    " ")
                 }
                 cardPadding="p-2 xl:p-4"
                 cardBorder="border"

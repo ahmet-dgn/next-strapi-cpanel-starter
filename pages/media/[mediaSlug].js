@@ -28,7 +28,9 @@ export default function BlogDetail({ singlePress, menu, generalSettings }) {
               height={400}
               src={
                 process.env.NEXT_PUBLIC_DATA_URL +
-                data?.attributes?.Resim?.data?.attributes?.url
+                ((data?.attributes?.Resim &&
+                  data?.attributes?.Resim?.data?.attributes?.url) ||
+                  " ")
               }
               className="rounded"
             />
