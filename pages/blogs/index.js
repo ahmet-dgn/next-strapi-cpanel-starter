@@ -7,6 +7,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import SEO from "@/components/seo";
 import { getMenu, getGeneralSettings, getBlogList } from "@/lib/query";
+import Link from "next/link";
 
 export default function Blogs({ menu, blogList, generalSettings }) {
   const { t, i18n } = useTranslation("common");
@@ -81,27 +82,30 @@ export default function Blogs({ menu, blogList, generalSettings }) {
 
               <Row rowCol="grid-cols-1">
                 {filteredblogs.map((blog) => (
-                  <HorizontalCard
-                    titleCustom="!text-h6"
-                    key={blog?.id}
-                    cardInfo={blog?.attributes?.Date}
-                    cardTitle={blog?.attributes?.Title}
-                    cardImg={
-                      process.env.NEXT_PUBLIC_DATA_URL +
-                      (blog?.attributes?.Image?.data?.attributes?.url ||
-                        (blog?.attributes?.Banner?.data &&
-                          blog?.attributes?.Banner?.data[0]?.attributes?.url) ||
-                        " ")
-                    }
-                    cardPadding="p-2 xl:p-4"
-                    cardBorder="border"
-                    cardBgColor="bg-surface-color"
-                    cardImgClass="aspect-[5/3]"
-                    cardDesc={blog?.attributes?.Description}
-                    cardBtn={t("read_more")}
-                    cardLink={`/blogs/${blog?.attributes?.Slug}`}
-                    cardBtnType="link"
-                  />
+                  <Link href={`/blogs/${blog?.attributes?.Slug}`}>
+                    <HorizontalCard
+                      titleCustom="!text-h6"
+                      key={blog?.id}
+                      cardInfo={blog?.attributes?.Date}
+                      cardTitle={blog?.attributes?.Title}
+                      cardImg={
+                        process.env.NEXT_PUBLIC_DATA_URL +
+                        (blog?.attributes?.Image?.data?.attributes?.url ||
+                          (blog?.attributes?.Banner?.data &&
+                            blog?.attributes?.Banner?.data[0]?.attributes
+                              ?.url) ||
+                          " ")
+                      }
+                      cardPadding="p-2 xl:p-4"
+                      cardBorder="border"
+                      cardBgColor="bg-surface-color"
+                      cardImgClass="aspect-[5/3]"
+                      cardDesc={
+                        blog?.attributes?.KisaAciklama ||
+                        blog?.attributes?.Description
+                      }
+                    />
+                  </Link>
                 ))}
               </Row>
             </div>

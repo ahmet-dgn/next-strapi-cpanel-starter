@@ -25,13 +25,13 @@ export default function Layout({ children, menuItems, generalSettings, t }) {
   }
   return (
     <>
-      <header className="fixed top-0 z-10 w-full shadow-xl ">
+      <header className="fixed top-0 z-50 w-full shadow-xl ">
         <TopHeader generalSettings={generalSettings} />
 
         {navbarComponent}
       </header>
       <main className="mt-[173px]">{children}</main>
-      <Footer menuData={menuItems} generalSettings={generalSettings} />
+      <Footer menuData={menuItems} generalSettings={generalSettings} t={t} />
     </>
   );
 }

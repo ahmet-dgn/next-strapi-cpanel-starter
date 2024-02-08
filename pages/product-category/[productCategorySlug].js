@@ -8,7 +8,11 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import Link from "next/link";
 import SEO from "@/components/seo";
-import { getMenu, getGeneralSettings, getProductList } from "@/lib/query";
+import {
+  getMenu,
+  getGeneralSettings,
+  getFilteredProductList,
+} from "@/lib/query";
 
 export default function Products({ menu, products, generalSettings }) {
   const { t, i18n } = useTranslation("common");
@@ -114,30 +118,11 @@ export default function Products({ menu, products, generalSettings }) {
                       {category}
                     </p>
                   ))}
-                  <p
-                    className="py-2 border-b border-gray-300 cursor-pointer text-on-background-color hover:text-primary-color/60"
-                    onClick={() => {
-                      filterProductsByLanguageAndCategory(t("all_filter"));
-                      menuStatusHandler();
-                    }} // Show all option
-                  >
-                    {t("all_filter")}
-                  </p>
                 </div>
               </div>
             )}
 
             <div className="col-span-2 w-full">
-              {generalSettings.KategoriYanBar && (
-                <div
-                  className="w-full flex justify-end mb-4 lg:hidden"
-                  onClick={menuStatusHandler}
-                >
-                  <p className="  min-h-[2rem] px-3 text-link-small flex items-center justify-center w-fit rounded text-on-background-color border-2 border-on-background-color hover:bg-on-background-color/20">
-                    Filtreyi Göster
-                  </p>
-                </div>
-              )}
               {!generalSettings.UrunListesiYatay && (
                 <Row rowCol="grid-cols-2 min-[475px]:grid-cols-3 md:grid-cols-4">
                   {filteredProducts.map((product) => (
@@ -208,11 +193,13 @@ export default function Products({ menu, products, generalSettings }) {
   );
 }
 
-export const getServerSideProps = async ({ locale, defaultLocale }) => {
+export const getServerSideProps = async ({ params, locale, defaultLocale }) => {
   try {
     const menu = await getMenu(locale, defaultLocale);
     const generalSettings = await getGeneralSettings();
-    const products = await getProductList(locale, defaultLocale);
+    const { productCategorySlug } = params;
+    const slug = productCategorySlug;
+    const products = await getFilteredProductList(slug);
 
     return {
       props: {

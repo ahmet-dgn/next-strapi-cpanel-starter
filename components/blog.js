@@ -23,7 +23,9 @@ export default function Blog({ data, title, description, translation }) {
             }
             cardInfo={blog?.attributes?.Date}
             cardTitle={blog?.attributes?.Title}
-            cardDesc={blog?.attributes?.Description}
+            cardDesc={
+              blog?.attributes?.KisaAciklama || blog?.attributes?.Description
+            }
             cardImgAlt={blog?.attributes?.Title}
             titleCustom="text-normal-bold"
             cardBtnType="link"

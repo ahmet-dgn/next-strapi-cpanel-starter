@@ -4,9 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 
-export default function Footer({ menuData, generalSettings }) {
+export default function Footer({ menuData, generalSettings, t }) {
   const currentYear = new Date().getFullYear();
-  console.log(generalSettings);
+
   const footerMenu = menuData;
 
   const [isVisible, setIsVisible] = useState(false);
@@ -84,6 +84,11 @@ export default function Footer({ menuData, generalSettings }) {
                 </li>
               ))}
           </ul>
+          <div className="flex justify-center">
+            <Button href="/contact" size="md" color="red">
+              {t("contact_us")}
+            </Button>
+          </div>
 
           <p className="text-gray-200 text-center text-tiny-regular">
             © {currentYear} Your Company, Inc. All rights reserved.

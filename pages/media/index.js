@@ -7,6 +7,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import SEO from "@/components/seo";
 import { getMenu, getGeneralSettings, getPressList } from "@/lib/query";
+import Link from "next/link";
 
 export default function Blogs({ menu, pressList, generalSettings }) {
   const { t, i18n } = useTranslation("common");
@@ -22,24 +23,26 @@ export default function Blogs({ menu, pressList, generalSettings }) {
         <Container>
           <Row rowCol="grid-cols-1 md:grid-cols-2">
             {pressList.map((pressListItem) => (
-              <HorizontalCard
-                titleCustom="!text-h6"
-                key={pressListItem?.id}
-                cardTitle={pressListItem?.attributes?.Baslik}
-                cardImg={
-                  process.env.NEXT_PUBLIC_DATA_URL +
-                  (pressListItem?.attributes?.Resim?.data?.attributes?.url ||
-                    " ")
-                }
-                cardPadding="p-2 xl:p-4"
-                cardBorder="border"
-                cardBgColor="bg-surface-color"
-                cardImgClass="aspect-[5/3]"
-                cardDesc={pressListItem?.attributes?.Yazi}
-                cardBtn={t("read_more")}
-                cardLink={`/media/${pressListItem?.attributes?.Slug}`}
-                cardBtnType="link"
-              />
+              <Link href={`/media/${pressListItem?.attributes?.Slug}`}>
+                <HorizontalCard
+                  titleCustom="!text-h6"
+                  key={pressListItem?.id}
+                  cardTitle={pressListItem?.attributes?.Baslik}
+                  cardImg={
+                    process.env.NEXT_PUBLIC_DATA_URL +
+                    (pressListItem?.attributes?.Resim?.data?.attributes?.url ||
+                      " ")
+                  }
+                  cardPadding="p-2 xl:p-4"
+                  cardBorder="border"
+                  cardBgColor="bg-surface-color"
+                  cardImgClass="aspect-[5/3]"
+                  cardDesc={
+                    pressListItem?.attributes?.KisaAciklama ||
+                    pressListItem?.attributes?.Yazi
+                  }
+                />
+              </Link>
             ))}
           </Row>
         </Container>
