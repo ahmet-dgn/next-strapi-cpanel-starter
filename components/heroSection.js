@@ -37,7 +37,7 @@ export default function HeroSection({ data }) {
               "video"
             ) && (
               <DynamicReactPlayer
-                className="react-player brightness-[0.40] "
+                className="react-player brightness-[0.80] "
                 url={
                   process.env.NEXT_PUBLIC_DATA_URL +
                     HeroSectionData?.Image?.data?.attributes?.url || ""

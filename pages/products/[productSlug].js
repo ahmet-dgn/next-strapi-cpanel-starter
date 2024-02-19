@@ -2,13 +2,14 @@ import Layout from "@/components/layout";
 import Container from "@/components/ui/container";
 import Row from "@/components/ui/row";
 import ReactMarkdown from "react-markdown";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 import Image from "next/image";
 import { useRef, useEffect, useState } from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import SEO from "@/components/seo";
 import { getMenu, getGeneralSettings, getSingleProduct } from "@/lib/query";
-
+import Button from "@/components/ui/buttons";
 export default function ProductDetail({ product, menu, generalSettings }) {
   const imagesArray = product?.attributes?.MainImage?.data
     ? [
@@ -147,10 +148,22 @@ export default function ProductDetail({ product, menu, generalSettings }) {
                 {" "}
                 {product?.attributes?.Title}
               </h1>
-              <div className="space-y-4">
-                <ReactMarkdown>
-                  {product?.attributes?.Description}
-                </ReactMarkdown>
+              <div className="space-y-4 desc">
+                {product?.attributes?.Aciklama ? (
+                  <BlocksRenderer content={product?.attributes?.Aciklama} />
+                ) : (
+                  <ReactMarkdown>
+                    {product?.attributes?.Description}
+                  </ReactMarkdown>
+                )}
+
+                {product?.attributes?.ButonUrl &&
+                  product?.attributes?.ButonBaslik && (
+                    <Button href={product?.attributes?.ButonUrl}>
+                      {" "}
+                      {product?.attributes?.ButonBaslik}
+                    </Button>
+                  )}
               </div>
             </div>
           </Row>

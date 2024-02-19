@@ -6,6 +6,21 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --scale: 1.2; /* Mobile Scale */
+  --size-l-6: calc(1rem * var(--scale));
+  --size-l-5: calc(var(--size-l-6) * var(--scale));
+  --size-l-4: calc(var(--size-l-5) * var(--scale));
+  --size-l-3: calc(var(--size-l-4) * var(--scale));
+  --size-l-2: calc(var(--size-l-3) * var(--scale));
+  --size-l-1: calc(var(--size-l-2) * var(--scale));
+  /*-----------------------*/
+  --scale-desktop: 1.313; /* Desktop Scale */
+  --size-l-d6: calc(1rem * var(--scale-desktop));
+  --size-l-d5: calc(var(--size-l-d6) * var(--scale-desktop));
+  --size-l-d4: calc(var(--size-l-d5) * var(--scale-desktop));
+  --size-l-d3: calc(var(--size-l-d4) * var(--scale-desktop));
+  --size-l-d2: calc(var(--size-l-d3) * var(--scale-desktop));
+  --size-l-d1: calc(var(--size-l-d2) * var(--scale-desktop));
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,4 +39,83 @@
 
 video {
   object-fit: cover;
+}
+
+h1{
+  font-size: var( --size-l-1);
+  font-weight: 700;
+  line-height: 120%;
+}
+h2{
+  font-size: var( --size-l-2);
+  font-weight: 700;
+  line-height: 120%;
+}
+h3{
+  font-size: var( --size-l-3);
+  font-weight: 700;
+  line-height: 120%;
+}
+h4{
+  font-size: var( --size-l-4);
+  font-weight: 700;
+  line-height: 130%;
+}
+h5{
+  font-size: var( --size-l-5);
+  font-weight: 700;
+  line-height: 140%;
+}
+h6{
+  font-size: var( --size-l-6);
+  font-weight: 700;
+  line-height: 140%;
+}
+
+@media screen and (min-width: 1024px) {
+  h1{
+    font-size: var( --size-l-d1);
+  }
+  h2{
+    font-size: var( --size-l-d2);
+    font-weight: 700;
+    line-height: 120%;
+  }
+  h3{
+    font-size: var( --size-l-d3);
+    font-weight: 700;
+    line-height: 120%;
+  }
+  h4{
+    font-size: var( --size-l-d4);
+    font-weight: 700;
+    line-height: 130%;
+  }
+  h5{
+    font-size: var( --size-l-d5);
+    font-weight: 700;
+    line-height: 140%;
+  }
+  h6{
+    font-size: var( --size-l-d6);
+    font-weight: 700;
+    line-height: 140%;
+  }
+}
+
+.desc ul{
+  list-style-type: disc;
+  list-style-position: inside;
+ 
+}
+.desc ul a{
+  color:rgb(0, 63, 238);
+}
+.desc ul a:hover{
+  color:rgb(0, 44, 167);
+}
+
+.desc ol{
+  list-style-type:decimal;
+  list-style-position: inside;
 }

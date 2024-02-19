@@ -73,6 +73,7 @@ export function Navbar2({ menuData, generalSettings, t }) {
                       href={parentItem?.path}
                       size="md"
                       type="link"
+                      onClick={menuStatusHandler}
                       color={
                         (asPath === "/") &
                         (generalSettings?.TransparanNavbar === true)
@@ -139,6 +140,7 @@ export function Navbar2({ menuData, generalSettings, t }) {
                                   href={childItem?.path}
                                   size="sm"
                                   type="link"
+                                  onClick={menuStatusHandler}
                                 >
                                   {childItem?.title}
                                 </Button>
@@ -172,6 +174,7 @@ export function Navbar2({ menuData, generalSettings, t }) {
                                           href={subChildItem?.path}
                                           size="sm"
                                           type="link"
+                                          onClick={menuStatusHandler}
                                         >
                                           {subChildItem?.title}
                                         </Button>
@@ -187,7 +190,12 @@ export function Navbar2({ menuData, generalSettings, t }) {
                 ))}
             </ul>
             <div className="flex">
-              <Button href="/contact" size="md" color="red">
+              <Button
+                href="/contact"
+                size="md"
+                color="red"
+                onClick={menuStatusHandler}
+              >
                 {t("contact_us")}
               </Button>
             </div>

@@ -8,6 +8,8 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import { useRouter } from "next/router";
 import { getMenu, getGeneralSettings } from "@/lib/query";
+import React, { useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function Contact({ generalSettings, menu }) {
   const companyName = generalSettings?.CompanyName;
@@ -22,6 +24,107 @@ export default function Contact({ generalSettings, menu }) {
   const { t } = useTranslation("common");
   const { locale, defaultLocale, asPath } = useRouter();
 
+  const [fullname, setFullname] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
+  const [subject, setSubject] = useState("");
+  const [captcha, setCaptcha] = useState(null);
+
+  //   Form validation
+  const [errors, setErrors] = useState({});
+
+  //   Setting button text
+  const [buttonText, setButtonText] = useState("Send");
+
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [showFailureMessage, setShowFailureMessage] = useState(false);
+
+  const handleValidation = () => {
+    let tempErrors = {};
+    let isValid = true;
+
+    if (fullname.length <= 0) {
+      tempErrors["fullname"] = true;
+      isValid = false;
+    }
+    if (captcha === null || "") {
+      tempErrors["captcha"] = true;
+      isValid = false;
+    }
+    if (email.length <= 0) {
+      tempErrors["email"] = true;
+      isValid = false;
+    }
+    if (phone.length <= 0) {
+      tempErrors["phone"] = true;
+      isValid = false;
+    }
+    if (subject.length <= 0) {
+      tempErrors["subject"] = true;
+      isValid = false;
+    }
+    if (message.length <= 0) {
+      tempErrors["message"] = true;
+      isValid = false;
+    }
+
+    setErrors({ ...tempErrors });
+    console.log("errors", errors);
+    return isValid;
+  };
+
+  //   const [form, setForm] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    let isValidForm = handleValidation();
+
+    if (isValidForm) {
+      setButtonText("Sending");
+      const res = await fetch("/api/sendgrid", {
+        body: JSON.stringify({
+          email: email,
+          fullname: fullname,
+          phone: phone,
+          message: message,
+          subject: subject,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+      });
+
+      const { error } = await res.json();
+      if (error) {
+        console.log(error);
+        setShowSuccessMessage(false);
+        setShowFailureMessage(true);
+        setButtonText("Send");
+
+        // Reset form fields
+        setFullname("");
+        setEmail("");
+        setMessage("");
+        setSubject("");
+        setPhone("");
+        setCaptcha(null);
+        return;
+      }
+      setShowSuccessMessage(true);
+      setShowFailureMessage(false);
+      setButtonText("Send");
+      // Reset form fields
+      setFullname("");
+      setEmail("");
+      setMessage("");
+      setSubject("");
+      setPhone("");
+      setCaptcha(null);
+    }
+  };
   return (
     <>
       <Head>
@@ -59,56 +162,133 @@ export default function Contact({ generalSettings, menu }) {
           </Title>
           <div className=" lg:max-w-6xl mx-auto">
             <div class="w-full p-6 m-auto bg-white rounded-md shadow">
-              <form class="flex flex-col md:space-x-4  md:flex-row">
-                <div className="flex-1">
-                  <div>
-                    <label class="label">
-                      <span class="text-base label-text">Ad Soyad</span>
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Ad Soyad"
-                      class="w-full input input-bordered "
-                    />
+              <form onSubmit={handleSubmit} class="flex flex-col ">
+                <div class="flex flex-col md:space-x-4  md:flex-row">
+                  <div className="flex-1">
+                    <div>
+                      <label class="label">
+                        <span class="text-base label-text">Ad Soyad</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={fullname}
+                        onChange={(e) => {
+                          setFullname(e.target.value);
+                        }}
+                        placeholder="Ad Soyad"
+                        class="w-full input input-bordered "
+                      />
+                      {errors?.fullname && (
+                        <p className="text-red-500">Ad Soyad boş olamaz.</p>
+                      )}
+                    </div>
+
+                    <div>
+                      <label class="label">
+                        <span class="text-base label-text">E-Posta</span>
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={email}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                        }}
+                        placeholder="E-Posta"
+                        class="w-full input input-bordered "
+                      />
+                      {errors?.email && (
+                        <p className="text-red-500">E-Posta boş olamaz.</p>
+                      )}
+                    </div>
                   </div>
-                  <div>
-                    <label class="label">
-                      <span class="text-base label-text">Telefon</span>
-                    </label>
-                    <input
-                      type="tel"
-                      placeholder="Telefon"
-                      class="w-full input input-bordered "
-                    />
+                  <div className="flex flex-col flex-1">
+                    <div>
+                      <label class="label">
+                        <span class="text-base label-text">Telefon</span>
+                      </label>
+                      <input
+                        type="tel"
+                        placeholder="Telefon"
+                        value={phone}
+                        onChange={(e) => {
+                          setPhone(e.target.value);
+                        }}
+                        class="w-full input input-bordered "
+                      />
+                      {errors?.phone && (
+                        <p className="text-red-500">
+                          Telefon numarası boş olamaz.
+                        </p>
+                      )}
+                    </div>
+                    <div>
+                      <label class="label">
+                        <span class="text-base label-text">Konu</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={subject}
+                        onChange={(e) => {
+                          setSubject(e.target.value);
+                        }}
+                        placeholder="Konu"
+                        class="w-full input input-bordered "
+                      />
+                      {errors?.fullname && (
+                        <p className="text-red-500">Konu boş olamaz.</p>
+                      )}
+                    </div>
                   </div>
-                  <div>
-                    <label class="label">
-                      <span class="text-base label-text">E-Posta</span>
-                    </label>
-                    <input
-                      type="mail"
-                      placeholder="E-Posta"
-                      class="w-full input input-bordered "
-                    />
-                  </div>{" "}
                 </div>
-                <div className="flex flex-col flex-1">
+
+                <div>
                   <div className="flex-1">
                     <label className="form-control h-full">
                       <div className="label">
                         <span className="label-text">Mesajınız</span>
                       </div>
                       <textarea
+                        name="message"
+                        value={message}
+                        onChange={(e) => {
+                          setMessage(e.target.value);
+                        }}
                         className="textarea textarea-bordered h-full"
                         placeholder="Mesajınız"
                       ></textarea>
                     </label>
+                    {errors?.message && (
+                      <p className="text-red-500">Mesaj boş olamaz.</p>
+                    )}
                   </div>
+                  <ReCAPTCHA
+                    className="pt-2 "
+                    onChange={setCaptcha}
+                    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                  />
+                  {errors?.captcha && (
+                    <p className="text-red-500">
+                      Lütfen kutucuğu işaretleyiniz.
+                    </p>
+                  )}
                   <div className="pt-2">
-                    <button class="btn btn-block btn-primary">
+                    <button type="submit" class="btn btn-block btn-primary">
                       {" "}
                       {t("btn_send")}
                     </button>
+                  </div>
+                  <div className="text-left">
+                    {showSuccessMessage && (
+                      <p className="text-green-500 font-semibold text-sm my-2">
+                        Teşekkürler! Mesajınız gönderildi.
+                      </p>
+                    )}
+                    {showFailureMessage && (
+                      <p className="text-red-500">
+                        Hata! Mesajınız gönderilemedi. Tekrar deneyiniz.
+                      </p>
+                    )}
                   </div>
                 </div>
               </form>

@@ -108,55 +108,82 @@ export default function TopHeader({ generalSettings }) {
               {telefon}
             </Button>
           </div> */}
-          <ul
-            className=" flex flex-col relative pl-4  h-fit"
-            onMouseOver={() => setIsHovered(true)}
-            onMouseOut={() => setIsHovered(false)}
-          >
-            <li
-              className={`cursor-pointer   min-h-[2rem] text-link-tiny flex justify-center items-center ${
-                (asPath === "/") & (generalSettings?.TransparanNavbar === true)
-                  ? "text-white hover:text-white/60"
-                  : "text-on-top-header hover:text-on-top-header/60"
-              }`}
-            >
-              <Image
-                className="object-contain mr-2"
-                src={`/icons/flags/${activeLocale}.svg`}
-                width={20}
-                height={15}
-                alt={`${
-                  activeLocale == defaultLocale
-                    ? "Türkçe"
-                    : activeLocale == "en"
-                    ? "English"
-                    : "Türkçe"
-                } `}
-              />
-              {activeLocale.toUpperCase()}
-              <svg
-                className={`ml-0.8 inline-block  ${
-                  (asPath === "/") &
-                  (generalSettings?.TransparanNavbar === true)
-                    ? "fill-white group-hover:white/60"
-                    : "fill-on-top-header group-hover:fill-on-top-header/60"
-                }`}
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M8.12498 8.99999L12.005 12.88L15.885 8.99999C16.275 8.60999 16.905 8.60999 17.295 8.99999C17.685 9.38999 17.685 10.02 17.295 10.41L12.705 15C12.315 15.39 11.685 15.39 11.295 15L6.70498 10.41C6.31498 10.02 6.31498 9.38999 6.70498 8.99999C7.09498 8.61999 7.73498 8.60999 8.12498 8.99999Z" />
-              </svg>
-            </li>
+          {generalSettings?.DilSecenegiGorunumu === "Seçenek" ? (
             <ul
+              className=" flex flex-col relative pl-4  h-fit"
               onMouseOver={() => setIsHovered(true)}
               onMouseOut={() => setIsHovered(false)}
-              className={`h-0 overflow-hidden absolute top-8 left-0 z-30 rounded bg-gray-50 lg:absolute lg:shadow-md lg:bg-white ${
-                isHovered ? "h-fit" : ""
-              }`}
             >
-              {activeLocales.map((locale) => {
+              <li
+                className={`cursor-pointer   min-h-[2rem] text-link-tiny flex justify-center items-center ${
+                  (asPath === "/") &
+                  (generalSettings?.TransparanNavbar === true)
+                    ? "text-white hover:text-white/60"
+                    : "text-on-top-header hover:text-on-top-header/60"
+                }`}
+              >
+                <Image
+                  className="object-contain mr-2"
+                  src={`/icons/flags/${activeLocale}.svg`}
+                  width={20}
+                  height={15}
+                  alt={`${
+                    activeLocale == defaultLocale
+                      ? "Türkçe"
+                      : activeLocale == "en"
+                      ? "English"
+                      : "Türkçe"
+                  } `}
+                />
+                {activeLocale.toUpperCase()}
+                <svg
+                  className={`ml-0.8 inline-block  ${
+                    (asPath === "/") &
+                    (generalSettings?.TransparanNavbar === true)
+                      ? "fill-white group-hover:white/60"
+                      : "fill-on-top-header group-hover:fill-on-top-header/60"
+                  }`}
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M8.12498 8.99999L12.005 12.88L15.885 8.99999C16.275 8.60999 16.905 8.60999 17.295 8.99999C17.685 9.38999 17.685 10.02 17.295 10.41L12.705 15C12.315 15.39 11.685 15.39 11.295 15L6.70498 10.41C6.31498 10.02 6.31498 9.38999 6.70498 8.99999C7.09498 8.61999 7.73498 8.60999 8.12498 8.99999Z" />
+                </svg>
+              </li>
+              <ul
+                onMouseOver={() => setIsHovered(true)}
+                onMouseOut={() => setIsHovered(false)}
+                className={`h-0 overflow-hidden absolute top-8 left-0 z-30 rounded bg-gray-50 lg:absolute lg:shadow-md lg:bg-white ${
+                  isHovered ? "h-fit" : ""
+                }`}
+              >
+                {activeLocales.map((locale) => {
+                  return (
+                    <li key={locale}>
+                      <Link
+                        className="min-h-[2rem]  text-link-tiny text-on-background-color hover:text-on-background-color/60 flex justify-center items-center px-4"
+                        href={asPath}
+                        locale={locale}
+                      >
+                        <Image
+                          className="object-contain mr-2"
+                          src={`/icons/flags/${locale}.svg`}
+                          width={20}
+                          height={15}
+                          alt={activeLocale}
+                        />
+                        {locale.toUpperCase()}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </ul>
+          ) : generalSettings?.DilSecenegiGorunumu === "Yan Yana" ? (
+            <ul className="flex">
+              {" "}
+              {locales.map((locale) => {
                 return (
                   <li key={locale}>
                     <Link
@@ -177,7 +204,79 @@ export default function TopHeader({ generalSettings }) {
                 );
               })}
             </ul>
-          </ul>
+          ) : (
+            <ul
+              className=" flex flex-col relative pl-4  h-fit"
+              onMouseOver={() => setIsHovered(true)}
+              onMouseOut={() => setIsHovered(false)}
+            >
+              <li
+                className={`cursor-pointer   min-h-[2rem] text-link-tiny flex justify-center items-center ${
+                  (asPath === "/") &
+                  (generalSettings?.TransparanNavbar === true)
+                    ? "text-white hover:text-white/60"
+                    : "text-on-top-header hover:text-on-top-header/60"
+                }`}
+              >
+                <Image
+                  className="object-contain mr-2"
+                  src={`/icons/flags/${activeLocale}.svg`}
+                  width={20}
+                  height={15}
+                  alt={`${
+                    activeLocale == defaultLocale
+                      ? "Türkçe"
+                      : activeLocale == "en"
+                      ? "English"
+                      : "Türkçe"
+                  } `}
+                />
+                {activeLocale.toUpperCase()}
+                <svg
+                  className={`ml-0.8 inline-block  ${
+                    (asPath === "/") &
+                    (generalSettings?.TransparanNavbar === true)
+                      ? "fill-white group-hover:white/60"
+                      : "fill-on-top-header group-hover:fill-on-top-header/60"
+                  }`}
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M8.12498 8.99999L12.005 12.88L15.885 8.99999C16.275 8.60999 16.905 8.60999 17.295 8.99999C17.685 9.38999 17.685 10.02 17.295 10.41L12.705 15C12.315 15.39 11.685 15.39 11.295 15L6.70498 10.41C6.31498 10.02 6.31498 9.38999 6.70498 8.99999C7.09498 8.61999 7.73498 8.60999 8.12498 8.99999Z" />
+                </svg>
+              </li>
+              <ul
+                onMouseOver={() => setIsHovered(true)}
+                onMouseOut={() => setIsHovered(false)}
+                className={`h-0 overflow-hidden absolute top-8 left-0 z-30 rounded bg-gray-50 lg:absolute lg:shadow-md lg:bg-white ${
+                  isHovered ? "h-fit" : ""
+                }`}
+              >
+                {activeLocales.map((locale) => {
+                  return (
+                    <li key={locale}>
+                      <Link
+                        className="min-h-[2rem]  text-link-tiny text-on-background-color hover:text-on-background-color/60 flex justify-center items-center px-4"
+                        href={asPath}
+                        locale={locale}
+                      >
+                        <Image
+                          className="object-contain mr-2"
+                          src={`/icons/flags/${locale}.svg`}
+                          width={20}
+                          height={15}
+                          alt={activeLocale}
+                        />
+                        {locale.toUpperCase()}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </ul>
+          )}
         </div>
       </div>
     </div>
