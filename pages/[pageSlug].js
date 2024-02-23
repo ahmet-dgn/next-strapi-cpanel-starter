@@ -54,7 +54,12 @@ export default function ProductDetail({
               )}
             </div>
           ) : null}
-          <ComponentRenderer blogList={blogList} blocks={pageBlocks} t={t} />
+          <ComponentRenderer
+            blogList={blogList}
+            blocks={pageBlocks}
+            t={t}
+            width={"w-[694px]"}
+          />
         </Container>
       </Layout>
     </>

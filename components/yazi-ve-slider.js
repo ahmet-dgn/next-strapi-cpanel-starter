@@ -3,7 +3,7 @@ import Row from "@/components/ui/row";
 import Image from "next/image";
 import { useRef, useEffect, useState } from "react";
 
-export default function YaziveSlider({ data }) {
+export default function YaziveSlider({ data, width }) {
   console.log(data);
   const imagesArray =
     data?.Resim?.data?.map(
@@ -93,7 +93,11 @@ export default function YaziveSlider({ data }) {
               </div>
               <div className="w-fit flex">
                 {imagesArray.map((image) => (
-                  <div className="relative w-[726px] h-[500px] ">
+                  <div
+                    className={`relative ${
+                      width ? width : " w-[726px]"
+                    }  h-[500px]`}
+                  >
                     <Image
                       src={image}
                       fill
